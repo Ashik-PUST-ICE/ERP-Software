@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LanguageSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(HrmSeeder::class);
         // $this->call(TwitterConfigSeeder::class);
         // $this->call(InstagramConfigSeeder::class);
         // $this->call(LinkedinConfigSeeder::class);

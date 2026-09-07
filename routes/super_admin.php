@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\AutoPost\SuperAdmin\CouponController;
+// use App\Http\Controllers\AutoPost\SuperAdmin\CouponController;
 use App\Http\Controllers\AutoPost\SuperAdmin\CurrencyController;
 use App\Http\Controllers\AutoPost\SuperAdmin\DashboardController;
 use App\Http\Controllers\AutoPost\SuperAdmin\GatewayController;
 use App\Http\Controllers\AutoPost\SuperAdmin\LanguageController;
-use App\Http\Controllers\AutoPost\SuperAdmin\LandingBlogController;
-use App\Http\Controllers\AutoPost\SuperAdmin\MenuController;
+// use App\Http\Controllers\AutoPost\SuperAdmin\LandingBlogController;
+// use App\Http\Controllers\AutoPost\SuperAdmin\MenuController;
 use App\Http\Controllers\AutoPost\SuperAdmin\PackageController;
 use App\Http\Controllers\AutoPost\SuperAdmin\PageController;
 use App\Http\Controllers\AutoPost\SuperAdmin\ProfileController;
@@ -113,56 +113,14 @@ Route::get('cache-settings', [SettingController::class, 'cacheSettings'])->name(
         ->middleware('can:Manage Application Setting')
         ->name('landing-settings');
 
-    // Blogs Settings
-    Route::group(['prefix' => 'blogs', 'as' => 'blogs.', 'middleware' => ['can:Manage Application Setting']], function () {
-        Route::get('/', [LandingBlogController::class, 'index'])->name('index');
-        Route::get('data', [LandingBlogController::class, 'data'])->name('data');
-        Route::post('store', [LandingBlogController::class, 'store'])->name('store');
-        Route::get('edit/{id}', [LandingBlogController::class, 'edit'])->name('edit');
-        Route::post('update/{id}', [LandingBlogController::class, 'update'])->name('update');
-        Route::delete('delete/{id}', [LandingBlogController::class, 'destroy'])->name('destroy');
-    });
+    // Blogs Settings (commented out)
+    // Route::group(['prefix' => 'blogs', 'as' => 'blogs.'], function () { ... });
 
-    // Pages Settings
-    Route::group(['prefix' => 'page', 'as' => 'page.', 'middleware' => ['can:Manage Application Setting']], function () {
-        Route::get('/', [PageController::class, 'index'])->name('index');
-        Route::get('list', [PageController::class, 'getPages'])->name('list');
-        Route::post('store', [PageController::class, 'store'])->name('store');
-        Route::get('edit/{uuid}', [PageController::class, 'edit'])->name('edit');
-        Route::post('update/{uuid}', [PageController::class, 'update'])->name('update');
-        Route::delete('delete/{uuid}', [PageController::class, 'delete'])->name('destroy');
-    });
+    // Pages Settings (commented out)
+    // Route::group(['prefix' => 'page', 'as' => 'page.'], function () { ... });
 
-    // Menu Settings
-    Route::group(['prefix' => 'menu', 'as' => 'menu.', 'middleware' => ['can:Manage Application Setting']], function () {
-        // Static Menu
-        Route::get('static', [MenuController::class, 'staticMenu'])->name('static');
-        Route::get('static/list', [MenuController::class, 'getStaticMenus'])->name('static.list');
-        Route::post('static/store', [MenuController::class, 'staticMenuStore'])->name('static.store');
-        Route::post('static/update/{slug}', [MenuController::class, 'staticMenuUpdate'])->name('static.update');
-        Route::delete('static/delete/{slug}', [MenuController::class, 'staticMenuDelete'])->name('static.delete');
-
-        // Dynamic Menu
-        Route::get('dynamic', [MenuController::class, 'dynamicMenu'])->name('dynamic');
-        Route::get('dynamic/list', [MenuController::class, 'getDynamicMenus'])->name('dynamic.list');
-        Route::post('dynamic/store', [MenuController::class, 'dynamicMenuStore'])->name('dynamic.store');
-        Route::post('dynamic/update/{id}', [MenuController::class, 'dynamicMenuUpdate'])->name('dynamic.update');
-        Route::delete('dynamic/delete/{id}', [MenuController::class, 'dynamicMenuDelete'])->name('dynamic.delete');
-
-        // Footer Left (Company) Menu
-        Route::get('footer-left', [MenuController::class, 'footerCompanyMenu'])->name('footer-left');
-        Route::get('footer-left/list', [MenuController::class, 'getFooterCompanyMenus'])->name('footer-left.list');
-        Route::post('footer-left/store', [MenuController::class, 'footerCompanyMenuStore'])->name('footer-left.store');
-        Route::post('footer-left/update/{id}', [MenuController::class, 'footerCompanyMenuUpdate'])->name('footer-left.update');
-        Route::delete('footer-left/delete/{id}', [MenuController::class, 'footerCompanyMenuDelete'])->name('footer-left.delete');
-
-        // Footer Right (Support) Menu
-        Route::get('footer-right', [MenuController::class, 'footerSupportMenu'])->name('footer-right');
-        Route::get('footer-right/list', [MenuController::class, 'getFooterSupportMenus'])->name('footer-right.list');
-        Route::post('footer-right/store', [MenuController::class, 'footerSupportMenuStore'])->name('footer-right.store');
-        Route::post('footer-right/update/{id}', [MenuController::class, 'footerSupportMenuUpdate'])->name('footer-right.update');
-        Route::delete('footer-right/delete/{id}', [MenuController::class, 'footerSupportMenuDelete'])->name('footer-right.delete');
-    });
+    // Menu Settings (commented out)
+    // Route::group(['prefix' => 'menu', 'as' => 'menu.'], function () { ... });
 
     //common setting update
     Route::post('common-settings-update', [SettingController::class, 'commonSettingUpdate'])->name('common.settings.update')->middleware('isDemo');
@@ -242,16 +200,8 @@ Route::group(['prefix' => 'subscription', 'as' => 'subscriptions.'], function ()
     Route::post('order/payment/status/change', [SubscriptionController::class, 'orderPaymentStatusChange'])->name('order.payment.status.change');
 });
 
-// Coupons
-Route::group(['prefix' => 'coupons', 'as' => 'coupons.'], function () {
-    Route::get('/', [CouponController::class, 'index'])->name('index');
-    Route::get('data', [CouponController::class, 'data'])->name('data');
-    Route::get('/create', [CouponController::class, 'create'])->name('create');
-    Route::post('/', [CouponController::class, 'store'])->name('store');
-    Route::get('/{coupon}/edit', [CouponController::class, 'edit'])->name('edit');
-    Route::patch('/{coupon}', [CouponController::class, 'update'])->name('update');
-    Route::delete('/{coupon}', [CouponController::class, 'destroy'])->name('destroy');
-});
+    // Coupons (commented out)
+    // Route::group(['prefix' => 'coupons', 'as' => 'coupons.'], function () { ... });
 
 // Tickets (Super Admin)
 Route::group(['prefix' => 'ticket', 'as' => 'ticket.'], function () {

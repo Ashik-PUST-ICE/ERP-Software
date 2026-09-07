@@ -765,17 +765,8 @@ if (!function_exists('getMeta')) {
             'og_image' => null,
         ];
 
-        $meta = Meta::where('slug', $slug)->select([
-            'meta_title',
-            'meta_description',
-            'meta_keyword',
-            'og_image',
-        ])->first();
-
-        if (!is_null($meta)) {
-            $metaData = $meta->toArray();
-        } else {
-            $meta = Meta::where('slug', 'default')->select([
+        if (class_exists(\App\Models\Meta::class)) {
+            $meta = \App\Models\Meta::where('slug', $slug)->select([
                 'meta_title',
                 'meta_description',
                 'meta_keyword',
@@ -784,6 +775,17 @@ if (!function_exists('getMeta')) {
 
             if (!is_null($meta)) {
                 $metaData = $meta->toArray();
+            } else {
+                $meta = \App\Models\Meta::where('slug', 'default')->select([
+                    'meta_title',
+                    'meta_description',
+                    'meta_keyword',
+                    'og_image',
+                ])->first();
+
+                if (!is_null($meta)) {
+                    $metaData = $meta->toArray();
+                }
             }
         }
 
@@ -897,6 +899,10 @@ if (!function_exists('getUserPostedCount')) {
         $userPackage = getUserCurrentPackage($userId);
 
         if (!$userPackage) {
+            return 0;
+        }
+
+        if (!class_exists(\App\Models\ScheduledPost::class)) {
             return 0;
         }
 

@@ -39,21 +39,7 @@
             </a>
           </li>
 
-          <li class="{{ isset($activeCoupons) && $activeCoupons == 'active' ? 'currrent-menu' : '' }}">
-            <a href="{{ route('super_admin.coupons.index') }}">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.95087 1.94036L5.51568 4.06935C5.17434 4.2332 4.80962 4.27425 4.43783 4.19096C4.19451 4.13645 4.07284 4.1092 3.97487 4.09801C2.75829 3.95909 2 4.92195 2 6.02919V6.63683C2 7.74407 2.75829 8.70694 3.97487 8.56801C4.07284 8.55681 4.19452 8.52954 4.43783 8.47507C4.80962 8.39174 5.17434 8.43281 5.51568 8.59667L9.95087 10.7257C10.9689 11.2144 11.478 11.4587 12.0456 11.2683C12.6131 11.0778 12.8079 10.6691 13.1976 9.85167C14.2675 7.60714 14.2675 5.05891 13.1976 2.81431C12.8079 1.99691 12.6131 1.58821 12.0456 1.39774C11.478 1.20727 10.9689 1.45163 9.95087 1.94036Z"
-                  stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                  d="M7.63906 13.8466L6.64482 14.666C4.40376 12.8886 4.67755 12.041 4.67755 8.66602H5.43344C5.74018 10.5733 6.46374 11.4767 7.46213 12.1307C8.07713 12.5335 8.20393 13.381 7.63906 13.8466Z"
-                  stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M5 8.33301V4.33301" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              {{ __('Coupons') }}
-            </a>
-          </li>
+
 
           <li class="{{ isset($activeUserPackages) && $activeUserPackages == 'active' ? 'currrent-menu' : '' }}">
             <a href="{{ route('super_admin.packages.user') }}">

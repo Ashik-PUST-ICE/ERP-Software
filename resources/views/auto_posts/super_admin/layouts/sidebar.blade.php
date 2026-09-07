@@ -39,21 +39,6 @@
                 </a>
             </li>
 
-            <li class="{{ isset($activeCoupons) && $activeCoupons == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.coupons.index') }}">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9.95087 1.94036L5.51568 4.06935C5.17434 4.2332 4.80962 4.27425 4.43783 4.19096C4.19451 4.13645 4.07284 4.1092 3.97487 4.09801C2.75829 3.95909 2 4.92195 2 6.02919V6.63683C2 7.74407 2.75829 8.70694 3.97487 8.56801C4.07284 8.55681 4.19452 8.52954 4.43783 8.47507C4.80962 8.39174 5.17434 8.43281 5.51568 8.59667L9.95087 10.7257C10.9689 11.2144 11.478 11.4587 12.0456 11.2683C12.6131 11.0778 12.8079 10.6691 13.1976 9.85167C14.2675 7.60714 14.2675 5.05891 13.1976 2.81431C12.8079 1.99691 12.6131 1.58821 12.0456 1.39774C11.478 1.20727 10.9689 1.45163 9.95087 1.94036Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M7.63906 13.8466L6.64482 14.666C4.40376 12.8886 4.67755 12.041 4.67755 8.66602H5.43344C5.74018 10.5733 6.46374 11.4767 7.46213 12.1307C8.07713 12.5335 8.20393 13.381 7.63906 13.8466Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M5 8.33301V4.33301" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    {{ __('Coupons') }}
-                </a>
-            </li>
 
             <li class="{{ isset($activeUserPackages) && $activeUserPackages == 'active' ? 'currrent-menu' : '' }}">
                 <a href="{{ route('super_admin.packages.user') }}">
@@ -150,109 +135,7 @@
             </li>
 
 
-            <li class="divider"><span>{{ __('Frontend Configuration') }}</span></li>
-            <li class="{{ isset($activeBlogs) && $activeBlogs == 'active' ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#blogs-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ isset($showBlogsMenu) ? 'true' : 'false' }}" aria-controls="blogs-menu">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M13.1673 7.33398V6.66732C13.1673 4.15316 13.1673 2.89608 12.3862 2.11503C11.6052 1.33398 10.3481 1.33398 7.83396 1.33398H7.16736C4.6532 1.33398 3.39614 1.33398 2.61509 2.11502C1.83404 2.89606 1.83403 4.15313 1.83401 6.66727L1.83398 9.33398C1.83396 11.8481 1.83396 13.1052 2.61498 13.8863C3.39602 14.6672 4.65314 14.6673 7.16729 14.6673"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4.83398 4.66602H10.1673M4.83398 7.99935H10.1673" stroke="#808080" stroke-width="1.3"
-                            stroke-linecap="round" />
-                        <path
-                            d="M8.83398 13.8852V14.6673H9.61625C9.88918 14.6673 10.0257 14.6673 10.1483 14.6165C10.2711 14.5657 10.3675 14.4692 10.5605 14.2763L13.7763 11.0603C13.9583 10.8783 14.0492 10.7873 14.0979 10.6891C14.1905 10.5023 14.1905 10.2831 14.0979 10.0963C14.0492 9.99805 13.9583 9.90705 13.7763 9.72505C13.5942 9.54305 13.5032 9.45205 13.405 9.40338C13.2182 9.31085 12.9989 9.31085 12.8121 9.40338C12.7139 9.45205 12.6229 9.54305 12.4409 9.72505L9.22512 12.9411C9.03218 13.134 8.93565 13.2305 8.88485 13.3531C8.83398 13.4759 8.83398 13.6123 8.83398 13.8852Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linejoin="round" />
-                    </svg>
-                    {{ __('Manage  Blogs') }}
-                </a>
-                <ul id="blogs-menu" class="collapse {{ isset($showBlogsMenu) ? 'show' : '' }}">
-                    <li
-                        class="{{ isset($subManageBlogsActiveClass) && $subManageBlogsActiveClass == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('super_admin.setting.blogs.index') }}">
-                            {{ __(' Blogs Create') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="{{ isset($activePages) && $activePages == 'active' ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#pages-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ isset($showPagesMenu) ? 'true' : 'false' }}" aria-controls="pages-menu">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.5 2H9.5L12 4.5V14H4.5C3.67157 14 3 13.3284 3 12.5V3.5C3 2.67157 3.67157 2 4.5 2Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9.5 2V4.5H12" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    {{ __('Manage Pages') }}
-                </a>
-                <ul id="pages-menu" class="collapse {{ isset($showPagesMenu) ? 'show' : '' }}">
-                    <li class="{{ isset($subPagesActiveClass) && $subPagesActiveClass == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('super_admin.setting.page.index') }}">
-                            {{ __('Create Pages') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="{{ isset($activeMenus) && $activeMenus == 'active' ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#menus-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ isset($showMenusMenu) ? 'true' : 'false' }}" aria-controls="menus-menu">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 4.5C3 3.67157 3.67157 3 4.5 3H11.5C12.3284 3 13 3.67157 13 4.5V11.5C13 12.3284 12.3284 13 11.5 13H4.5C3.67157 13 3 12.3284 3 11.5V4.5Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M5 6H11" stroke="#808080" stroke-width="1.3" stroke-linecap="round" />
-                        <path d="M5 8.5H11" stroke="#808080" stroke-width="1.3" stroke-linecap="round" />
-                        <path d="M5 11H9" stroke="#808080" stroke-width="1.3" stroke-linecap="round" />
-                    </svg>
-                    {{ __('Manage Menus') }}
-                </a>
-                <ul id="menus-menu" class="collapse {{ isset($showMenusMenu) ? 'show' : '' }}">
-                    <!-- <li class="{{ isset($subStaticMenusActiveClass) && $subStaticMenusActiveClass == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('super_admin.setting.menu.static') }}">
-                            {{ __('Nav Menu') }}
-                        </a>
-                    </li> -->
-                    <li
-                        class="{{ isset($subDynamicMenusActiveClass) && $subDynamicMenusActiveClass == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('super_admin.setting.menu.dynamic') }}">
-                            {{ __('Nav Dynamic Menu') }}
-                        </a>
-                    </li>
-                    <!-- <li
-                        class="{{ isset($subFooterCompanyMenusActiveClass) && $subFooterCompanyMenusActiveClass == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('super_admin.setting.menu.footer-left') }}">
-                            {{ __('Footer Left') }}
-                        </a>
-                    </li>
-                    <li
-                        class="{{ isset($subFooterSupportMenusActiveClass) && $subFooterSupportMenusActiveClass == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('super_admin.setting.menu.footer-right') }}">
-                            {{ __('Footer Right') }}
-                        </a>
-                    </li> -->
-                </ul>
-            </li>
-            <!-- <li class="{{ isset($activePromotions) && $activePromotions == 'active' ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#promotions-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ isset($showPromotionsMenu) ? 'true' : 'false' }}" aria-controls="promotions-menu">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9.95087 1.94036L5.51568 4.06935C5.17434 4.2332 4.80962 4.27425 4.43783 4.19096C4.19451 4.13645 4.07284 4.1092 3.97487 4.09801C2.75829 3.95909 2 4.92195 2 6.02919V6.63683C2 7.74407 2.75829 8.70694 3.97487 8.56801C4.07284 8.55681 4.19452 8.52954 4.43783 8.47507C4.80962 8.39174 5.17434 8.43281 5.51568 8.59667L9.95087 10.7257C10.9689 11.2144 11.478 11.4587 12.0456 11.2683C12.6131 11.0778 12.8079 10.6691 13.1976 9.85167C14.2675 7.60714 14.2675 5.05891 13.1976 2.81431C12.8079 1.99691 12.6131 1.58821 12.0456 1.39774C11.478 1.20727 10.9689 1.45163 9.95087 1.94036Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M7.63906 13.8466L6.64482 14.666C4.40376 12.8886 4.67755 12.041 4.67755 8.66602H5.43344C5.74018 10.5733 6.46374 11.4767 7.46213 12.1307C8.07713 12.5335 8.20393 13.381 7.63906 13.8466Z"
-                            stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M5 8.33301V4.33301" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    {{ __('Manage Promotions') }}
-                </a>
-                <ul id="promotions-menu" class="collapse {{ isset($showPromotionsMenu) ? 'show' : '' }}">
-                    <li><a href="#">{{ __('Sub Menu') }}</a></li>
-                </ul>
-            </li> -->
+            {{-- Frontend Configuration: Blogs, Pages, Menus removed --}}
 
             <li class="divider"><span>{{ __('System Configuration') }}</span></li>
             <li

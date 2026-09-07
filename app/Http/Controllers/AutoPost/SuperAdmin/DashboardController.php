@@ -54,7 +54,7 @@ class DashboardController extends Controller
         $rawSubData = UserPackage::whereDate('start_date', '>=', $startMonth)
             ->whereDate('start_date', '<=', $endMonth)
             ->select(
-                DB::raw("DATE_FORMAT(start_date, '%Y-%m') as ym"),
+                DB::raw("strftime('%Y-%m', start_date) as ym"),
                 DB::raw('COUNT(*) as total')
             )
             ->groupBy('ym')
@@ -66,7 +66,7 @@ class DashboardController extends Controller
         $rawSalesData = Transaction::whereDate('payment_time', '>=', $startMonth)
             ->whereDate('payment_time', '<=', $endMonth)
             ->select(
-                DB::raw("DATE_FORMAT(payment_time, '%Y-%m') as ym"),
+                DB::raw("strftime('%Y-%m', payment_time) as ym"),
                 DB::raw('SUM(amount) as total')
             )
             ->groupBy('ym')

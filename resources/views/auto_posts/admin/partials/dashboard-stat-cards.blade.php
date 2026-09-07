@@ -84,12 +84,7 @@
             </span>
             <div class="card-info">
                 @php
-                    use App\Models\ScheduledPost;
-                    $pendingQ = ScheduledPost::where('status', 'pending');
-                    if ($platform) {
-                        $pendingQ->whereHas('socialMediaAccount', fn($q) => $q->where('platform', $platform));
-                    }
-                    $pendingCount = $pendingQ->count();
+                    $pendingCount = 0;
                 @endphp
                 <h2>{{ number_format($pendingCount) }}</h2>
                 <h3>{{ __('Scheduled Posts') }}</h3>
