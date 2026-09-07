@@ -1,7 +1,13 @@
 @extends('auto_posts.admin.layouts.admin')
 @push('title') {{ __('HRM Dashboard') }} @endpush
 
+@push('script')
+<script src="{{ asset('admin/js/hrm-dashboard.js') }}?ver={{ env('VERSION', 0) }}"></script>
+@endpush
+
 @section('content')
+
+<input type="hidden" id="dashboard-data-url" value="{{ route('admin.hrm.dashboard.data') }}">
 
 <div class="section-title">
     <h2 class="title">{{ __('HRM Dashboard') }}</h2>
@@ -22,7 +28,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $totalEmployees }}</h2>
+                <h2 id="kpiTotalEmployees">{{ $totalEmployees }}</h2>
                 <h3>{{ __('Total Employees') }}</h3>
             </div>
             <span class="card-status up">
@@ -42,7 +48,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $todayPresent }}</h2>
+                <h2 id="kpiTodayPresent">{{ $todayPresent }}</h2>
                 <h3>{{ __("Today's Present") }}</h3>
             </div>
             <span class="card-status {{ $todayPresent > 0 ? 'up' : 'down' }}">
@@ -63,7 +69,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $pendingLeaves }}</h2>
+                <h2 id="kpiPendingLeaves">{{ $pendingLeaves }}</h2>
                 <h3>{{ __('Pending Leaves') }}</h3>
             </div>
             <span class="card-status {{ $pendingLeaves > 0 ? 'down' : 'up' }}">
@@ -84,7 +90,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2 style="font-size:2rem;">{{ showPrice($monthlyPayroll) }}</h2>
+                <h2 style="font-size:2rem;" id="kpiMonthlyPayroll">{{ showPrice($monthlyPayroll) }}</h2>
                 <h3>{{ __('Monthly Payroll') }}</h3>
             </div>
             <span class="card-status up">
@@ -111,7 +117,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $todayLate }}</h2>
+                <h2 id="kpiTodayLate">{{ $todayLate }}</h2>
                 <h3>{{ __('Today Late') }}</h3>
             </div>
             <span class="card-status {{ $todayLate > 0 ? 'down' : 'up' }}">
@@ -131,7 +137,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $todayAbsent }}</h2>
+                <h2 id="kpiTodayAbsent">{{ $todayAbsent }}</h2>
                 <h3>{{ __('Today Absent') }}</h3>
             </div>
             <span class="card-status {{ $todayAbsent > 0 ? 'down' : 'up' }}">
@@ -153,7 +159,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $totalDepartments }}</h2>
+                <h2 id="kpiTotalDepartments">{{ $totalDepartments }}</h2>
                 <h3>{{ __('Departments') }}</h3>
             </div>
             <span class="card-status up">
@@ -174,7 +180,7 @@
                 </svg>
             </span>
             <div class="card-info">
-                <h2>{{ $totalEmployees - $todayPresent }}</h2>
+                <h2 id="kpiNotCheckedIn">{{ $totalEmployees - $todayPresent }}</h2>
                 <h3>{{ __('Not Checked In') }}</h3>
             </div>
             <span class="card-status {{ ($totalEmployees - $todayPresent) > 0 ? 'down' : 'up' }}">
@@ -196,10 +202,11 @@
                 <h3 class="title">{{ __('Recent Employees') }}</h3>
                 <a href="{{ route('admin.hrm.employees.index') }}" class="text-primary" style="font-size:1.2rem;">{{ __('View All') }}</a>
             </div>
-            <table class="table primary-table w-100">
+            <table class="display primary-table w-100" id="recentEmployeesTable" data-url="{{ route('admin.hrm.employees.index') }}">
                 <thead>
                     <tr>
-                        <th>{{ __('Name') }}</th>
+                        <th class="keep-show">{{ __('Name') }}</th>
+                        <th>{{ __('Employee Code') }}</th>
                         <th>{{ __('Department') }}</th>
                         <th>{{ __('Designation') }}</th>
                         <th>{{ __('Status') }}</th>
@@ -224,7 +231,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center text-muted py-3">{{ __('No employees found') }}</td>
+                        <td colspan="5" class="text-center text-muted py-3">{{ __('No employees found') }}</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -239,13 +246,13 @@
                 <h3 class="title">{{ __('Pending Leave Requests') }}</h3>
                 <a href="{{ route('admin.hrm.leaves.index') }}" class="text-primary" style="font-size:1.2rem;">{{ __('View All') }}</a>
             </div>
-            <table class="table primary-table w-100">
+            <table class="display primary-table w-100" id="pendingLeavesTable" data-url="{{ route('admin.hrm.leaves.index') }}">
                 <thead>
                     <tr>
                         <th>{{ __('Employee') }}</th>
                         <th>{{ __('Type') }}</th>
-                        <th>{{ __('Days') }}</th>
-                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Duration') }}</th>
+                        <th>{{ __('Status') }}</th>
                         <th>{{ __('Action') }}</th>
                     </tr>
                 </thead>
@@ -277,7 +284,7 @@
             <div class="section-small-title mb-20">
                 <h3 class="title">{{ __('Department Headcount') }}</h3>
             </div>
-            <div class="row gy-3">
+            <div class="row gy-3" id="departmentStatsContainer">
                 @forelse($departmentStats as $dept)
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
                     <div class="stats">

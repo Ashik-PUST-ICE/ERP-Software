@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
         // Dashboard
         Route::get('/dashboard', [HrmDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard/data', [HrmDashboardController::class, 'data'])->name('dashboard.data');
 
         // Departments
         Route::prefix('departments')->name('departments.')->group(function () {
