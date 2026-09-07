@@ -1,0 +1,145 @@
+.single-payment {
+    position: relative;
+}
+
+.single-payment .mode-status {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.options-area {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.options-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    color: #6c757d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.options-btn:hover {
+    background: #fff;
+    color: #212529;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.single-payment .logo {
+    max-width: 200px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+#editModal .modal-dialog {
+    max-width: 600px;
+}
+
+#editModal .zModalTwo-body {
+    padding: 25px;
+}
+
+#editModal .gateway-logo-preview {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    background: #f8f9fa;
+}
+
+#editModal .form-group {
+    margin-bottom: 1rem;
+}
+
+#editModal .form-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+#editModal .form-control,
+#editModal .select.form-control {
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#editModal .form-control:focus,
+#editModal .select.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+}
+
+#editModal .form-control[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+#editModal hr {
+    border-color: #e9ecef;
+    opacity: 0.5;
+}
+
+#editModal .btn-list {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#editModal .btn-list .primary-btn {
+    min-width: 100px;
+}
+
+#editModal .btn-sm {
+    padding: 4px 12px;
+    font-size: 13px;
+}
+
+#editModal h6.text-muted {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#editModal .bank-div-append {
+    margin-top: 15px;
+}
+
+#editModal .multi-bank {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef !important;
+    transition: all 0.3s ease;
+}
+
+#editModal .multi-bank:hover {
+    border-color: #dee2e6 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#editModal .multi-bank .form-group {
+    margin-bottom: 0;
+}
+
+#editModal .multi-bank textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+#editModal #currencyConversionRateSection {
+    margin-top: 10px;
+}

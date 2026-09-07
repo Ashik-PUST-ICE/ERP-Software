@@ -2,24 +2,35 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(BankSeeder::class);
+        $this->call(CurrencySeeder::class);
+        $this->call(GatewaySeeder::class);
+        $this->call(LanguageSeeder::class);
+        $this->call(SettingSeeder::class);
+        $this->call(UserSeeder::class);
+        // $this->call(TwitterConfigSeeder::class);
+        // $this->call(InstagramConfigSeeder::class);
+        // $this->call(LinkedinConfigSeeder::class);
+        // $this->call(TikTokConfigSeeder::class);
+        // $this->call(FacebookConfigSeeder::class);
+        // $this->call(YouTubeConfigSeeder::class);
+        // $this->call(ThreadsConfigSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+
+
+
+        // if (filter_var(env('ENABLE_DUMMY_DATA', false), FILTER_VALIDATE_BOOLEAN)) {
+        //     $this->call(DummyDataSeeder::class);
+        // }
     }
 }

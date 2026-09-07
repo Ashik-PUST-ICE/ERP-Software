@@ -1,0 +1,187 @@
+/*===============================
+ #.primary-table
+=================================*/
+.primary-table {
+    &.dataTable {
+        thead {
+            tr {
+                border: 1px solid var(--border-color);
+
+                th {
+                    padding: 1.5rem;
+                    font-size: 1.2rem;
+                    font-weight: 400;
+                    text-transform: capitalize;
+                    color: var(--color1);
+                    background-color: var(--color2);
+                    border-bottom: 1px solid var(--border-color);
+                    text-align: left;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                color: var(--bColor);
+                td {
+                    padding: 1.5rem;
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                    text-transform: capitalize;
+                    background-color: var(--white);
+                    border-bottom: 1px solid var(--border-color) !important;
+                    box-shadow: none;
+                    text-align: left;
+                }
+
+                &:last-child {
+                    td {
+                        border-bottom: none !important;
+                    }
+                }
+
+                &:nth-child(odd) {
+                    td {
+                        background: var(--white);
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.search-input-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.8rem;
+    width: 100%;
+    max-width: 32rem;
+
+    .icon {
+        position: absolute;
+        left: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .search-input {
+        width: 100%;
+        height: 4.2rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--color2);
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: var(--color1);
+        padding: 1rem 2rem 1rem 4.4rem;
+    }
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: .6rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    background-color: var(--color2);
+    color: var(--bColor);
+
+    &.active {
+        background-color: #E7FBF1;
+        color: #0FA958;
+    }
+
+    &.inactive {
+        background-color: #EBEBEB;
+        color: #0D0D0D;
+    }
+
+    &.cancelled {
+        background-color: #EBEBEB;
+        color: #0D0D0D;
+    }
+
+    &.failed {
+        background-color: #FFEEE6;
+        color: #FF4F02;
+    }
+
+    &.pending {
+        background-color: #FFF5D5;
+        color: #FFC402;
+    }
+
+    &.connected {
+        background-color: #E7FBF1;
+        color: #0FA958;
+    }
+
+    &.not-connected {
+        background-color: #EBEBEB;
+        color: #0D0D0D;
+    }
+}
+
+.table-top {
+    display: flex;
+    flex-flow: row wrap;
+    grid-gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sl-check-label {
+    display: flex;
+    align-items: center;
+    grid-column-gap: .8rem;
+    cursor: pointer;
+
+    .form-check-input {
+        margin: 0;
+        appearance: none;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: .4rem;
+        border: 1px solid var(--border-color);
+        box-shadow: none;
+
+        &:checked {
+            background-color: var(--primary-color);
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .primary-table.dataTable tbody tr td {
+        padding: 1rem;
+        white-space: normal !important;
+        vertical-align: middle;
+    }
+
+    .primary-table.dataTable thead tr th {
+        padding: 1rem;
+    }
+}
+#packagesDataTable.dtr-inline.collapsed,
+#couponsDataTable.dtr-inline.collapsed,
+#commonDataTable.dtr-inline.collapsed,
+#orderDataTable.dtr-inline.collapsed,
+#usersDataTable.dtr-inline.collapsed,
+#refundRequestDatatable.dtr-inline.collapsed
+ {
+    > tbody > tr > td.dtr-control {
+        white-space: nowrap !important;
+    }
+} 
+#ticketDataTable {
+    p{
+        margin-bottom: 0 !important;
+    }
+}
+table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control{
+    white-space: nowrap;
+    vertical-align: middle;
+}

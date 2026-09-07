@@ -1,0 +1,115 @@
+/*===============================
+ #.section-title
+=================================*/
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 1rem;
+    margin-bottom: 2.5rem;
+    @media (max-width: 768px) {        
+        flex-direction: column;
+        align-items: flex-start;             
+    }
+
+    .title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--bColor) !important;
+        @media (max-width: 768px) {
+            font-size: 2.2rem;       
+        }
+    }
+}
+
+.section-inner-title {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.3rem;
+    margin-bottom: 2rem;
+
+    .title {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: var(--black);
+    }
+    >div{
+        @media (max-width: 375px) {
+            flex-direction: column;    
+            justify-content: flex-start !important;
+            align-items: flex-start !important;
+            row-gap: 20px;
+        }
+    }
+}
+
+.section-large-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 1rem;
+    margin-bottom: 2rem;
+
+    .title {
+        margin: 0;
+        margin: 0;
+        font-size: 2.8rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        color: var(--bColor);
+    }
+}
+.section-medium-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 1rem;
+    margin-bottom: 2rem;
+
+    .title {
+        margin: 0;
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-transform: capitalize;
+        color: var(--bColor);
+    }
+}
+
+.section-small-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 1rem;
+    margin-bottom: 2rem;
+
+    .title {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-transform: capitalize;
+        color: var(--bColor);
+    }
+}
+
+@media (max-width: 767px) {
+    .section-title {
+        margin-bottom: 1.5rem;
+    }
+
+    .section-inner-title {
+        margin-bottom: 1.5rem;
+    }
+
+    .section-medium-title {
+        margin-bottom: 1.5rem;
+    }
+
+    .section-small-title {
+        margin-bottom: 1.5rem;
+    }
+}

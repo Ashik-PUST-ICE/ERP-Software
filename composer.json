@@ -6,9 +6,19 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "php": "^8.2 | ^8.3 | ^8.4",
+        "bacon/bacon-qr-code": "*",
+        "intervention/image": "*",
+        "jenssegers/agent": "*",
+        "laravel/framework": "^13.0",
+        "laravel/sanctum": "*",
+        "laravel/tinker": "*",
+        "laravel/ui": "^4.6",
+        "maatwebsite/excel": "*",
+        "pragmarx/google2fa-laravel": "*",
+        "spatie/laravel-permission": "*",
+        "yajra/laravel-datatables-oracle": "*",
+        "zainiklab/zai-installer": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -24,7 +34,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/Helper.php",
+            "app/Helpers/Constant.php",
+            "app/Helpers/CoreArray.php",
+            "app/Helpers/LangHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

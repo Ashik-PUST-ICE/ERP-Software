@@ -22,3 +22,11 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/okk
+/database/seeders/FacebookConfigSeeder.php
+/database/seeders/InstagramConfigSeeder.php
+/database/seeders/LinkedinConfigSeeder.php
+/database/seeders/TikTokConfigSeeder.php
+/database/seeders/ThreadsConfigSeeder.php
+/database/seeders/TwitterConfigSeeder.php
+/database/seeders/YouTubeConfigSeeder.php
