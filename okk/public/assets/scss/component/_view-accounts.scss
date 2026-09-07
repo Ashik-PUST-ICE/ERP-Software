@@ -1,0 +1,58 @@
+/*===============================
+ #.view-accounts
+=================================*/
+.view-accounts-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--border-color);
+
+    .accounts-card {
+        display: grid;
+        place-items: center;
+        position: relative;
+        padding: 1.3rem;
+        background-color: var(--white);
+        min-height: 17.5rem;
+        text-align: center;
+        border-right: 1px solid var(--border-color);
+
+        &:last-child {
+            border: none;
+        }
+
+        .card-icon {
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--bColor);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--color1);
+            margin-bottom: 0;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .view-accounts-wrap {
+        grid-template-columns: repeat(2, 1fr);
+        border-top: none;
+    }
+
+    .view-accounts-wrap .accounts-card {
+        border-top: 1px solid var(--border-color);
+        min-height: 15rem;
+    }
+
+    .view-accounts-wrap .accounts-card:nth-child(3n) {
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+    }
+}

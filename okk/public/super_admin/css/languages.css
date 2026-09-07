@@ -1,0 +1,418 @@
+/* Language Settings - Modal UI/UX Improvements */
+#add-modal .modal-dialog,
+#edit-modal .modal-dialog {
+    max-width: 600px;
+}
+
+#add-modal .zModalTwo-body,
+#edit-modal .zModalTwo-body {
+    padding: 25px;
+}
+
+#add-modal .form-group,
+#edit-modal .form-group {
+    margin-bottom: 1rem;
+}
+
+#add-modal .form-label,
+#edit-modal .form-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+#add-modal .form-control,
+#add-modal .select.form-control,
+#edit-modal .form-control,
+#edit-modal .select.form-control {
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#add-modal .form-control:focus,
+#add-modal .select.form-control:focus,
+#edit-modal .form-control:focus,
+#edit-modal .select.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+}
+
+#add-modal .zImage-upload-details,
+#edit-modal .zImage-upload-details {
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+#add-modal .zImage-upload-details:hover,
+#edit-modal .zImage-upload-details:hover {
+    border-color: #007bff;
+    background: #f0f7ff;
+}
+
+#add-modal .upload-img-box,
+#edit-modal .upload-img-box {
+    margin-top: 15px;
+}
+
+#add-modal .upload-img-box img,
+#edit-modal .upload-img-box img {
+    max-width: 100px;
+    max-height: 60px;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    padding: 5px;
+    background: #fff;
+    display: none;
+}
+
+#add-modal .upload-img-box img[src]:not([src=""]),
+#edit-modal .upload-img-box img[src]:not([src=""]) {
+    display: block;
+    margin: 0 auto 10px;
+}
+
+#add-modal .upload-img-box input[type="file"],
+#edit-modal .upload-img-box input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
+#add-modal .btn-list,
+#edit-modal .btn-list {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#add-modal .btn-list .primary-btn,
+#edit-modal .btn-list .primary-btn {
+    min-width: 100px;
+}
+
+#add-modal .form-check,
+#edit-modal .form-check {
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+#add-modal .form-check-label,
+#edit-modal .form-check-label {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0;
+    user-select: none;
+    line-height: 1.5;
+}
+
+#add-modal .form-check-input[type="checkbox"],
+#edit-modal .form-check-input[type="checkbox"] {
+    margin-top: 0;
+    margin-left: 0;
+    width: 3em;
+    height: 1.5em;
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+    border-radius: 1em;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+    background-position: 0.25em center;
+    background-repeat: no-repeat;
+    background-size: 1em 1em;
+    appearance: none;
+    padding: 0;
+}
+
+#add-modal .form-check-input[type="checkbox"]:checked,
+#edit-modal .form-check-input[type="checkbox"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    background-position: calc(100% - 0.25em) center;
+}
+
+#add-modal .form-check-input[type="checkbox"]:focus,
+#edit-modal .form-check-input[type="checkbox"]:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: #007bff;
+    outline: none;
+}
+
+#add-modal .form-check-input[type="checkbox"]:hover:not(:disabled),
+#edit-modal .form-check-input[type="checkbox"]:hover:not(:disabled) {
+    border-color: #007bff;
+}
+
+#add-modal .text-muted.small,
+#edit-modal .text-muted.small {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* Select2 Styling to Match Theme */
+#add-modal .select2-container,
+#edit-modal .select2-container {
+    width: 100% !important;
+}
+
+#add-modal .select2-container--default .select2-selection--single,
+#edit-modal .select2-container--default .select2-selection--single {
+    height: 38px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+#add-modal .select2-container--default .select2-selection--single .select2-selection__rendered,
+#edit-modal .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+    padding-left: 12px;
+    padding-right: 20px;
+    color: #495057;
+    font-size: 14px;
+}
+
+#add-modal .select2-container--default .select2-selection--single .select2-selection__arrow,
+#edit-modal .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+    right: 8px;
+}
+
+#add-modal .select2-container--default .select2-selection--single .select2-selection__arrow b,
+#edit-modal .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #6c757d transparent transparent transparent;
+    border-width: 5px 4px 0 4px;
+    margin-top: -2px;
+}
+
+#add-modal .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b,
+#edit-modal .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #6c757d transparent;
+    border-width: 0 4px 5px 4px;
+    margin-top: -3px;
+}
+
+#add-modal .select2-container--default.select2-container--focus .select2-selection--single,
+#edit-modal .select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+    outline: none;
+}
+
+#add-modal .select2-dropdown,
+#edit-modal .select2-dropdown {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 4px;
+}
+
+#add-modal .select2-results__option,
+#edit-modal .select2-results__option {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+#add-modal .select2-results__option--highlighted[aria-selected],
+#edit-modal .select2-results__option--highlighted[aria-selected] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#add-modal .select2-results__option[aria-selected=true],
+#edit-modal .select2-results__option[aria-selected=true] {
+    background-color: #e7f3ff;
+    color: #007bff;
+    font-weight: 500;
+}
+
+#add-modal .select2-search--dropdown .select2-search__field,
+#edit-modal .select2-search--dropdown .select2-search__field {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 14px;
+    margin: 8px;
+    width: calc(100% - 16px);
+}
+
+#add-modal .select2-search--dropdown .select2-search__field:focus,
+#edit-modal .select2-search--dropdown .select2-search__field:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+}
+
+#add-modal .select2-container--default .select2-selection--single:hover,
+#edit-modal .select2-container--default .select2-selection--single:hover {
+    border-color: #adb5bd;
+}
+
+/* Table Action Column Styling */
+.inline-flex {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.options-area {
+    position: relative;
+}
+
+.options-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    color: #6c757d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.options-btn:hover {
+    background: #fff;
+    color: #212529;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.translator {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.translator:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.flag-icon {
+    width: 32px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+/* Translate Page - Search Form */
+#search-form .input-group {
+    display: flex;
+}
+
+#search-form .form-control {
+    border-radius: 6px 0 0 6px;
+    border-right: none;
+}
+
+#search-form .primary-btn {
+    border-radius: 0 6px 6px 0;
+    white-space: nowrap;
+}
+
+/* Translate Page - Import Modals */
+#importModal .modal-dialog,
+#importFile .modal-dialog {
+    max-width: 600px;
+}
+
+#importModal .zModalTwo-body,
+#importFile .zModalTwo-body {
+    padding: 25px;
+}
+
+#importModal .form-group,
+#importFile .form-group {
+    margin-bottom: 1rem;
+}
+
+#importModal .form-label,
+#importFile .form-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+#importModal .form-control,
+#importFile .form-control,
+#importModal .select.form-control,
+#importFile .select.form-control {
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#importModal .form-control:focus,
+#importFile .form-control:focus,
+#importModal .select.form-control:focus,
+#importFile .select.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+}
+
+#importModal .btn-list,
+#importFile .btn-list {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#importModal .btn-list .primary-btn,
+#importFile .btn-list .primary-btn {
+    min-width: 100px;
+}
+
+#importModal .alert,
+#importFile .alert {
+    border-radius: 6px;
+    padding: 12px 16px;
+}
+
+/* Modal Close Button Styling */
+#importModal .btn-close,
+#importFile .btn-close {
+    opacity: 0.6;
+    padding: 8px;
+    background-size: 12px;
+}
+
+#importModal .btn-close:hover,
+#importFile .btn-close:hover {
+    opacity: 1;
+}
+
+#importModal .btn-close:focus,
+#importFile .btn-close:focus {
+    box-shadow: none;
+    opacity: 1;
+}

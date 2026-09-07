@@ -1,0 +1,73 @@
+/*===============================
+ #.gallery-area
+=================================*/
+#GalleryTabContent{
+    .single-card-image {
+        .image-wrapper{
+            img, video{
+                height: 100px;
+            }
+        }
+        .image-info{
+            // display: none;
+            .image-format{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+            }
+        }
+    }
+}
+.single-card-image {
+    position: relative;
+    border: 1px solid var(--border-color);
+    background-color: var(--color2);
+    padding: 1.5rem;
+
+    .image-wrapper{
+        img, video{
+            height: 300px;
+            width: 100%;
+            object-fit: cover;
+            @media (max-width: 991px) {
+                height: 200px;                
+            }
+            @media (max-width: 576px) {
+                height: 150px;                
+            }
+        }
+    }
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .image-format {
+        margin-bottom: 0;
+        margin-top: 1.5rem;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 24px;
+        color: var(--bColor);
+    }
+    .image-title-overlay{
+        margin-top: 20px;
+    }
+    .options-area {
+        position: absolute;
+        right: 2.5rem;
+        top: 2.5rem;
+        z-index: 1;
+
+        .options-btn {
+            background-color: var(--white);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            &:hover {
+                background-color: var(--primary-color);
+                border: 1px solid var(--primary-color);
+            }
+        }
+    }
+}

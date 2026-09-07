@@ -1,0 +1,77 @@
+/* The total progress gets shown by event listeners */
+#previews #total-progress {
+    opacity: 0;
+    height: 0;
+    transition: opacity 0.3s linear;
+}
+
+#previews .upload-completed {
+    height: 0;
+    opacity: 0;
+}
+
+#previews .dz-processing #total-progress {
+    opacity: 100;
+    height: 15px;
+    transition: opacity 0.3s linear;
+}
+
+#previews .file-upload.dz-success #total-progress {
+    opacity: 0;
+    height: 0;
+    transition: opacity 0.3s linear;
+}
+
+#previews .file-upload.dz-success .upload-completed {
+    opacity: 100;
+    height: 20px;
+}
+
+#previews .progress {
+    background-color: var(--bs-progress-bg) !important;
+}
+
+/* Hide the progress bar when finished */
+#previews .file-upload.dz-success .progress {
+    opacity: 0;
+    height: 0;
+    transition: opacity 0.3s linear;
+}
+
+#previews .file-upload.dz-error .progress {
+    display: none;
+}
+
+
+/* Hide the delete button initially */
+#previews .file-upload .delete-btn {
+    display: none;
+}
+
+/* Hide the start and cancel buttons and show the delete button */
+
+#previews .file-upload.dz-success .start,
+#previews .file-upload.dz-success .cancel {
+    display: none;
+}
+
+#previews .file-upload.dz-success .delete-btn {
+    display: block;
+}
+
+#previews .file-upload.dz-error .start-btn {
+    display: none;
+}
+
+.fs-7 {
+    font-size: 0.8rem;
+}
+
+.box-title-text{
+        color: #212121;
+        font-size: 18px;
+        font-weight: 500;
+}
+    .box-title-text:hover{
+        color: var(--primary-color);
+}

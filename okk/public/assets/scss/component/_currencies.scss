@@ -1,0 +1,209 @@
+/* -------------
+Currency Management Page Stylses (Copied from \currencies\index.blade.php in style tag)  
+------------- */
+
+/* Modal UI/UX Improvements */
+#add-modal .modal-dialog,
+#edit-modal .modal-dialog {
+    max-width: 600px;
+}
+
+#add-modal .zModalTwo-body,
+#edit-modal .zModalTwo-body {
+    padding: 25px;
+}
+
+#add-modal .form-group,
+#edit-modal .form-group {
+    margin-bottom: 1rem;
+}
+
+#add-modal .form-label,
+#edit-modal .form-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+#add-modal .form-control,
+#add-modal .select.form-control,
+#edit-modal .form-control,
+#edit-modal .select.form-control {
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#add-modal .form-control:focus,
+#add-modal .select.form-control:focus,
+#edit-modal .form-control:focus,
+#edit-modal .select.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+}
+
+#add-modal .btn-list,
+#edit-modal .btn-list {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#add-modal .btn-list .primary-btn,
+#edit-modal .btn-list .primary-btn {
+    min-width: 100px;
+}
+
+#add-modal .form-check,
+#edit-modal .form-check {
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+#add-modal .form-check-label,
+#edit-modal .form-check-label {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0;
+    user-select: none;
+    line-height: 1.5;
+}
+
+#add-modal .form-check-input[type="checkbox"],
+#edit-modal .form-check-input[type="checkbox"] {
+    margin-top: 0;
+    margin-left: 0;
+    width: 3em;
+    height: 1.5em;
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+    border-radius: 1em;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+    background-position: 0.25em center;
+    background-repeat: no-repeat;
+    background-size: 1em 1em;
+    appearance: none;
+    padding: 0;
+}
+
+#add-modal .form-check-input[type="checkbox"]:checked,
+#edit-modal .form-check-input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    background-position: calc(100% - 0.25em) center;
+}
+
+#add-modal .form-check-input[type="checkbox"]:focus,
+#edit-modal .form-check-input[type="checkbox"]:focus {
+    box-shadow: none;
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+#add-modal .form-check-input[type="checkbox"]:hover:not(:disabled),
+#edit-modal .form-check-input[type="checkbox"]:hover:not(:disabled) {
+    border-color: var(--primary-color);
+}
+
+/* Badge styling */
+.badge {
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.bg-success {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Select2 Styling to Match Theme */
+#add-modal .select2-container,
+#edit-modal .select2-container {
+    width: 100% !important;
+}
+
+#add-modal .select2-container--default .select2-selection--single,
+#edit-modal .select2-container--default .select2-selection--single {
+    height: 38px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background-color: var(--color2);
+    transition: all 0.3s ease;
+}
+
+#add-modal .select2-container--default .select2-selection--single .select2-selection__rendered,
+#edit-modal .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+    padding-left: 12px;
+    padding-right: 20px;
+    color: #495057;
+    font-size: 14px;
+}
+
+#add-modal .select2-container--default .select2-selection--single .select2-selection__arrow,
+#edit-modal .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+    right: 8px;
+}
+
+#add-modal .select2-container--default .select2-selection--single .select2-selection__arrow b,
+#edit-modal .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #6c757d transparent transparent transparent;
+    border-width: 5px 4px 0 4px;
+    margin-top: -2px;
+}
+
+#add-modal .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b,
+#edit-modal .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #6c757d transparent;
+    border-width: 0 4px 5px 4px;
+    margin-top: -3px;
+}
+
+#add-modal .select2-container--default.select2-container--focus .select2-selection--single,
+#edit-modal .select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+    outline: none;
+}
+
+.me-2 {
+    margin-right: .2rem !important;
+}
+
+.padding-left-increase {
+    padding-left: 24px !important;
+}
+
+.biling-submit-response-page {
+    .title {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        color: var(--bColor);
+        margin: 15px 0;
+    }
+
+    .subtitle {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 24px;
+        text-align: center;
+        color: var(--color1);
+    }
+}

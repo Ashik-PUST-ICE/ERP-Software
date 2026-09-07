@@ -1,0 +1,42 @@
+/*===============================
+ #.my-plan-area.scss
+=================================*/
+.my-plan-area {
+    .plan-head {
+        margin-bottom: 2.5rem;
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--black);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+    }
+
+    .plan-body {
+        h3 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--black);
+        }
+
+        .plan-features {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                font-size: 1.2rem;
+                font-weight: 400;
+                color: var(--black);
+                .package-badge{
+                    margin-bottom: 4px;
+                }
+            }
+        }
+    }
+}

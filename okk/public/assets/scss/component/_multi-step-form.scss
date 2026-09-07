@@ -1,0 +1,189 @@
+/*===============================
+ #.multi-step-form
+=================================*/
+
+.steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3.6rem;
+
+    .step {
+        text-align: center;
+
+
+        span {
+            width: 3.5rem;
+            height: 3.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--color2);
+            margin-bottom: 6px;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--bColor);
+            transition: $transition;
+        }
+
+        p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0;
+            color: var(--bColor);
+        }
+
+        &.active {
+            span {
+                background: var(--primary-color);
+                color: var(--white);
+            }
+        }
+
+        &.completed {
+            span {
+                background: #0FA958;
+                color: #fff;
+            }
+        }
+    }
+
+    .line {
+        position: relative;
+        width: 100%;
+        max-width: 6rem;
+        height: .6rem;
+        background: #F8F8F8;
+        border-radius: 3rem;
+        transform: translateY(15px);
+
+        &::before {
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 3rem;
+            transition: $transition;
+        }
+    }
+
+    .step.active+.line {
+        &::before {
+            width: 50%;
+            background-color: var(--primary-color);
+        }
+    }
+
+    .step.completed+.line {
+        &::before {
+            width: 100%;
+            background-color: #0FA958;
+        }
+    }
+}
+
+.form-step {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+
+    .form-step-top {
+        margin-bottom: 2.5rem;
+
+        h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--color1);
+        }
+    }
+
+    .create-post-left {
+        border: 1px solid var(--border-color);
+    }
+
+    .feed-wrap {
+        border: 1px solid var(--border-color);
+    }
+    .create-post-center {
+        border: 1px solid var(--border-color);
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 3rem;
+}
+
+.campaign-details {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.review-launch-area {
+    .single-review-campaing {
+        padding: 2rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--color2);
+        height: 100%;
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--bColor);
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--color1);
+        }
+
+        .account-area {
+            display: flex;
+            align-items: center;
+            grid-column-gap: .6rem;
+            font-size: 1.2rem;
+            color: var(--color1);
+
+            img {
+                width: 2.3rem;
+                height: 2.3rem;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+.ready-launch {
+    padding: 4rem 2rem;
+    background-color: #F0FDF4;
+    border: 1px solid #BBF7D0;
+
+    h3 {
+        margin-top: 2rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--color7);
+    }
+
+    p {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: var(--color7);
+    }
+}

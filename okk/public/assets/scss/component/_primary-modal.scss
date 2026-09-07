@@ -1,0 +1,90 @@
+/*===============================
+ #.primary-modal
+=================================*/
+.primary-modal {
+    &.modal {
+        .modal-content {
+            border-radius: 0;
+        }
+
+        .btn-close {
+            width: 2.4rem;
+            height: 2.4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: none;
+        }
+
+        .modal-header {
+            padding: 3rem;
+            border-bottom: 1px solid var(--border-color);
+
+            .modal-title {
+                font-size: 2.4rem;
+                font-weight: 500;
+                text-transform: capitalize;
+                color: var(--black);
+            }
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .modal-footer {
+            padding: 0 3rem 3rem 3rem;
+            border-top: 0;
+            justify-content: flex-start;
+        }
+    }
+}
+
+.tip-area {
+    display: flex;
+    grid-column-gap: .7rem;
+    padding: 2rem;
+    background-color: #FFFAEA;
+    border: 1px solid #FFC402;
+    margin-top: 2rem;
+
+    &.easy-tip {
+        background-color: #FFF1EB;
+        border: 1px solid #FF4F02;
+    }
+
+    .tip-info {
+        flex: 1;
+
+        h4 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--bColor);
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .primary-modal.modal .modal-header {
+        padding: 2rem;
+    }
+
+    .primary-modal.modal .modal-header .modal-title {
+        font-size: 1.8rem;
+    }
+
+    .primary-modal.modal .modal-body {
+        padding: 2rem;
+    }
+
+    .primary-modal.modal .modal-footer {
+        padding: 0 2rem 2rem 2rem;
+    }
+}

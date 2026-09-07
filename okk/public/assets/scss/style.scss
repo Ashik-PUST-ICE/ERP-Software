@@ -1,0 +1,202 @@
+/*
+------------- Table of content ----------------
+
+Template Name: PostBot  Responsive  HTML5 Template
+Template URI: https://postbot.com
+Description: PostBot  Responsive  HTML5 Template
+Author: Gobinda Sarkar
+Author URI: https://postbot.com
+Version: 1.0
+
+---------------------- common content ----------
+1.body reset content
+#.header-area
+#.auth-area
+#.sidebar-area
+#.section-title
+#.settings-page-area
+#.primary-form
+#.primary-table
+#.post-area
+#.primary-modal
+#.gallery-area
+#.multi-step-form
+#.calendar-area
+#.my-plan-area
+#.analytics
+#.platform-area
+#.view-accounts
+#.primry-tabs
+
+
+
+
+*/
+
+
+/*===============================
+ #.primry-tabs
+=================================*/
+
+// variable
+@import "variable/_variable.scss";
+
+// mixin
+@import "mixin/_mixin.scss";
+
+// body reset content
+@import "reset/_predefine.scss";
+
+// component content
+@import "component/header.scss";
+@import "component/auth-area";
+@import "component/sidebar-area";
+@import "component/section-title";
+@import "component/settings-page-area";
+@import "component/primary-form";
+@import "component/primary-table";
+@import "component/post-area";
+@import "component/primary-modal";
+@import "component/gallery-area";
+@import "component/multi-step-form";
+@import "component/calendar-area";
+@import "component/my-plan-area";
+@import "component/analytics";
+@import "component/platform-area";
+@import "component/view-accounts";
+@import "component/primry-tabs";
+@import "component/payment-modals";
+@import "component/package";
+@import "component/currencies";
+@import "component/landing-page";
+
+/* RTL Support */
+.direction-rtl {
+    .sidebar-area {
+        left: unset;
+        right: 0;
+        padding-right: 5px;
+
+        @media (max-width: 1024px) {
+            margin-right: -25rem;
+            margin-left: unset;
+
+            &.menuClose {
+                margin-right: 0;
+            }
+        }
+
+        .primary-menu li a::before {
+            left: unset;
+            right: -2rem;
+        }
+
+        .brand-logo {
+            padding-right: 10px;
+        }
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-right: 25rem;
+
+        @media (max-width: 1024px) {
+            margin-right: 0;
+        }
+    }
+
+    table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
+    table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
+        margin-left: .5em;
+        margin-right: 0;
+    }
+
+    // .dropdown .dropdown-menu li a, .dropdown .dropdown-menu li .campaign-delete-btn, .dropdown .dropdown-menu li .ticket-coversation-dlt-btn{
+    //     justify-content: end;
+    // }
+    .primary-modal.modal,
+    .modal {
+        .modal-header {
+            justify-content: space-between;
+
+            .btn-close {
+                margin-left: unset;
+            }
+        }
+    }
+
+    .nice-select .option {
+        text-align: right;
+    }
+
+    .nice-select:after {
+        right: unset;
+        left: 12px;
+    }
+
+    .primary-form .form-group .nice-select .current {
+        text-align: right;
+    }
+
+    .dtr-details li {
+        @media (max-width: 991px) {
+            .dtr-title {
+                text-align: right;
+            }
+        }
+    }
+
+    .settings-page-area .settings-page-left .settings-menu ul li a {
+        .fa-angle-right {
+            transform: rotate(180deg);
+        }
+    }
+
+    .permission-item {
+        .form-check {
+            display: flex;
+            align-items: center;
+            column-gap: 40px;
+        }
+    }
+
+    table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 0 solid transparent;
+        border-right: 10px solid rgb(0 0 0 / .5);
+    }
+
+    table.dataTable.dtr-inline.collapsed>tbody>tr.dtr-expanded>td.dtr-control:before {
+        border-top: 10px solid rgb(0 0 0 / .5);
+        border-left: 5px solid #fff0;
+        border-bottom: 0 solid #fff0;
+        border-right: 5px solid #fff0;
+    }
+
+    .content-wrapper {
+        .offcanvas {
+            .offcanvas-header {
+                .btn-close {
+                    margin-left: unset;
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+
+    .pricing-card .badge {
+        right: unset;
+        left: 15px;
+    }
+
+    .fc-daygrid-day-events .fc-daygrid-event-harness .fc-daygrid-dot-event .post {
+        text-align: right;
+        padding-right: 7px;
+    }
+
+    .sidebar-area .primary-menu li>ul {
+        padding-left: unset;
+        padding-right: 3.5rem;
+    }
+}
