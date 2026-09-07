@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin\HRM;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HRM\EmployeeRequest;
 use App\Http\Services\Admin\HRM\EmployeeService;
+use App\Models\HRM\Attendance;
 use App\Models\HRM\Department;
 use App\Models\HRM\Designation;
 use App\Models\HRM\HrmEmployee;
+use App\Models\HRM\LeaveRequest;
+use App\Models\HRM\Payroll;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
@@ -113,7 +116,7 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         $response = $this->employeeService->store($request);
-        if ($response->getData()->success) {
+        if ($response->getData()->status) {
             return redirect()->route('admin.hrm.employees.index')->with('success', $response->getData()->message);
         }
         return back()->with('error', $response->getData()->message);
@@ -156,7 +159,7 @@ class EmployeeController extends Controller
     {
         $request->merge(['id' => $id]);
         $response = $this->employeeService->store($request);
-        if ($response->getData()->success) {
+        if ($response->getData()->status) {
             return redirect()->route('admin.hrm.employees.index')->with('success', $response->getData()->message);
         }
         return back()->with('error', $response->getData()->message);
@@ -173,5 +176,115 @@ class EmployeeController extends Controller
             ->where('status', STATUS_ACTIVE)
             ->get(['id', 'name']);
         return response()->json($designations);
+    }
+
+    public function attendanceData(Request $request, $id)
+    {
+        $employee = HrmEmployee::findOrFail($id);
+
+        $query = Attendance::where('employee_id', $id);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        return datatables($query)
+            ->addColumn('date', function ($data) {
+                return $data->date ? \Carbon\Carbon::parse($data->date)->format('d M, Y') : 'N/A';
+            })
+            ->addColumn('check_in', function ($data) {
+                return $data->check_in ?? '—';
+            })
+            ->addColumn('check_out', function ($data) {
+                return $data->check_out ?? '—';
+            })
+            ->addColumn('status', function ($data) {
+                if ($data->status == ATTENDANCE_STATUS_PRESENT) {
+                    return '<span class="zBadge zBadge-complete">' . __("Present") . '</span>';
+                } elseif ($data->status == ATTENDANCE_STATUS_LATE) {
+                    return '<span class="zBadge zBadge-warning">' . __("Late") . '</span>';
+                } elseif ($data->status == ATTENDANCE_STATUS_ABSENT) {
+                    return '<span class="zBadge zBadge-deactive">' . __("Absent") . '</span>';
+                } elseif ($data->status == ATTENDANCE_STATUS_ON_LEAVE) {
+                    return '<span class="zBadge zBadge-warning">' . __("On Leave") . '</span>';
+                } else {
+                    return '<span class="zBadge zBadge-warning">' . ucfirst($data->status) . '</span>';
+                }
+            })
+            ->rawColumns(['status'])
+            ->orderByDesc('date')
+            ->make(true);
+    }
+
+    public function leavesData(Request $request, $id)
+    {
+        $employee = HrmEmployee::findOrFail($id);
+
+        $query = LeaveRequest::where('employee_id', $id);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        return datatables($query)
+            ->addColumn('leave_type', function ($data) {
+                return ucfirst($data->leave_type ?? 'N/A');
+            })
+            ->addColumn('start_date', function ($data) {
+                return $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('d M, Y') : 'N/A';
+            })
+            ->addColumn('end_date', function ($data) {
+                return $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('d M, Y') : 'N/A';
+            })
+            ->addColumn('days_count', function ($data) {
+                return $data->days_count ?? 0;
+            })
+            ->addColumn('status', function ($data) {
+                if ($data->status == LEAVE_STATUS_APPROVED) {
+                    return '<span class="zBadge zBadge-complete">' . __("Approved") . '</span>';
+                } elseif ($data->status == LEAVE_STATUS_REJECTED) {
+                    return '<span class="zBadge zBadge-deactive">' . __("Rejected") . '</span>';
+                } else {
+                    return '<span class="zBadge zBadge-warning">' . __("Pending") . '</span>';
+                }
+            })
+            ->rawColumns(['status'])
+            ->orderByDesc('id')
+            ->make(true);
+    }
+
+    public function payrollsData(Request $request, $id)
+    {
+        $employee = HrmEmployee::findOrFail($id);
+
+        $query = Payroll::where('employee_id', $id);
+
+        if ($request->filled('status')) {
+            $query->where('payment_status', $request->status);
+        }
+
+        return datatables($query)
+            ->addColumn('basic_salary', function ($data) {
+                return showPrice($data->basic_salary ?? 0);
+            })
+            ->addColumn('allowances', function ($data) {
+                return showPrice($data->allowances ?? 0);
+            })
+            ->addColumn('deductions', function ($data) {
+                return showPrice($data->deductions ?? 0);
+            })
+            ->addColumn('net_salary', function ($data) {
+                return showPrice($data->net_salary ?? 0);
+            })
+            ->addColumn('payment_status', function ($data) {
+                if (($data->payment_status ?? 0) == PAYMENT_STATUS_PAID) {
+                    return '<span class="zBadge zBadge-complete">' . __("Paid") . '</span>';
+                } else {
+                    return '<span class="zBadge zBadge-warning">' . __("Unpaid") . '</span>';
+                }
+            })
+            ->rawColumns(['payment_status'])
+            ->orderByDesc('payroll_month')
+            ->make(true);
     }
 }

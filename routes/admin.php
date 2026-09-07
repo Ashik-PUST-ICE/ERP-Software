@@ -162,6 +162,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::put('/{id}', [HrmEmployeeController::class, 'update'])->name('update');
             Route::delete('/{id}', [HrmEmployeeController::class, 'destroy'])->name('destroy');
             Route::get('/get-designations', [HrmEmployeeController::class, 'getDesignations'])->name('getDesignations');
+            Route::get('/{id}/attendance/data', [HrmEmployeeController::class, 'attendanceData'])->name('attendance.data');
+            Route::get('/{id}/leaves/data', [HrmEmployeeController::class, 'leavesData'])->name('leaves.data');
+            Route::get('/{id}/payrolls/data', [HrmEmployeeController::class, 'payrollsData'])->name('payrolls.data');
         });
 
         // Attendance

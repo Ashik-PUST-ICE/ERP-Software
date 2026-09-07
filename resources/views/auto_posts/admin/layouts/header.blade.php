@@ -56,7 +56,6 @@
 
     @include('auto_posts.admin.layouts.dynamic-color')
     @stack('style')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         {!! getOption('custom_css') !!}
     </style>

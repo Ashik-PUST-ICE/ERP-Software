@@ -193,11 +193,16 @@
             if (response.departmentStats && response.departmentStats.length) {
                 var deptHtml = '';
                 $.each(response.departmentStats, function (i, dept) {
-                    deptHtml += '<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">';
-                    deptHtml += '<div class="stats">';
-                    deptHtml += '<div class="stat-box w-100" style="max-width:100%;">';
-                    deptHtml += '<strong>' + dept.employees_count + '</strong> ' + dept.name;
-                    deptHtml += '</div></div></div>';
+                    deptHtml += '<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">';
+                    deptHtml += '<div class="card-box">';
+                    deptHtml += '<div class="card-info">';
+                    deptHtml += '<h2>' + dept.employees_count + '</h2>';
+                    deptHtml += '<h3>' + dept.name + '</h3>';
+                    deptHtml += '</div>';
+                    deptHtml += '<span class="card-status up">';
+                    deptHtml += '<span class="arrow"><i class="fa-solid fa-arrow-up"></i></span>';
+                    deptHtml += '</span>';
+                    deptHtml += '</div></div>';
                 });
                 $('#departmentStatsContainer').html(deptHtml);
             }

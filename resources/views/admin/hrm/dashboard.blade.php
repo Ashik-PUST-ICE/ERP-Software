@@ -285,13 +285,19 @@
                 <h3 class="title">{{ __('Department Headcount') }}</h3>
             </div>
             <div class="row gy-3" id="departmentStatsContainer">
-                @forelse($departmentStats as $dept)
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
-                    <div class="stats">
-                        <div class="stat-box w-100" style="max-width:100%;">
-                            <strong>{{ $dept->employees_count }}</strong>
-                            {{ $dept->name }}
+                @php
+                    $topDepartments = $departmentStats->sortByDesc('employees_count')->take(3);
+                @endphp
+                @forelse($topDepartments as $dept)
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+                    <div class="card-box">
+                        <div class="card-info">
+                            <h2>{{ $dept->employees_count }}</h2>
+                            <h3>{{ $dept->name }}</h3>
                         </div>
+                        <span class="card-status up">
+                            <span class="arrow"><i class="fa-solid fa-arrow-up"></i></span>
+                        </span>
                     </div>
                 </div>
                 @empty

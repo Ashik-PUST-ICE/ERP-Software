@@ -86,7 +86,7 @@ class LeaveController extends Controller
     public function store(LeaveFormRequest $request)
     {
         $response = $this->leaveService->store($request);
-        if ($response->getData()->success) {
+        if ($response->getData()->status) {
             return back()->with('success', $response->getData()->message);
         }
         return back()->with('error', $response->getData()->message);
@@ -95,7 +95,7 @@ class LeaveController extends Controller
     public function approve($id)
     {
         $response = $this->leaveService->approve($id);
-        if ($response->getData()->success) {
+        if ($response->getData()->status) {
             return back()->with('success', $response->getData()->message);
         }
         return back()->with('error', $response->getData()->message);
@@ -104,7 +104,7 @@ class LeaveController extends Controller
     public function reject(Request $request, $id)
     {
         $response = $this->leaveService->reject($id, $request->admin_note);
-        if ($response->getData()->success) {
+        if ($response->getData()->status) {
             return back()->with('success', $response->getData()->message);
         }
         return back()->with('error', $response->getData()->message);

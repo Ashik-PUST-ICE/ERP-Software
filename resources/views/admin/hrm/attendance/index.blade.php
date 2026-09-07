@@ -9,104 +9,65 @@
 
 <div class="settings-page-area">
     <div class="settings-page-right">
-        {{-- Stats Cards --}}
-        <div class="row gy-3 mb-4">
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Present') }}</p>
-                    <h3 class="text-success fw-700">{{ $stats['present'] }}</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Late') }}</p>
-                    <h3 class="text-warning fw-700">{{ $stats['late'] }}</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Absent') }}</p>
-                    <h3 class="text-danger fw-700">{{ $stats['absent'] }}</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('On Leave') }}</p>
-                    <h3 class="text-info fw-700">{{ $stats['on_leave'] }}</h3>
-                </div>
-            </div>
-        </div>
-
-        {{-- Controls --}}
         <div class="section-wrap">
-            <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
-                <form method="GET" action="{{ route('admin.hrm.attendance.index') }}" class="d-flex gap-2">
-                    <input type="date" class="form-control" name="date" value="{{ $date }}">
-                    <button type="submit" class="primary-btn">{{ __('Filter') }}</button>
-                </form>
-
-                <form method="POST" action="{{ route('admin.hrm.attendance.bulkMark') }}" class="d-flex gap-2 ms-auto">
-                    @csrf
-                    <input type="hidden" name="date" value="{{ $date }}">
-                    <select class="form-control" name="status" required>
-                        <option value="{{ ATTENDANCE_STATUS_PRESENT }}">{{ __('Present') }}</option>
-                        <option value="{{ ATTENDANCE_STATUS_LATE }}">{{ __('Late') }}</option>
-                        <option value="{{ ATTENDANCE_STATUS_ABSENT }}">{{ __('Absent') }}</option>
-                    </select>
-                    <button type="submit" class="primary-btn">{{ __('Bulk Mark') }}</button>
-                </form>
-            </div>
-
             <div class="table-waraper">
-                <table class="display primary-table dtr-inline">
+                {{-- Filters & Search --}}
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+                    <div class="search-input-wrap mb-0 flex-grow-1" style="max-width: 380px;">
+                        <label class="icon" for="searchData">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.625 10.625L11.6875 11.6875" stroke="#6E5858" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M11.9944 13.4762C11.5852 13.067 11.5852 12.4035 11.9944 11.9944C12.4035 11.5852 13.067 11.5852 13.4762 11.9944L14.9222 13.4405C15.3314 13.8497 15.3314 14.5131 14.9222 14.9222C14.5131 15.3314 13.8497 15.3314 13.4405 14.9222L11.9944 13.4762Z"
+                                    stroke="#6E5858" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M11.6872 6.72982C11.6872 3.99141 9.46726 1.77148 6.72884 1.77148C3.99043 1.77148 1.77051 3.99141 1.77051 6.72982C1.77051 9.46824 3.99043 11.6882 6.72884 11.6882C9.46726 11.6882 11.6872 9.46824 11.6872 6.72982Z"
+                                    stroke="#6E5858" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </label>
+                        <input type="text" class="search-input" id="searchData"
+                            placeholder="{{ __('Search Attendance...') }}" />
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 flex-wrap ms-auto">
+                        <div class="select-wrap" style="min-width: 170px;">
+                            <input type="date" class="form-control form-control sf-select wide" id="filterDate" value="{{ $date }}" style="height: 42px; border-radius: 10px; font-size: 13px;">
+                        </div>
+                        <div class="select-wrap" style="min-width: 170px;">
+                            <select class="form-select form-control sf-select wide" id="filterStatus" style="height: 42px; border-radius: 10px; font-size: 13px;">
+                                <option value="">{{ __('All Status') }}</option>
+                                <option value="{{ ATTENDANCE_STATUS_PRESENT }}">{{ __('Present') }}</option>
+                                <option value="{{ ATTENDANCE_STATUS_LATE }}">{{ __('Late') }}</option>
+                                <option value="{{ ATTENDANCE_STATUS_ABSENT }}">{{ __('Absent') }}</option>
+                                <option value="{{ ATTENDANCE_STATUS_ON_LEAVE }}">{{ __('On Leave') }}</option>
+                            </select>
+                        </div>
+                        <div class="select-wrap" style="min-width: 200px;">
+                            <select class="form-select form-control sf-select wide" id="filterDepartment" style="height: 42px; border-radius: 10px; font-size: 13px;">
+                                <option value="">{{ __('All Departments') }}</option>
+                                @foreach($departments as $dept)
+                                    <option value="{{ $dept->id }}">{{ $dept->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="attendance-data-route" value="{{ route('admin.hrm.attendance.index') }}">
+                <table class="display primary-table dataTable dtr-inline" id="attendanceDataTable">
                     <thead>
                         <tr>
-                            <th>{{ __('SL') }}</th>
-                            <th>{{ __('Employee') }}</th>
-                            <th>{{ __('Department') }}</th>
-                            <th>{{ __('Check In') }}</th>
-                            <th>{{ __('Check Out') }}</th>
-                            <th>{{ __('Status') }}</th>
-                            <th>{{ __('Action') }}</th>
+                            <th class="keep-show">{{ __("SL") }}</th>
+                            <th>{{ __("Employee Code") }}</th>
+                            <th>{{ __("Name") }}</th>
+                            <th>{{ __("Department") }}</th>
+                            <th>{{ __("Check In") }}</th>
+                            <th>{{ __("Check Out") }}</th>
+                            <th>{{ __("Status") }}</th>
+                            <th class="keep-show">{{ __("Action") }}</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($employees as $key => $employee)
-                        @php $att = $employee->attendances->first(); @endphp
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $employee->first_name }} {{ $employee->last_name }}<br>
-                                <small class="text-muted">{{ $employee->employee_code }}</small>
-                            </td>
-                            <td>{{ $employee->department->name ?? 'N/A' }}</td>
-                            <td>{{ $att->check_in ?? '—' }}</td>
-                            <td>{{ $att->check_out ?? '—' }}</td>
-                            <td>
-                                @if($att)
-                                    @if($att->status == ATTENDANCE_STATUS_PRESENT)
-                                        <span class="zBadge zBadge-complete">{{ __('Present') }}</span>
-                                    @elseif($att->status == ATTENDANCE_STATUS_LATE)
-                                        <span class="zBadge zBadge-warning">{{ __('Late') }}</span>
-                                    @elseif($att->status == ATTENDANCE_STATUS_ABSENT)
-                                        <span class="zBadge zBadge-deactive">{{ __('Absent') }}</span>
-                                    @elseif($att->status == ATTENDANCE_STATUS_ON_LEAVE)
-                                        <span class="zBadge zBadge-warning">{{ __('On Leave') }}</span>
-                                    @else
-                                        <span class="zBadge zBadge-warning">{{ ucfirst($att->status) }}</span>
-                                    @endif
-                                @else
-                                    <span class="zBadge zBadge-deactive">{{ __('Absent') }}</span>
-                                @endif
-                            </td>
-                            <td>
-                                <button type="button" class="primary-btn btn-sm"
-                                    onclick="markAttendance({{ $employee->id }}, '{{ $date }}')">
-                                    {{ __('Mark') }}
-                                </button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -172,11 +133,5 @@
 @endsection
 
 @push('script')
-<script>
-function markAttendance(empId, date) {
-    $('#att_employee_id').val(empId);
-    $('#att_date').val(date);
-    $('#mark-modal').modal('show');
-}
-</script>
+<script src="{{ asset('admin/js/hrm-attendance.js') }}"></script>
 @endpush

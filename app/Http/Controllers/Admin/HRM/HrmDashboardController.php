@@ -97,7 +97,10 @@ class HrmDashboardController extends Controller
 
         $departmentStats = Department::withCount(['employees' => function ($q) {
             $q->where('status', EMPLOYEE_STATUS_ACTIVE);
-        }])->where('status', EMPLOYEE_STATUS_ACTIVE)->get()
+        }])->where('status', EMPLOYEE_STATUS_ACTIVE)
+            ->orderByDesc('employees_count')
+            ->take(3)
+            ->get()
             ->map(function ($dept) {
                 return [
                     'name' => $dept->name,
