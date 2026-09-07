@@ -67,7 +67,10 @@ class DesignationController extends Controller
         }
 
         $data['title'] = __('Designations');
+        $data['activeHrm'] = 'active';
+        $data['activeDesignation'] = 'active';
         $data['activeDesignations'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['departments'] = Department::where('status', STATUS_ACTIVE)->get();
         return view('admin.hrm.designations.index', $data);

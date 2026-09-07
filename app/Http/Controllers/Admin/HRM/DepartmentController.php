@@ -63,7 +63,10 @@ class DepartmentController extends Controller
         }
 
         $data['title'] = __('Departments');
+        $data['activeHrm'] = 'active';
+        $data['activeDepartment'] = 'active';
         $data['activeDepartments'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         return view('admin.hrm.departments.index', $data);
     }

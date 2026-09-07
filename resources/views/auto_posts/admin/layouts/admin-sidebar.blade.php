@@ -24,47 +24,40 @@
                 </a>
             </li>
             <li class="divider"><span>{{ __('HRM Management') }}</span></li>
-            <li class="{{ isset($activeHrmDashboard) && $activeHrmDashboard == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.dashboard') }}">
-                    <i class="fa-solid fa-chart-line text-muted me-2"></i>
-                    {{ __('HRM Dashboard') }}
+            <li class="{{ (isset($activeHrm) || isset($showHrmMenu) || isset($showHRMMenu) || isset($activeHrmDashboard) || isset($activeDepartment) || isset($activeDepartments) || isset($activeDesignation) || isset($activeDesignations) || isset($activeEmployee) || isset($activeEmployees) || isset($activeAttendance) || isset($activeAttendances) || isset($activeLeave) || isset($activeLeaves) || isset($activePayroll) || isset($activePayrolls)) ? 'currrent-menu' : '' }}">
+                <a class="has-arrow" href="#hrm-menu" data-bs-toggle="collapse" role="button"
+                    aria-expanded="{{ (isset($activeHrm) || isset($showHrmMenu) || isset($showHRMMenu) || isset($activeHrmDashboard) || isset($activeDepartment) || isset($activeDepartments) || isset($activeDesignation) || isset($activeDesignations) || isset($activeEmployee) || isset($activeEmployees) || isset($activeAttendance) || isset($activeAttendances) || isset($activeLeave) || isset($activeLeaves) || isset($activePayroll) || isset($activePayrolls)) ? 'true' : 'false' }}"
+                    aria-controls="hrm-menu">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.33301 1.33301V3.99967M10.6663 1.33301V3.99967" stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 8C9.65685 8 11 6.65685 11 5C11 3.34315 9.65685 2 8 2C6.34315 2 5 3.34315 5 5C5 6.65685 6.34315 8 8 8Z" stroke="#808080" stroke-width="1.3"/>
+                        <path d="M2 14C2 11.2386 4.68629 9 8 9C11.3137 9 14 11.2386 14 14" stroke="#808080" stroke-width="1.3"/>
+                    </svg>
+                    {{ __('HRM Management') }}
                 </a>
-            </li>
-            <li class="{{ isset($activeDepartment) && $activeDepartment == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.departments.index') }}">
-                    <i class="fa-solid fa-sitemap text-muted me-2"></i>
-                    {{ __('Departments') }}
-                </a>
-            </li>
-            <li class="{{ isset($activeDesignation) && $activeDesignation == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.designations.index') }}">
-                    <i class="fa-solid fa-id-card text-muted me-2"></i>
-                    {{ __('Designations') }}
-                </a>
-            </li>
-            <li class="{{ isset($activeEmployee) && $activeEmployee == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.employees.index') }}">
-                    <i class="fa-solid fa-users text-muted me-2"></i>
-                    {{ __('Employees') }}
-                </a>
-            </li>
-            <li class="{{ isset($activeAttendance) && $activeAttendance == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.attendance.index') }}">
-                    <i class="fa-solid fa-clock text-muted me-2"></i>
-                    {{ __('Attendance') }}
-                </a>
-            </li>
-            <li class="{{ isset($activeLeave) && $activeLeave == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.leaves.index') }}">
-                    <i class="fa-solid fa-calendar-check text-muted me-2"></i>
-                    {{ __('Leave Requests') }}
-                </a>
-            </li>
-            <li class="{{ isset($activePayroll) && $activePayroll == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('admin.hrm.payroll.index') }}">
-                    <i class="fa-solid fa-money-check-dollar text-muted me-2"></i>
-                    {{ __('Payroll') }}
-                </a>
+                <ul id="hrm-menu" class="collapse {{ (isset($activeHrm) || isset($showHrmMenu) || isset($showHRMMenu) || isset($activeHrmDashboard) || isset($activeDepartment) || isset($activeDepartments) || isset($activeDesignation) || isset($activeDesignations) || isset($activeEmployee) || isset($activeEmployees) || isset($activeAttendance) || isset($activeAttendances) || isset($activeLeave) || isset($activeLeaves) || isset($activePayroll) || isset($activePayrolls)) ? 'show' : '' }}">
+                    <li class="{{ isset($activeHrmDashboard) && $activeHrmDashboard == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.dashboard') }}">{{ __('Dashboard') }}</a>
+                    </li>
+                    <li class="{{ (isset($activeDepartment) && $activeDepartment == 'active') || (isset($activeDepartments) && $activeDepartments == 'active') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.departments.index') }}">{{ __('Departments') }}</a>
+                    </li>
+                    <li class="{{ (isset($activeDesignation) && $activeDesignation == 'active') || (isset($activeDesignations) && $activeDesignations == 'active') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.designations.index') }}">{{ __('Designations') }}</a>
+                    </li>
+                    <li class="{{ (isset($activeEmployee) && $activeEmployee == 'active') || (isset($activeEmployees) && $activeEmployees == 'active') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.employees.index') }}">{{ __('Employees') }}</a>
+                    </li>
+                    <li class="{{ (isset($activeAttendance) && $activeAttendance == 'active') || (isset($activeAttendances) && $activeAttendances == 'active') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.attendance.index') }}">{{ __('Attendance') }}</a>
+                    </li>
+                    <li class="{{ (isset($activeLeave) && $activeLeave == 'active') || (isset($activeLeaves) && $activeLeaves == 'active') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.leaves.index') }}">{{ __('Leave Requests') }}</a>
+                    </li>
+                    <li class="{{ (isset($activePayroll) && $activePayroll == 'active') || (isset($activePayrolls) && $activePayrolls == 'active') ? 'active' : '' }}">
+                        <a href="{{ route('admin.hrm.payroll.index') }}">{{ __('Payroll') }}</a>
+                    </li>
+                </ul>
             </li>
 
             <li class="divider"><span>{{ __('Access Control') }}</span></li>

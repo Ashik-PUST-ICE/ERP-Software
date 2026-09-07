@@ -38,10 +38,17 @@ class HrmDashboardController extends Controller
             $q->where('status', EMPLOYEE_STATUS_ACTIVE);
         }])->where('status', EMPLOYEE_STATUS_ACTIVE)->get();
 
-        return view('admin.hrm.dashboard', compact(
+        $data = compact(
             'totalEmployees', 'todayPresent', 'todayLate', 'todayAbsent',
             'pendingLeaves', 'totalDepartments', 'monthlyPayroll',
             'recentEmployees', 'pendingLeaveList', 'departmentStats'
-        ));
+        );
+        $data['title'] = __('HRM Dashboard');
+        $data['activeHrm'] = 'active';
+        $data['showHrmMenu'] = 'show';
+        $data['showHRMMenu'] = 'show';
+        $data['activeHrmDashboard'] = 'active';
+
+        return view('admin.hrm.dashboard', $data);
     }
 }

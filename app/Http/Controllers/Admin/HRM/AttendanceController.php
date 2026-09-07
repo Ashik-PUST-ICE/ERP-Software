@@ -36,7 +36,10 @@ class AttendanceController extends Controller
         ];
 
         $data['title'] = __('Attendance');
+        $data['activeHrm'] = 'active';
         $data['activeAttendance'] = 'active';
+        $data['activeAttendances'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['employees'] = $employees;
         $data['date'] = $date;

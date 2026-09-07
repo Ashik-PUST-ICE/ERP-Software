@@ -66,7 +66,10 @@ class PayrollController extends Controller
         }
 
         $data['title'] = __('Payroll');
+        $data['activeHrm'] = 'active';
         $data['activePayroll'] = 'active';
+        $data['activePayrolls'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['month'] = $month;
         
@@ -85,27 +88,30 @@ class PayrollController extends Controller
     public function generate(PayrollRequest $request)
     {
         $response = $this->payrollService->generate($request->month);
-        if ($response->getData()->success) {
-            return back()->with('success', $response->getData()->message);
+        $data = $response->getData();
+        if ($data->status) {
+            return back()->with('success', $data->message);
         }
-        return back()->with('error', $response->getData()->message);
+        return back()->with('error', $data->message);
     }
 
     public function markPaid(PayrollPaymentRequest $request, $id)
     {
         $response = $this->payrollService->markPaid($id, $request->payment_method);
-        if ($response->getData()->success) {
-            return back()->with('success', $response->getData()->message);
+        $data = $response->getData();
+        if ($data->status) {
+            return back()->with('success', $data->message);
         }
-        return back()->with('error', $response->getData()->message);
+        return back()->with('error', $data->message);
     }
 
     public function bulkPay(PayrollRequest $request)
     {
         $response = $this->payrollService->bulkPay($request->month);
-        if ($response->getData()->success) {
-            return back()->with('success', $response->getData()->message);
+        $data = $response->getData();
+        if ($data->status) {
+            return back()->with('success', $data->message);
         }
-        return back()->with('error', $response->getData()->message);
+        return back()->with('error', $data->message);
     }
 }

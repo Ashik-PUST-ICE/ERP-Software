@@ -72,7 +72,10 @@ class LeaveController extends Controller
         }
 
         $data['title'] = __('Leave Requests');
+        $data['activeHrm'] = 'active';
+        $data['activeLeave'] = 'active';
         $data['activeLeaves'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['employees'] = HrmEmployee::where('status', EMPLOYEE_STATUS_ACTIVE)->get(['id', 'first_name', 'last_name']);
         $data['pendingCount'] = LeaveModel::where('status', LEAVE_STATUS_PENDING)->count();

@@ -89,7 +89,10 @@ class EmployeeController extends Controller
         }
 
         $data['title'] = __('Employees');
+        $data['activeHrm'] = 'active';
+        $data['activeEmployee'] = 'active';
         $data['activeEmployees'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['departments'] = Department::where('status', STATUS_ACTIVE)->get();
         return view('admin.hrm.employees.index', $data);
@@ -98,7 +101,10 @@ class EmployeeController extends Controller
     public function create()
     {
         $data['title'] = __('Add Employee');
+        $data['activeHrm'] = 'active';
+        $data['activeEmployee'] = 'active';
         $data['activeEmployees'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['departments'] = Department::where('status', STATUS_ACTIVE)->get();
         return view('admin.hrm.employees.create', $data);
@@ -116,7 +122,10 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $data['title'] = __('Employee Details');
+        $data['activeHrm'] = 'active';
+        $data['activeEmployee'] = 'active';
         $data['activeEmployees'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['employee'] = HrmEmployee::with(['department', 'designation', 'attendances' => function ($q) {
             $q->latest()->take(30);
@@ -132,7 +141,10 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $data['title'] = __('Edit Employee');
+        $data['activeHrm'] = 'active';
+        $data['activeEmployee'] = 'active';
         $data['activeEmployees'] = 'active';
+        $data['showHrmMenu'] = 'show';
         $data['showHRMMenu'] = 'show';
         $data['employee'] = HrmEmployee::findOrFail($id);
         $data['departments'] = Department::where('status', STATUS_ACTIVE)->get();
