@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Garments\GrnController;
 use App\Http\Controllers\Admin\Garments\StoreIssueController;
 use App\Http\Controllers\Admin\Garments\CuttingController;
 use App\Http\Controllers\Admin\Garments\SewingProductionController;
+use App\Http\Controllers\Admin\Garments\EfficiencyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -290,6 +291,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [SewingProductionController::class, 'edit'])->name('edit');
             Route::put('/{id}', [SewingProductionController::class, 'update'])->name('update');
             Route::delete('/{id}', [SewingProductionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('efficiency')->name('efficiency.')->group(function () {
+            Route::get('/', [EfficiencyController::class, 'index'])->name('index');
+            Route::post('/', [EfficiencyController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [EfficiencyController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [EfficiencyController::class, 'update'])->name('update');
+            Route::delete('/{id}', [EfficiencyController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -112,6 +112,14 @@ function garmentSewingStatuses(): array
     ];
 }
 
+function garmentEfficiencyStatuses(): array
+{
+    return [
+        GARMENT_EFFICIENCY_STATUS_RECORDED => ['Recorded', 'zBadge-primary'],
+        GARMENT_EFFICIENCY_STATUS_REVIEWED => ['Reviewed', 'zBadge-complete'],
+    ];
+}
+
 
 function country($input = null)
 {

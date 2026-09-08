@@ -102,6 +102,9 @@
                     <li class="{{ isset($activeGarmentSewing) && $activeGarmentSewing == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.sewing.index') }}">{{ __('Sewing Line Production') }}</a>
                     </li>
+                    <li class="{{ isset($activeGarmentEfficiency) && $activeGarmentEfficiency == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.efficiency.index') }}">{{ __('Operator / Machine Efficiency') }}</a>
+                    </li>
                 </ul>
             </li>
 

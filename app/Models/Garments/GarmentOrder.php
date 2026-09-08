@@ -68,4 +68,9 @@ class GarmentOrder extends Model
     {
         return $this->hasMany(SewingProduction::class, 'order_id');
     }
+
+    public function efficiencies(): HasMany
+    {
+        return $this->hasMany(Efficiency::class, 'order_id');
+    }
 }
