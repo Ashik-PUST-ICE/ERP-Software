@@ -1,0 +1,15 @@
+@extends('auto_posts.admin.layouts.admin')
+@push('title') {{ $title }} @endpush
+@section('content')
+<div class="section-title"><h2 class="title">{{ __($title) }}</h2><button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-issue-modal"><i class="fa fa-plus me-2"></i>{{ __('Issue Material') }}</button></div>
+<div class="settings-page-area"><div class="settings-page-right"><div class="section-wrap"><div class="table-waraper">
+<div class="search-input-wrap mb-3"><label class="icon" for="issueSearchData"><i class="fa-solid fa-magnifying-glass"></i></label><input type="text" class="search-input" id="issueSearchData" placeholder="{{ __('Search issue, material or section...') }}"></div>
+<input type="hidden" id="garment-issue-data-route" value="{{ route('admin.garments.issues.index') }}"><table class="display primary-table dataTable dtr-inline" id="garmentStoreIssueDataTable"><thead><tr><th class="keep-show">{{ __('SL') }}</th><th>{{ __('Issue No.') }}</th><th>{{ __('Material') }}</th><th>{{ __('Order') }}</th><th>{{ __('Net Qty') }}</th><th>{{ __('Issue Date') }}</th><th>{{ __('Status') }}</th><th class="keep-show">{{ __('Action') }}</th></tr></thead><tbody></tbody></table>
+</div></div></div></div>
+<div class="modal fade zModalTwo issue-modal" id="add-issue-modal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content">@include('admin.garments.issues.form', ['issue'=>null, 'materials'=>$materials, 'orders'=>$orders])</div></div></div>
+<div class="modal fade zModalTwo issue-modal" id="edit-issue-modal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content"></div></div></div>
+@endsection
+@push('style')<style>
+#add-issue-modal .modal-dialog,#edit-issue-modal .modal-dialog{max-width:900px;height:calc(100% - 2rem);min-height:0}#add-issue-modal .modal-content,#edit-issue-modal .modal-content{height:100%;max-height:100%;min-height:0;overflow:hidden}#add-issue-modal form,#edit-issue-modal form{display:flex;flex-direction:column;height:100%;min-height:0}#add-issue-modal .modal-body,#edit-issue-modal .modal-body{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:28px 30px 24px}.issue-form-section{border:1px solid #eee8e5;border-radius:8px;padding:18px;background:#fff}.issue-form-section+.issue-form-section{margin-top:16px}.issue-form-section-title{color:#1b1c17;font-size:15px;font-weight:600;margin:0 0 15px}.issue-form-section-title i{color:#ff4f02;margin-right:8px}.issue-modal .form-group{margin-bottom:0}.issue-modal .form-control{min-height:44px}.issue-modal textarea.form-control{min-height:82px;resize:vertical}.issue-modal-footer{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid #eee8e5;margin-top:22px;padding-top:18px}
+</style>@endpush
+@push('script')<script src="{{ asset('admin/js/garment-store-issues.js') }}"></script>@endpush

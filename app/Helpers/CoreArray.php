@@ -85,6 +85,15 @@ function garmentGrnStatuses(): array
     ];
 }
 
+function garmentIssueStatuses(): array
+{
+    return [
+        GARMENT_ISSUE_STATUS_ISSUED => ['Issued', 'zBadge-primary'],
+        GARMENT_ISSUE_STATUS_RETURNED => ['Returned', 'zBadge-complete'],
+        GARMENT_ISSUE_STATUS_PARTIAL_RETURN => ['Partially Returned', 'zBadge-warning'],
+    ];
+}
+
 
 function country($input = null)
 {
