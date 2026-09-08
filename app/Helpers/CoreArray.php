@@ -26,6 +26,17 @@ if(!function_exists("month")){
     }
 }
 
+function garmentOrderStatuses(): array
+{
+    return [
+        GARMENT_ORDER_STATUS_PENDING => ['Pending', 'zBadge-warning'],
+        GARMENT_ORDER_STATUS_CONFIRMED => ['Confirmed', 'zBadge-complete'],
+        GARMENT_ORDER_STATUS_IN_PRODUCTION => ['In Production', 'zBadge-primary'],
+        GARMENT_ORDER_STATUS_COMPLETED => ['Completed', 'zBadge-complete'],
+        GARMENT_ORDER_STATUS_CANCELLED => ['Cancelled', 'zBadge-deactive'],
+    ];
+}
+
 
 function country($input = null)
 {

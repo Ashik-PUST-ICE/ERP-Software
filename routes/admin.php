@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\HRM\AttendanceController as HrmAttendanceControll
 use App\Http\Controllers\Admin\HRM\LeaveController as HrmLeaveController;
 use App\Http\Controllers\Admin\HRM\PayrollController as HrmPayrollController;
 use App\Http\Controllers\Admin\Garments\BuyerController as GarmentBuyerController;
+use App\Http\Controllers\Admin\Garments\GarmentOrderController;
+use App\Http\Controllers\Admin\Garments\StyleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -191,8 +193,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::post('/bulk-pay', [HrmPayrollController::class, 'bulkPay'])->name('bulkPay');
         });
     });
-});
-    // Garments ERP - Buyer Management
+
+    // Garments ERP
     Route::prefix('garments')->name('garments.')->group(function () {
         Route::prefix('buyers')->name('buyers.')->group(function () {
             Route::get('/', [GarmentBuyerController::class, 'index'])->name('index');
@@ -201,4 +203,21 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::put('/{id}', [GarmentBuyerController::class, 'update'])->name('update');
             Route::delete('/{id}', [GarmentBuyerController::class, 'destroy'])->name('destroy');
         });
+
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/', [GarmentOrderController::class, 'index'])->name('index');
+            Route::post('/', [GarmentOrderController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [GarmentOrderController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [GarmentOrderController::class, 'update'])->name('update');
+            Route::delete('/{id}', [GarmentOrderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('styles')->name('styles.')->group(function () {
+            Route::get('/', [StyleController::class, 'index'])->name('index');
+            Route::post('/', [StyleController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [StyleController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [StyleController::class, 'update'])->name('update');
+            Route::delete('/{id}', [StyleController::class, 'destroy'])->name('destroy');
+        });
     });
+});

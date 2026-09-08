@@ -27,4 +27,9 @@ class Buyer extends Model
         'status',
         'notes',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(GarmentOrder::class);
+    }
 }

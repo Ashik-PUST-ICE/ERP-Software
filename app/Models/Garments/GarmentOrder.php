@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models\Garments;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class GarmentOrder extends Model
+{
+    use HasFactory;
+
+    protected $table = 'garment_orders';
+
+    protected $fillable = [
+        'buyer_id',
+        'style_id',
+        'order_number',
+        'product_description',
+        'quantity',
+        'unit_price',
+        'order_date',
+        'delivery_date',
+        'status',
+        'notes',
+    ];
+
+    protected $casts = [
+        'quantity' => 'integer',
+        'unit_price' => 'decimal:4',
+        'order_date' => 'date',
+        'delivery_date' => 'date',
+    ];
+
+    public function buyer(): BelongsTo
+    {
+        return $this->belongsTo(Buyer::class);
+    }
+
+    public function style(): BelongsTo
+    {
+        return $this->belongsTo(Style::class);
+    }
+}
