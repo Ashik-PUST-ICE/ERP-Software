@@ -58,6 +58,7 @@ use App\Http\Controllers\Admin\Garments\MerchandiserInsightsController;
 use App\Http\Controllers\Admin\Garments\ProductionAnalyticsController;
 use App\Http\Controllers\Admin\Garments\InvoiceController;
 use App\Http\Controllers\Admin\Garments\ApArController;
+use App\Http\Controllers\Admin\Garments\GarmentPaymentGatewayController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -423,12 +424,17 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/', [InvoiceController::class, 'index'])->name('index');
             Route::post('/', [InvoiceController::class, 'store'])->name('store');
             Route::post('/{id}/payments', [InvoiceController::class, 'payment'])->name('payments.store');
+            Route::post('/{id}/checkout', [InvoiceController::class, 'checkout'])->name('payments.checkout');
+            Route::match(['get', 'post'], '/{invoice}/payments/{payment}/callback', [InvoiceController::class, 'paymentCallback'])->name('payment-callback');
             Route::get('/{id}/edit', [InvoiceController::class, 'edit'])->name('edit');
             Route::put('/{id}', [InvoiceController::class, 'update'])->name('update');
             Route::delete('/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
             Route::get('/{id}/print', [InvoiceController::class, 'print'])->name('print');
         });
         Route::get('/ap-ar', [ApArController::class, 'index'])->name('ap-ar.index');
+        Route::get('/payment-gateways', [GarmentPaymentGatewayController::class, 'index'])->name('payment-gateways.index');
+        Route::post('/payment-gateways', [GarmentPaymentGatewayController::class, 'store'])->name('payment-gateways.store');
+        Route::delete('/payment-gateways/{id}', [GarmentPaymentGatewayController::class, 'destroy'])->name('payment-gateways.destroy');
         Route::prefix('profit-loss')->name('profit-loss.')->group(function () {
             Route::get('/', [OrderProfitLossController::class, 'index'])->name('index');
             Route::post('/', [OrderProfitLossController::class, 'store'])->name('store');

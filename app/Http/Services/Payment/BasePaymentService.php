@@ -42,8 +42,9 @@ class BasePaymentService
 
 
         $this->paymentMethod = $method;
-        $this->gateway = Gateway::where('slug', $this->paymentMethod)->first();
-        $this->gatewayCurrency = GatewayCurrency::where(['gateway_id' => $this->gateway->id, 'currency' => $this->currency])->firstOrFail();
+        $this->gateway = $object['gateway'] ?? Gateway::where('slug', $this->paymentMethod)->first();
+        $this->gatewayCurrency = $object['gateway_currency']
+            ?? GatewayCurrency::where(['gateway_id' => $this->gateway->id, 'currency' => $this->currency])->firstOrFail();
     }
 
     public function calculateAmount($amount)

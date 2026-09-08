@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Garments;
 use App\Http\Controllers\Controller;
 use App\Models\Garments\GarmentOrder;
 use App\Models\Garments\Invoice;
+use App\Models\Garments\GarmentPaymentGateway;
+use App\Http\Services\Payment\Payment as GatewayPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +18,10 @@ class InvoiceController extends Controller
             'title' => __('Commercial Invoices'),
             'orders' => GarmentOrder::with('buyer')->latest()->get(),
             'invoices' => Invoice::with('order.buyer')->latest('issue_date')->get(),
+            'gateways' => GarmentPaymentGateway::with('currencies')
+                ->where('status', STATUS_ACTIVE)
+                ->orderBy('title')
+                ->get(),
             'activeGarments' => 'active',
             'activeGarmentInvoices' => 'active',
             'showGarmentsMenu' => 'show',
@@ -118,12 +124,130 @@ class InvoiceController extends Controller
                 abort(422, __('Payment exceeds invoice outstanding balance.'));
             }
 
-            $invoice->payments()->create($data);
+            $invoice->payments()->create(array_merge($data, [
+                'gateway' => 'manual',
+                'gateway_status' => 'success',
+                'paid_at' => now(),
+            ]));
             $invoice->paid_amount = (float) $invoice->paid_amount + (float) $data['amount'];
             $invoice->status = (float) $invoice->paid_amount >= (float) $invoice->total_amount ? 'paid' : 'partially_paid';
             $invoice->save();
         });
 
         return redirect()->route('admin.garments.invoices.index')->with('success', __('Payment recorded successfully.'));
+    }
+
+    public function checkout(Request $request, $id)
+    {
+        $data = $request->validate([
+            'gateway' => ['required', 'string'],
+            'amount' => ['required', 'numeric', 'gt:0'],
+        ]);
+
+        $invoice = Invoice::findOrFail($id);
+        $gateway = GarmentPaymentGateway::where('slug', $data['gateway'])
+            ->where('status', STATUS_ACTIVE)
+            ->firstOrFail();
+        if (!$gateway->currencies()->where('currency', $invoice->currency)->exists()) {
+            abort(422, __('The selected gateway does not support the invoice currency.'));
+        }
+        $outstanding = (float) $invoice->total_amount - (float) $invoice->paid_amount;
+        if ((float) $data['amount'] > $outstanding) {
+            abort(422, __('Payment exceeds invoice outstanding balance.'));
+        }
+
+        $payment = $invoice->payments()->create([
+            'payment_date' => now()->toDateString(),
+            'amount' => $data['amount'],
+            'payment_method' => $data['gateway'],
+            'gateway' => $data['gateway'],
+            'gateway_status' => 'pending',
+        ]);
+
+        $gatewayPayment = new GatewayPayment($gateway->slug, [
+            'id' => $payment->id,
+            'currency' => $invoice->currency,
+            'gateway' => $gateway,
+            'gateway_currency' => $gateway->currencies()->where('currency', $invoice->currency)->first(),
+            'callback_url' => route('admin.garments.invoices.payment-callback', [
+                'invoice' => $invoice->id,
+                'payment' => $payment->id,
+            ]),
+        ]);
+        $result = $gatewayPayment->makePayment((float) $data['amount']);
+
+        if (!($result['success'] ?? false)) {
+            $payment->update([
+                'gateway_status' => 'failed',
+                'gateway_response' => ['message' => $result['message'] ?? __('Gateway payment failed.')],
+            ]);
+
+            return back()->with('error', $result['message'] ?? __('Gateway payment failed.'));
+        }
+
+        $payment->update([
+            'gateway_payment_id' => $result['payment_id'] ?? null,
+            'gateway_response' => $result,
+        ]);
+
+        return redirect()->away($result['redirect_url']);
+    }
+
+    public function paymentCallback(Request $request, $invoiceId, $paymentId)
+    {
+        $invoice = Invoice::findOrFail($invoiceId);
+        $payment = $invoice->payments()->whereKey($paymentId)->firstOrFail();
+
+        if ($payment->gateway_status === 'success') {
+            return redirect()->route('admin.garments.invoices.index')->with('success', __('Payment already confirmed.'));
+        }
+
+        $gateway = GarmentPaymentGateway::where('slug', $payment->gateway)->firstOrFail();
+        $gatewayPayment = new GatewayPayment($payment->gateway, [
+            'id' => $payment->id,
+            'currency' => $invoice->currency,
+            'gateway' => $gateway,
+            'gateway_currency' => $gateway->currencies()->where('currency', $invoice->currency)->firstOrFail(),
+            'callback_url' => route('admin.garments.invoices.payment-callback', [
+                'invoice' => $invoice->id,
+                'payment' => $payment->id,
+            ]),
+        ]);
+        $confirmation = $gatewayPayment->paymentConfirmation(
+            $payment->gateway_payment_id ?: $request->input('payment_id', $request->input('sessionkey')),
+            $request->input('PayerID', $request->input('payer_id'))
+        );
+
+        if (!($confirmation['success'] ?? false) || ($confirmation['data']['payment_status'] ?? null) !== 'success') {
+            $payment->update(['gateway_status' => 'failed', 'gateway_response' => $confirmation]);
+            return redirect()->route('admin.garments.invoices.index')->with('error', __('Payment could not be confirmed.'));
+        }
+
+        DB::transaction(function () use ($invoiceId, $paymentId, $confirmation) {
+            $invoice = Invoice::lockForUpdate()->findOrFail($invoiceId);
+            $payment = $invoice->payments()->lockForUpdate()->findOrFail($paymentId);
+            if ($payment->gateway_status === 'success') {
+                return;
+            }
+            $amount = (float) $payment->amount;
+            $outstanding = (float) $invoice->total_amount - (float) $invoice->paid_amount;
+            if ($amount > $outstanding) {
+                abort(422, __('Payment exceeds invoice outstanding balance.'));
+            }
+            $payment->update([
+                'gateway_status' => 'success',
+                'gateway_transaction_id' => $confirmation['data']['transaction_id'] ?? null,
+                'gateway_response' => $confirmation,
+                'paid_at' => now(),
+            ]);
+            $invoice->update([
+                'paid_amount' => (float) $invoice->paid_amount + $amount,
+                'status' => ((float) $invoice->paid_amount + $amount) >= (float) $invoice->total_amount
+                    ? 'paid'
+                    : 'partially_paid',
+            ]);
+        });
+
+        return redirect()->route('admin.garments.invoices.index')->with('success', __('Payment confirmed successfully.'));
     }
 }

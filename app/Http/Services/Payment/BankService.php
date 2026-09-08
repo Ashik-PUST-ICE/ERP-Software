@@ -10,13 +10,13 @@ class BankService extends BasePaymentService
     public function __construct($method, $object)
     {
         $this->paymentMethod = $method;
-        $this->gateway = Gateway::where('slug', $method)->first();
+        $this->gateway = $object['gateway'] ?? Gateway::where('slug', $method)->first();
         if (isset($object['callback_url'])) {
             $this->callbackUrl = $object['callback_url'];
         }
         $this->currency = $object['currency'] ?? 'USD';
         if ($this->gateway) {
-            $this->gatewayCurrency = GatewayCurrency::where([
+            $this->gatewayCurrency = $object['gateway_currency'] ?? GatewayCurrency::where([
                 'gateway_id' => $this->gateway->id,
                 'currency' => $this->currency
             ])->first();

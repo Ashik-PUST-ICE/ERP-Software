@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LanguageSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(GarmentPaymentGatewaySeeder::class);
         $this->call(HrmSeeder::class);
         $this->call(GarmentBuyerSeeder::class);
         // $this->call(TwitterConfigSeeder::class);

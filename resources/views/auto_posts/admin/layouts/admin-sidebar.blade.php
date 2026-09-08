@@ -62,7 +62,7 @@
 
             <li class="divider"><span>{{ __('Garments ERP') }}</span></li>
                     <li class="{{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-overview-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'true' : 'false' }}" aria-controls="garments-overview-menu">{{ __('Overview & Merchandising') }}</a>
+                        <a class="has-arrow" href="#garments-overview-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'true' : 'false' }}" aria-controls="garments-overview-menu"><i class="fa-solid fa-chart-line" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Overview & Merchandising') }}</a>
                         <ul id="garments-overview-menu" class="collapse {{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentDashboard) && $activeGarmentDashboard == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.dashboard') }}">{{ __('Garments Dashboard') }}</a></li>
                     <li class="{{ isset($activeGarmentAnalytics) && $activeGarmentAnalytics == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.analytics.index') }}">{{ __('Production Analytics') }}</a></li>
@@ -73,7 +73,7 @@
                         </ul>
                     </li>
                     <li class="{{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-planning-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'true' : 'false' }}" aria-controls="garments-planning-menu">{{ __('Order & Planning') }}</a>
+                        <a class="has-arrow" href="#garments-planning-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'true' : 'false' }}" aria-controls="garments-planning-menu"><i class="fa-solid fa-clipboard-list" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Order & Planning') }}</a>
                         <ul id="garments-planning-menu" class="collapse {{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentBuyers) && $activeGarmentBuyers == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.buyers.index') }}">{{ __('Buyers') }}</a>
@@ -97,7 +97,7 @@
                         </ul>
                     </li>
                     <li class="{{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-materials-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'true' : 'false' }}" aria-controls="garments-materials-menu">{{ __('Materials & Procurement') }}</a>
+                        <a class="has-arrow" href="#garments-materials-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'true' : 'false' }}" aria-controls="garments-materials-menu"><i class="fa-solid fa-boxes-stacked" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Materials & Procurement') }}</a>
                         <ul id="garments-materials-menu" class="collapse {{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentMaterials) && $activeGarmentMaterials == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.materials.index') }}">{{ __('Raw Material Inventory') }}</a>
@@ -115,7 +115,7 @@
                         </ul>
                     </li>
                     <li class="{{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-production-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'true' : 'false' }}" aria-controls="garments-production-menu">{{ __('Production Floor') }}</a>
+                        <a class="has-arrow" href="#garments-production-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'true' : 'false' }}" aria-controls="garments-production-menu"><i class="fa-solid fa-gears" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Production Floor') }}</a>
                         <ul id="garments-production-menu" class="collapse {{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentCutting) && $activeGarmentCutting == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.cutting.index') }}">{{ __('Cutting Section') }}</a>
@@ -129,7 +129,7 @@
                         </ul>
                     </li>
                     <li class="{{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-quality-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'true' : 'false' }}" aria-controls="garments-quality-menu">{{ __('Quality Control') }}</a>
+                        <a class="has-arrow" href="#garments-quality-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'true' : 'false' }}" aria-controls="garments-quality-menu"><i class="fa-solid fa-clipboard-check" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Quality Control') }}</a>
                         <ul id="garments-quality-menu" class="collapse {{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentInlineQc) && $activeGarmentInlineQc == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.inline-qc.index') }}">{{ __('Inline QC') }}</a>
@@ -142,9 +142,9 @@
                     </li>
                         </ul>
                     </li>
-                    <li class="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments) || isset($activeGarmentInvoices)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-export-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments) || isset($activeGarmentInvoices)) ? 'true' : 'false' }}" aria-controls="garments-export-menu">{{ __('Finishing & Export') }}</a>
-                        <ul id="garments-export-menu" class="collapse {{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments) || isset($activeGarmentInvoices)) ? 'show' : '' }}">
+                    <li class="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'currrent-menu' : '' }}">
+                                <a class="has-arrow" href="#garments-export-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'true' : 'false' }}" aria-controls="garments-export-menu"><i class="fa-solid fa-truck-fast" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Finishing & Export') }}</a>
+                                <ul id="garments-export-menu" class="collapse {{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentFinishing) && $activeGarmentFinishing == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.finishing.index') }}">{{ __('Finishing Entries') }}</a>
                     </li>
@@ -154,14 +154,13 @@
                     <li class="{{ isset($activeGarmentShipmentDocuments) && $activeGarmentShipmentDocuments == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.shipment-documents.index') }}">{{ __('Shipment & Export Documents') }}</a>
                     </li>
-                    <li class="{{ isset($activeGarmentInvoices) && $activeGarmentInvoices == 'active' ? 'active' : '' }}">
-                        <a href="{{ route('admin.garments.invoices.index') }}">{{ __('Commercial Invoices') }}</a>
-                    </li>
                         </ul>
                     </li>
-                    <li class="{{ (isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-finance-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr)) ? 'true' : 'false' }}" aria-controls="garments-finance-menu">{{ __('Finance') }}</a>
-                        <ul id="garments-finance-menu" class="collapse {{ (isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr)) ? 'show' : '' }}">
+                    <li class="{{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'currrent-menu' : '' }}">
+                        <a class="has-arrow" href="#garments-finance-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'true' : 'false' }}" aria-controls="garments-finance-menu"><i class="fa-solid fa-coins" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Finance & Payments') }}</a>
+                        <ul id="garments-finance-menu" class="collapse {{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'show' : '' }}">
+                    <li class="{{ isset($activeGarmentInvoices) && $activeGarmentInvoices == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.invoices.index') }}">{{ __('Commercial Invoices & Payments') }}</a></li>
+                    <li class="{{ isset($activeGarmentPaymentGateways) && $activeGarmentPaymentGateways == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.payment-gateways.index') }}">{{ __('Garments Payment Gateways') }}</a></li>
                     <li class="{{ isset($activeGarmentProfitLoss) && $activeGarmentProfitLoss == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.profit-loss.index') }}">{{ __('Order-wise Profit & Loss') }}</a>
                     </li>
@@ -170,14 +169,14 @@
                         </ul>
                     </li>
                     <li class="{{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-hr-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'true' : 'false' }}" aria-controls="garments-hr-menu">{{ __('HR Extension') }}</a>
+                        <a class="has-arrow" href="#garments-hr-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'true' : 'false' }}" aria-controls="garments-hr-menu"><i class="fa-solid fa-users-gear" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('HR Extension') }}</a>
                         <ul id="garments-hr-menu" class="collapse {{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentIncentive) && $activeGarmentIncentive == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.incentives.index') }}">{{ __('Piece-rate / Incentives') }}</a></li>
                     <li class="{{ isset($activeGarmentProductionAttendance) && $activeGarmentProductionAttendance == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.production-attendance.index') }}">{{ __('Production Attendance') }}</a></li>
                         </ul>
                     </li>
                     <li class="{{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'currrent-menu' : '' }}">
-                        <a class="has-arrow" href="#garments-system-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'true' : 'false' }}" aria-controls="garments-system-menu">{{ __('System & Compliance') }}</a>
+                        <a class="has-arrow" href="#garments-system-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'true' : 'false' }}" aria-controls="garments-system-menu"><i class="fa-solid fa-shield-halved" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('System & Compliance') }}</a>
                         <ul id="garments-system-menu" class="collapse {{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentNotifications) && $activeGarmentNotifications == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.notifications.index') }}">{{ __('Notifications') }}</a></li>
                     <li class="{{ isset($activeGarmentAuditLogs) && $activeGarmentAuditLogs == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.audit-logs.index') }}">{{ __('Audit Log') }}</a></li>
