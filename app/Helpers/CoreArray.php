@@ -67,6 +67,15 @@ function garmentPlanStatuses(): array
     ];
 }
 
+function garmentMaterialCategories(): array
+{
+    return [
+        'fabric' => 'Fabric',
+        'trims' => 'Trims',
+        'accessories' => 'Accessories',
+    ];
+}
+
 
 function country($input = null)
 {
