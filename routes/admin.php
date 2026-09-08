@@ -31,6 +31,8 @@ use App\Http\Controllers\Admin\Garments\EfficiencyController;
 use App\Http\Controllers\Admin\Garments\InlineQcController;
 use App\Http\Controllers\Admin\Garments\FinalInspectionController;
 use App\Http\Controllers\Admin\Garments\DefectRejectionController;
+use App\Http\Controllers\Admin\Garments\FinishingController;
+use App\Http\Controllers\Admin\Garments\PackingListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -324,6 +326,20 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [DefectRejectionController::class, 'edit'])->name('edit');
             Route::put('/{id}', [DefectRejectionController::class, 'update'])->name('update');
             Route::delete('/{id}', [DefectRejectionController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('finishing')->name('finishing.')->group(function () {
+            Route::get('/', [FinishingController::class, 'index'])->name('index');
+            Route::post('/', [FinishingController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [FinishingController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [FinishingController::class, 'update'])->name('update');
+            Route::delete('/{id}', [FinishingController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('packing-lists')->name('packing-lists.')->group(function () {
+            Route::get('/', [PackingListController::class, 'index'])->name('index');
+            Route::post('/', [PackingListController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [PackingListController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [PackingListController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PackingListController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -135,6 +135,24 @@ function garmentDefectStatuses(): array
     return [GARMENT_DEFECT_STATUS_OPEN => ['Open', 'zBadge-warning'], GARMENT_DEFECT_STATUS_ACTION_TAKEN => ['Action Taken', 'zBadge-primary'], GARMENT_DEFECT_STATUS_CLOSED => ['Closed', 'zBadge-complete']];
 }
 
+function garmentFinishingStatuses(): array
+{
+    return [
+        GARMENT_FINISHING_STATUS_PENDING => ['Pending', 'zBadge-warning'],
+        GARMENT_FINISHING_STATUS_IN_PROGRESS => ['In Progress', 'zBadge-primary'],
+        GARMENT_FINISHING_STATUS_COMPLETED => ['Completed', 'zBadge-complete'],
+        GARMENT_FINISHING_STATUS_HOLD => ['Hold', 'zBadge-deactive'],
+    ];
+}
+
+function garmentPackingStatuses(): array
+{
+    return [
+        GARMENT_PACKING_STATUS_DRAFT => ['Draft', 'zBadge-warning'],
+        GARMENT_PACKING_STATUS_PACKED => ['Packed', 'zBadge-complete'],
+    ];
+}
+
 
 function country($input = null)
 {
@@ -1025,5 +1043,4 @@ if (!function_exists("gatewaySettings")) {
         return json_encode($settings);
     }
 }
-
 

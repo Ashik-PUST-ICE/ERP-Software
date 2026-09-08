@@ -1,7 +1,58 @@
 @extends('auto_posts.admin.layouts.admin')
 @push('title') {{ $title }} @endpush
 @section('content')
-<div class="section-title"><h2 class="title">{{ __($title) }}</h2><button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-final-inspection-modal"><i class="fa fa-plus me-2"></i>{{ __('Add Inspection') }}</button></div>
-<div class="settings-page-area"><div class="settings-page-right"><div class="section-wrap"><div class="table-waraper"><div class="search-input-wrap mb-3"><label class="icon" for="finalInspectionSearch"><i class="fa-solid fa-magnifying-glass"></i></label><input class="search-input" id="finalInspectionSearch" placeholder="{{ __('Search lot or order...') }}"></div><input type="hidden" id="final-inspection-route" value="{{ route('admin.garments.final-inspections.index') }}"><table class="display primary-table dataTable dtr-inline" id="garmentFinalInspectionDataTable"><thead><tr><th class="keep-show">{{ __('SL') }}</th><th>{{ __('Order') }}</th><th>{{ __('Lot') }}</th><th>{{ __('Sample / Lot') }}</th><th>{{ __('Date') }}</th><th>{{ __('Result') }}</th><th class="keep-show">{{ __('Action') }}</th></tr></thead><tbody></tbody></table></div></div></div></div>
-<div class="modal fade zModalTwo" id="add-final-inspection-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content">@include('admin.garments.final-inspections.form',['inspection'=>null,'orders'=>$orders])</div></div></div><div class="modal fade zModalTwo" id="edit-final-inspection-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content zModalTwo-content"></div></div></div>@endsection
-@push('script')<script src="{{ asset('admin/js/garment-quality.js') }}"></script>@endpush
+<div class="section-title">
+    <h2 class="title">{{ __($title) }}</h2>
+    <button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-final-inspection-modal">
+        <i class="fa fa-plus me-2"></i>{{ __('Add Inspection') }}
+    </button>
+</div>
+<div class="settings-page-area">
+    <div class="settings-page-right">
+        <div class="section-wrap">
+            <div class="table-waraper">
+                <div class="search-input-wrap mb-3">
+                    <label class="icon" for="finalInspectionSearch">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </label>
+                    <input class="search-input" id="finalInspectionSearch" placeholder="{{ __('Search lot or order...') }}">
+                </div>
+                <input type="hidden" id="final-inspection-route" value="{{ route('admin.garments.final-inspections.index') }}">
+                <table class="display primary-table dataTable dtr-inline" id="garmentFinalInspectionDataTable">
+                    <thead>
+                        <tr>
+                            <th class="keep-show">{{ __('SL') }}</th>
+                            <th>{{ __('Order') }}</th>
+                            <th>{{ __('Lot') }}</th>
+                            <th>{{ __('Sample / Lot') }}</th>
+                            <th>{{ __('Date') }}</th>
+                            <th>{{ __('Result') }}</th>
+                            <th class="keep-show">{{ __('Action') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade zModalTwo" id="add-final-inspection-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content zModalTwo-content">
+            @include('admin.garments.final-inspections.form',['inspection'=>null,'orders'=>$orders])
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade zModalTwo" id="edit-final-inspection-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content zModalTwo-content"></div>
+    </div>
+</div>
+@endsection
+@push('script')
+<script src="{{ asset('admin/js/garment-quality.js') }}"></script>
+@endpush

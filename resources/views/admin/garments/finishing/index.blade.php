@@ -1,0 +1,8 @@
+@extends('auto_posts.admin.layouts.admin')
+@push('title') {{ $title }} @endpush
+@section('content')
+<div class="section-title"><h2 class="title">{{ __($title) }}</h2><button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-finishing-modal"><i class="fa fa-plus me-2"></i>{{ __('Add Finishing Entry') }}</button></div>
+<div class="settings-page-area"><div class="settings-page-right"><div class="section-wrap"><div class="table-waraper"><div class="search-input-wrap mb-3"><label class="icon" for="finishingSearch"><i class="fa-solid fa-magnifying-glass"></i></label><input class="search-input" id="finishingSearch" placeholder="{{ __('Search order...') }}"></div><input type="hidden" id="finishing-route" value="{{ route('admin.garments.finishing.index') }}"><table class="display primary-table dataTable dtr-inline" id="garmentFinishingDataTable"><thead><tr><th class="keep-show">{{ __('SL') }}</th><th>{{ __('Order') }}</th><th>{{ __('Passed / Received') }}</th><th>{{ __('Date') }}</th><th>{{ __('Status') }}</th><th class="keep-show">{{ __('Action') }}</th></tr></thead><tbody></tbody></table></div></div></div></div>
+<div class="modal fade zModalTwo" id="add-finishing-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content">@include('admin.garments.finishing.form',['finishing'=>null,'orders'=>$orders])</div></div></div><div class="modal fade zModalTwo" id="edit-finishing-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content zModalTwo-content"></div></div></div>
+@endsection
+@push('script')<script src="{{ asset('admin/js/garment-finishing.js') }}"></script>@endpush
