@@ -37,6 +37,16 @@ use App\Http\Controllers\Admin\Garments\ShipmentDocumentController;
 use App\Http\Controllers\Admin\Garments\OrderProfitLossController;
 use App\Http\Controllers\Admin\Garments\AccountingEntryController;
 use App\Http\Controllers\Admin\Garments\IncentiveController;
+use App\Http\Controllers\Admin\Garments\ProductionAttendanceController;
+use App\Http\Controllers\Admin\Garments\GarmentDashboardController;
+use App\Http\Controllers\Admin\Garments\GarmentNotificationController;
+use App\Http\Controllers\Admin\Garments\SupplierController;
+use App\Http\Controllers\Admin\Garments\BuyerPortalController;
+use App\Http\Controllers\Admin\Garments\PurchaseOrderController;
+use App\Http\Controllers\Admin\Garments\ShipmentTrackingController;
+use App\Http\Controllers\Admin\Garments\WarehouseController;
+use App\Http\Controllers\Admin\Garments\AuditLogController;
+use App\Http\Controllers\Admin\Garments\ProductionAnalyticsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -214,6 +224,25 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     // Garments ERP
     Route::prefix('garments')->name('garments.')->group(function () {
+        Route::get('/dashboard', [GarmentDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
+        Route::get('/buyer-portal', [BuyerPortalController::class, 'index'])->name('buyer-portal.index');
+        Route::get('/warehouses', [WarehouseController::class, 'index'])->name('warehouses.index');
+        Route::post('/warehouses', [WarehouseController::class, 'store'])->name('warehouses.store');
+        Route::get('/shipment-documents/{id}/tracking', [ShipmentTrackingController::class, 'show'])->name('shipment-documents.tracking');
+        Route::post('/shipment-documents/{id}/tracking', [ShipmentTrackingController::class, 'store'])->name('shipment-documents.tracking.store');
+        Route::prefix('purchase-orders')->name('purchase-orders.')->group(function () {
+            Route::get('/', [PurchaseOrderController::class, 'index'])->name('index');
+            Route::post('/', [PurchaseOrderController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [PurchaseOrderController::class, 'update'])->name('update');
+            Route::delete('/{id}', [PurchaseOrderController::class, 'destroy'])->name('destroy');
+        });
+        Route::get('/analytics', [ProductionAnalyticsController::class, 'index'])->name('analytics.index');
+        Route::get('/analytics/data', [ProductionAnalyticsController::class, 'data'])->name('analytics.data');
+        Route::get('/notifications', [GarmentNotificationController::class, 'index'])->name('notifications.index');
+        Route::post('/notifications/{id}/read', [GarmentNotificationController::class, 'markRead'])->name('notifications.read');
+        Route::post('/notifications/read-all', [GarmentNotificationController::class, 'markAllRead'])->name('notifications.read-all');
         Route::prefix('buyers')->name('buyers.')->group(function () {
             Route::get('/', [GarmentBuyerController::class, 'index'])->name('index');
             Route::post('/', [GarmentBuyerController::class, 'store'])->name('store');
@@ -265,9 +294,17 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::prefix('materials')->name('materials.')->group(function () {
             Route::get('/', [MaterialController::class, 'index'])->name('index');
             Route::post('/', [MaterialController::class, 'store'])->name('store');
+            Route::get('/{id}/label', [MaterialController::class, 'label'])->name('label');
             Route::get('/{id}/edit', [MaterialController::class, 'edit'])->name('edit');
             Route::put('/{id}', [MaterialController::class, 'update'])->name('update');
             Route::delete('/{id}', [MaterialController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('suppliers')->name('suppliers.')->group(function () {
+            Route::get('/', [SupplierController::class, 'index'])->name('index');
+            Route::post('/', [SupplierController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [SupplierController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [SupplierController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('grns')->name('grns.')->group(function () {
@@ -372,6 +409,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [IncentiveController::class, 'edit'])->name('edit');
             Route::put('/{id}', [IncentiveController::class, 'update'])->name('update');
             Route::delete('/{id}', [IncentiveController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('production-attendance')->name('production-attendance.')->group(function () {
+            Route::get('/', [ProductionAttendanceController::class, 'index'])->name('index');
+            Route::post('/', [ProductionAttendanceController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [ProductionAttendanceController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [ProductionAttendanceController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductionAttendanceController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -17,6 +17,7 @@ class GrnRequest extends FormRequest
 
         return [
             'material_id' => 'required|exists:garment_materials,id',
+            'purchase_order_id' => 'nullable|exists:garment_purchase_orders,id',
             'grn_number' => 'required|string|max:60|unique:garment_grns,grn_number,' . $id,
             'supplier_name' => 'required|string|max:150',
             'purchase_reference' => 'nullable|string|max:100',

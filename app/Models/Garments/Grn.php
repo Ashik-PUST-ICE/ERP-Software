@@ -13,7 +13,7 @@ class Grn extends Model
     protected $table = 'garment_grns';
 
     protected $fillable = [
-        'material_id', 'grn_number', 'supplier_name', 'purchase_reference',
+        'material_id', 'purchase_order_id', 'grn_number', 'supplier_name', 'purchase_reference',
         'received_date', 'ordered_quantity', 'received_quantity', 'rejected_quantity',
         'accepted_quantity', 'unit_cost', 'status', 'notes',
     ];
@@ -30,5 +30,10 @@ class Grn extends Model
     public function material(): BelongsTo
     {
         return $this->belongsTo(Material::class, 'material_id');
+    }
+
+    public function purchaseOrder(): BelongsTo
+    {
+        return $this->belongsTo(PurchaseOrder::class);
     }
 }

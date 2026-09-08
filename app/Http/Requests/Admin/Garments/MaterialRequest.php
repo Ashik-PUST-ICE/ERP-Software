@@ -17,6 +17,7 @@ class MaterialRequest extends FormRequest
 
         return [
             'item_code' => 'required|string|max:50|unique:garment_materials,item_code,' . $id,
+            'barcode' => 'nullable|string|max:100|unique:garment_materials,barcode,' . $id,
             'item_name' => 'required|string|max:150',
             'category' => 'required|in:' . implode(',', array_keys(garmentMaterialCategories())),
             'unit' => 'required|string|max:30',

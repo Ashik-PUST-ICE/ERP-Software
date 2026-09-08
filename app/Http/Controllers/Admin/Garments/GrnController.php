@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Garments\GrnRequest;
 use App\Http\Services\Admin\Garments\GrnService;
 use App\Models\Garments\Grn;
 use App\Models\Garments\Material;
+use App\Models\Garments\PurchaseOrder;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
@@ -52,6 +53,7 @@ class GrnController extends Controller
         return view('admin.garments.grns.index', [
             'title' => __('Goods Received Notes'),
             'materials' => Material::where('status', STATUS_ACTIVE)->orderBy('item_name')->get(),
+            'purchaseOrders' => PurchaseOrder::where('status', '!=', STATUS_CANCELLED)->latest()->get(),
             'activeGarments' => 'active',
             'activeGarmentGrns' => 'active',
             'showGarmentsMenu' => 'show',
@@ -67,7 +69,8 @@ class GrnController extends Controller
     {
         $grn = Grn::findOrFail($id);
         $materials = Material::where('status', STATUS_ACTIVE)->orderBy('item_name')->get();
-        return view('admin.garments.grns.form', compact('grn', 'materials'));
+        $purchaseOrders = PurchaseOrder::where('status', '!=', STATUS_CANCELLED)->latest()->get();
+        return view('admin.garments.grns.form', compact('grn', 'materials', 'purchaseOrders'));
     }
 
     public function update(GrnRequest $request, $id)

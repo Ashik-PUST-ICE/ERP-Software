@@ -12,7 +12,7 @@ class Material extends Model
     protected $table = 'garment_materials';
 
     protected $fillable = [
-        'item_code', 'item_name', 'category', 'unit', 'opening_stock',
+        'item_code', 'barcode', 'item_name', 'category', 'unit', 'opening_stock', 'warehouse_id',
         'current_stock', 'reorder_level', 'warehouse', 'location', 'status', 'notes',
     ];
 

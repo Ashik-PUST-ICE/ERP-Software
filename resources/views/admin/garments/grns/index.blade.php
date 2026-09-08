@@ -12,7 +12,7 @@
     </tr></thead><tbody></tbody></table>
 </div></div></div></div>
 
-<div class="modal fade zModalTwo grn-modal" id="add-grn-modal" aria-hidden="true" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content">@include('admin.garments.grns.form', ['grn' => null, 'materials' => $materials])</div></div></div>
+<div class="modal fade zModalTwo grn-modal" id="add-grn-modal" aria-hidden="true" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content">@include('admin.garments.grns.form', ['grn' => null, 'materials' => $materials, 'purchaseOrders' => $purchaseOrders])</div></div></div>
 <div class="modal fade zModalTwo grn-modal" id="edit-grn-modal" aria-hidden="true" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content"></div></div></div>
 @endsection
 

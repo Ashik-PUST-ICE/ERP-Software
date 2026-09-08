@@ -8,6 +8,7 @@ use App\Http\Services\Admin\Garments\MaterialService;
 use App\Models\Garments\Material;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MaterialController extends Controller
 {
@@ -45,6 +46,7 @@ class MaterialController extends Controller
                     return '<div class="inline-flex"><div class="dropdown options-area">
                         <a class="options-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="' . route('admin.garments.materials.label', $material->id) . '" target="_blank">' . __('Print Barcode / QR') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.materials.edit', $material->id) . '\', \'#edit-material-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.materials.destroy', $material->id) . '\', \'garmentMaterialDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
@@ -64,7 +66,18 @@ class MaterialController extends Controller
 
     public function store(MaterialRequest $request)
     {
+        if (!$request->filled('barcode')) {
+            $request->merge(['barcode' => 'MAT-' . strtoupper(Str::random(10))]);
+        }
+
         return $this->materialService->store($request);
+    }
+
+    public function label($id)
+    {
+        return view('admin.garments.materials.label', [
+            'material' => Material::findOrFail($id),
+        ]);
     }
 
     public function edit($id)
@@ -76,6 +89,9 @@ class MaterialController extends Controller
     public function update(MaterialRequest $request, $id)
     {
         $request->merge(['id' => $id]);
+        if (!$request->filled('barcode')) {
+            $request->merge(['barcode' => 'MAT-' . strtoupper(Str::random(10))]);
+        }
         return $this->materialService->store($request);
     }
 
