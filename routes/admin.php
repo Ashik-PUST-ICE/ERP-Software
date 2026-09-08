@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\HRM\EmployeeController as HrmEmployeeController;
 use App\Http\Controllers\Admin\HRM\AttendanceController as HrmAttendanceController;
 use App\Http\Controllers\Admin\HRM\LeaveController as HrmLeaveController;
 use App\Http\Controllers\Admin\HRM\PayrollController as HrmPayrollController;
+use App\Http\Controllers\Admin\Garments\BuyerController as GarmentBuyerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -191,3 +192,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         });
     });
 });
+    // Garments ERP - Buyer Management
+    Route::prefix('garments')->name('garments.')->group(function () {
+        Route::prefix('buyers')->name('buyers.')->group(function () {
+            Route::get('/', [GarmentBuyerController::class, 'index'])->name('index');
+            Route::post('/', [GarmentBuyerController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [GarmentBuyerController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [GarmentBuyerController::class, 'update'])->name('update');
+            Route::delete('/{id}', [GarmentBuyerController::class, 'destroy'])->name('destroy');
+        });
+    });

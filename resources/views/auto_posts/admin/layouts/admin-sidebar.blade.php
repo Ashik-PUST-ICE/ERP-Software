@@ -60,6 +60,21 @@
                 </ul>
             </li>
 
+            <li class="divider"><span>{{ __('Garments ERP') }}</span></li>
+            <li class="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers)) ? 'currrent-menu' : '' }}">
+                <a class="has-arrow" href="#garments-menu" data-bs-toggle="collapse" role="button"
+                    aria-expanded="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers)) ? 'true' : 'false' }}"
+                    aria-controls="garments-menu">
+                    <i class="fa-solid fa-shirt" style="width: 16px; text-align: center; color: #808080;"></i>
+                    {{ __('Garments ERP') }}
+                </a>
+                <ul id="garments-menu" class="collapse {{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers)) ? 'show' : '' }}">
+                    <li class="{{ isset($activeGarmentBuyers) && $activeGarmentBuyers == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.buyers.index') }}">{{ __('Buyers') }}</a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="divider"><span>{{ __('Access Control') }}</span></li>
             <li class="{{ isset($activeRoles) && $activeRoles == 'active' ? 'currrent-menu' : '' }}">
                 <a class="has-arrow" href="#roles-menu" data-bs-toggle="collapse" role="button"
