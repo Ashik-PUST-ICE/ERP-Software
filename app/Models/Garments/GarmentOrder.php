@@ -83,4 +83,14 @@ class GarmentOrder extends Model
     {
         return $this->hasMany(PackingList::class, 'order_id');
     }
+
+    public function shipmentDocuments(): HasMany
+    {
+        return $this->hasMany(ShipmentDocument::class, 'order_id');
+    }
+
+    public function profitLoss(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(OrderProfitLoss::class, 'order_id');
+    }
 }

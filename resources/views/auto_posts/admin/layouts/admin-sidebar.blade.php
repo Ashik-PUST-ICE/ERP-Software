@@ -120,6 +120,14 @@
                     <li class="{{ isset($activeGarmentPacking) && $activeGarmentPacking == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.packing-lists.index') }}">{{ __('Packing Lists') }}</a>
                     </li>
+                    <li class="{{ isset($activeGarmentShipmentDocuments) && $activeGarmentShipmentDocuments == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.shipment-documents.index') }}">{{ __('Shipment & Export Documents') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentProfitLoss) && $activeGarmentProfitLoss == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.profit-loss.index') }}">{{ __('Order-wise Profit & Loss') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentAccounting) && $activeGarmentAccounting == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.accounting.index') }}">{{ __('Accounting Integration') }}</a></li>
+                    <li class="{{ isset($activeGarmentIncentive) && $activeGarmentIncentive == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.incentives.index') }}">{{ __('Piece-rate / Incentives') }}</a></li>
                 </ul>
             </li>
 

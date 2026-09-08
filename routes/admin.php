@@ -33,6 +33,10 @@ use App\Http\Controllers\Admin\Garments\FinalInspectionController;
 use App\Http\Controllers\Admin\Garments\DefectRejectionController;
 use App\Http\Controllers\Admin\Garments\FinishingController;
 use App\Http\Controllers\Admin\Garments\PackingListController;
+use App\Http\Controllers\Admin\Garments\ShipmentDocumentController;
+use App\Http\Controllers\Admin\Garments\OrderProfitLossController;
+use App\Http\Controllers\Admin\Garments\AccountingEntryController;
+use App\Http\Controllers\Admin\Garments\IncentiveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -340,6 +344,34 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [PackingListController::class, 'edit'])->name('edit');
             Route::put('/{id}', [PackingListController::class, 'update'])->name('update');
             Route::delete('/{id}', [PackingListController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('shipment-documents')->name('shipment-documents.')->group(function () {
+            Route::get('/', [ShipmentDocumentController::class, 'index'])->name('index');
+            Route::post('/', [ShipmentDocumentController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [ShipmentDocumentController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [ShipmentDocumentController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ShipmentDocumentController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('profit-loss')->name('profit-loss.')->group(function () {
+            Route::get('/', [OrderProfitLossController::class, 'index'])->name('index');
+            Route::post('/', [OrderProfitLossController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [OrderProfitLossController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [OrderProfitLossController::class, 'update'])->name('update');
+            Route::delete('/{id}', [OrderProfitLossController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('accounting')->name('accounting.')->group(function () {
+            Route::get('/', [AccountingEntryController::class, 'index'])->name('index');
+            Route::post('/', [AccountingEntryController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AccountingEntryController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [AccountingEntryController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AccountingEntryController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('incentives')->name('incentives.')->group(function () {
+            Route::get('/', [IncentiveController::class, 'index'])->name('index');
+            Route::post('/', [IncentiveController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [IncentiveController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [IncentiveController::class, 'update'])->name('update');
+            Route::delete('/{id}', [IncentiveController::class, 'destroy'])->name('destroy');
         });
     });
 });

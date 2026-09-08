@@ -153,6 +153,43 @@ function garmentPackingStatuses(): array
     ];
 }
 
+function garmentShipmentStatuses(): array
+{
+    return [
+        GARMENT_SHIPMENT_STATUS_DRAFT => ['Draft', 'zBadge-warning'],
+        GARMENT_SHIPMENT_STATUS_READY => ['Ready', 'zBadge-primary'],
+        GARMENT_SHIPMENT_STATUS_SHIPPED => ['Shipped', 'zBadge-complete'],
+    ];
+}
+
+function garmentShipmentDocumentTypes(): array
+{
+    return ['commercial_invoice' => 'Commercial Invoice', 'packing_list' => 'Packing List', 'bill_of_lading' => 'Bill of Lading'];
+}
+
+function garmentProfitLossStatuses(): array
+{
+    return [
+        GARMENT_PROFIT_LOSS_STATUS_DRAFT => ['Draft', 'zBadge-warning'],
+        GARMENT_PROFIT_LOSS_STATUS_FINAL => ['Final', 'zBadge-complete'],
+    ];
+}
+
+function garmentAccountingStatuses(): array
+{
+    return [GARMENT_ACCOUNTING_ENTRY_DRAFT => ['Draft', 'zBadge-warning'], GARMENT_ACCOUNTING_ENTRY_POSTED => ['Posted', 'zBadge-complete']];
+}
+
+function garmentAccountingTypes(): array
+{
+    return ['gl' => 'General Ledger', 'ap' => 'Accounts Payable', 'ar' => 'Accounts Receivable'];
+}
+
+function garmentIncentiveStatuses(): array
+{
+    return [GARMENT_INCENTIVE_STATUS_DRAFT => ['Draft', 'zBadge-warning'], GARMENT_INCENTIVE_STATUS_APPROVED => ['Approved', 'zBadge-complete']];
+}
+
 
 function country($input = null)
 {
@@ -1043,4 +1080,3 @@ if (!function_exists("gatewaySettings")) {
         return json_encode($settings);
     }
 }
-
