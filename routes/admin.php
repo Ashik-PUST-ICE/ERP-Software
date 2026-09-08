@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\HRM\PayrollController as HrmPayrollController;
 use App\Http\Controllers\Admin\Garments\BuyerController as GarmentBuyerController;
 use App\Http\Controllers\Admin\Garments\GarmentOrderController;
 use App\Http\Controllers\Admin\Garments\StyleController;
+use App\Http\Controllers\Admin\Garments\CostingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -218,6 +219,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [StyleController::class, 'edit'])->name('edit');
             Route::put('/{id}', [StyleController::class, 'update'])->name('update');
             Route::delete('/{id}', [StyleController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('costings')->name('costings.')->group(function () {
+            Route::get('/', [CostingController::class, 'index'])->name('index');
+            Route::post('/', [CostingController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [CostingController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [CostingController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CostingController::class, 'destroy'])->name('destroy');
         });
     });
 });

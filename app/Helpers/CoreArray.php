@@ -37,6 +37,14 @@ function garmentOrderStatuses(): array
     ];
 }
 
+function garmentCostingStatuses(): array
+{
+    return [
+        GARMENT_COSTING_STATUS_DRAFT => ['Draft', 'zBadge-warning'],
+        GARMENT_COSTING_STATUS_APPROVED => ['Approved', 'zBadge-complete'],
+    ];
+}
+
 
 function country($input = null)
 {
