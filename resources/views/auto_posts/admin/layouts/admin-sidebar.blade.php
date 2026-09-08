@@ -105,6 +105,15 @@
                     <li class="{{ isset($activeGarmentEfficiency) && $activeGarmentEfficiency == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.efficiency.index') }}">{{ __('Operator / Machine Efficiency') }}</a>
                     </li>
+                    <li class="{{ isset($activeGarmentInlineQc) && $activeGarmentInlineQc == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.inline-qc.index') }}">{{ __('Inline QC') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentFinalInspection) && $activeGarmentFinalInspection == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.final-inspections.index') }}">{{ __('Final Inspection / AQL') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentDefects) && $activeGarmentDefects == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.defects.index') }}">{{ __('Defect & Rejection Tracking') }}</a>
+                    </li>
                 </ul>
             </li>
 

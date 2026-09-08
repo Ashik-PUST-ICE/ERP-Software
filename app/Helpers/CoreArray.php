@@ -120,6 +120,21 @@ function garmentEfficiencyStatuses(): array
     ];
 }
 
+function garmentQcStatuses(): array
+{
+    return [GARMENT_QC_STATUS_PENDING => ['Pending', 'zBadge-warning'], GARMENT_QC_STATUS_PASSED => ['Passed', 'zBadge-complete'], GARMENT_QC_STATUS_FAILED => ['Failed', 'zBadge-deactive']];
+}
+
+function garmentInspectionResults(): array
+{
+    return [GARMENT_INSPECTION_RESULT_PENDING => ['Pending', 'zBadge-warning'], GARMENT_INSPECTION_RESULT_PASSED => ['Passed', 'zBadge-complete'], GARMENT_INSPECTION_RESULT_FAILED => ['Failed', 'zBadge-deactive']];
+}
+
+function garmentDefectStatuses(): array
+{
+    return [GARMENT_DEFECT_STATUS_OPEN => ['Open', 'zBadge-warning'], GARMENT_DEFECT_STATUS_ACTION_TAKEN => ['Action Taken', 'zBadge-primary'], GARMENT_DEFECT_STATUS_CLOSED => ['Closed', 'zBadge-complete']];
+}
+
 
 function country($input = null)
 {

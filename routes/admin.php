@@ -28,6 +28,9 @@ use App\Http\Controllers\Admin\Garments\StoreIssueController;
 use App\Http\Controllers\Admin\Garments\CuttingController;
 use App\Http\Controllers\Admin\Garments\SewingProductionController;
 use App\Http\Controllers\Admin\Garments\EfficiencyController;
+use App\Http\Controllers\Admin\Garments\InlineQcController;
+use App\Http\Controllers\Admin\Garments\FinalInspectionController;
+use App\Http\Controllers\Admin\Garments\DefectRejectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -299,6 +302,28 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [EfficiencyController::class, 'edit'])->name('edit');
             Route::put('/{id}', [EfficiencyController::class, 'update'])->name('update');
             Route::delete('/{id}', [EfficiencyController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('inline-qc')->name('inline-qc.')->group(function () {
+            Route::get('/', [InlineQcController::class, 'index'])->name('index');
+            Route::post('/', [InlineQcController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [InlineQcController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [InlineQcController::class, 'update'])->name('update');
+            Route::delete('/{id}', [InlineQcController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('final-inspections')->name('final-inspections.')->group(function () {
+            Route::get('/', [FinalInspectionController::class, 'index'])->name('index');
+            Route::post('/', [FinalInspectionController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [FinalInspectionController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [FinalInspectionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [FinalInspectionController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('defects')->name('defects.')->group(function () {
+            Route::get('/', [DefectRejectionController::class, 'index'])->name('index');
+            Route::post('/', [DefectRejectionController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [DefectRejectionController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [DefectRejectionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [DefectRejectionController::class, 'destroy'])->name('destroy');
         });
     });
 });
