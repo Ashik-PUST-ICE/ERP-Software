@@ -300,6 +300,307 @@
     font-size: .9rem;
 }
 
+.merchandiser-insights-kpis .card-box {
+    min-height: 15.5rem;
+}
+
+.merchandiser-insights-kpis .card-icon i {
+    align-items: center;
+    background: rgba(255, 255, 255, .2);
+    border-radius: 12px;
+    color: #fff;
+    display: inline-flex;
+    font-size: 1.35rem;
+    height: 48px;
+    justify-content: center;
+    width: 48px;
+}
+
+.merchandiser-insights-kpis .card-info h2 {
+    color: #fff;
+    font-size: 2.55rem;
+    font-weight: 700;
+}
+
+.merchandiser-insights-kpis .card-info h3,
+.merchandiser-insights-kpis .card-status {
+    color: rgba(255, 255, 255, .9);
+}
+
+.merchandiser-insights-kpis .card-status .arrow {
+    color: #fff;
+}
+
+.merchandiser-panel {
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(30, 41, 59, .05);
+}
+
+.merchandiser-live-status {
+    color: #2c9567;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.merchandiser-live-status i {
+    font-size: .55rem;
+    margin-right: .3rem;
+}
+
+.merchandiser-form-heading {
+    align-items: center;
+    border-bottom: 1px solid #edf0f4;
+    display: flex;
+    gap: .85rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.1rem;
+}
+
+.merchandiser-form-icon {
+    align-items: center;
+    background: #eaf1ff;
+    border-radius: 12px;
+    color: #4778c7;
+    display: inline-flex;
+    font-size: 1.15rem;
+    height: 44px;
+    justify-content: center;
+    width: 44px;
+}
+
+.merchandiser-form-heading h3 {
+    color: #26364a;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.merchandiser-form-heading p {
+    color: #8a96a6;
+    font-size: .8rem;
+    margin: .2rem 0 0;
+}
+
+.merchandiser-handover-form label {
+    color: #526174;
+    display: block;
+    font-size: .82rem;
+    font-weight: 600;
+    margin-bottom: .45rem;
+}
+
+.merchandiser-field {
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e3e9f1;
+    border-radius: 9px;
+    display: flex;
+    margin-bottom: 1rem;
+    padding-left: .9rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.merchandiser-field:focus-within {
+    border-color: #4778c7;
+    box-shadow: 0 0 0 3px rgba(71, 120, 199, .1);
+}
+
+.merchandiser-field > i {
+    color: #8ba7d3;
+    font-size: .9rem;
+}
+
+.merchandiser-field select {
+    background: transparent;
+    border: 0;
+    color: #35455a;
+    flex: 1;
+    min-height: 48px;
+    outline: 0;
+    padding: .7rem .85rem;
+}
+
+.merchandiser-field select:disabled {
+    color: #a3adba;
+    cursor: not-allowed;
+}
+
+.merchandiser-form-hint {
+    color: #8a96a6;
+    display: block;
+    font-size: .75rem;
+    margin: -.65rem 0 1rem;
+}
+
+.merchandiser-form-hint i {
+    color: #8ba7d3;
+    margin-right: .2rem;
+}
+
+.merchandiser-form-hint a {
+    color: #4778c7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.merchandiser-handover-form textarea {
+    background: #f8fafc;
+    border: 1px solid #e3e9f1;
+    border-radius: 9px;
+    color: #35455a;
+    margin-bottom: 1.1rem;
+    min-height: 105px;
+    outline: 0;
+    padding: .85rem 1rem;
+    resize: vertical;
+    width: 100%;
+}
+
+.merchandiser-handover-form textarea:focus {
+    border-color: #4778c7;
+    box-shadow: 0 0 0 3px rgba(71, 120, 199, .1);
+}
+
+.merchandiser-handover-form textarea::placeholder {
+    color: #a3adba;
+}
+
+.merchandiser-submit {
+    align-items: center;
+    background: #4778c7;
+    border: 0;
+    border-radius: 9px;
+    display: flex;
+    gap: .35rem;
+    justify-content: flex-start;
+    min-height: 48px;
+    padding: .75rem 1rem;
+    width: 100%;
+}
+
+.merchandiser-submit:hover {
+    background: #315b9d;
+}
+
+.merchandiser-handover-cta {
+    align-items: center;
+    background: linear-gradient(135deg, #f5f8ff, #eef5ff);
+    border: 1px dashed #b7cbea;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 270px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.merchandiser-cta-graphic {
+    align-items: center;
+    color: #4778c7;
+    display: flex;
+    font-size: 1.5rem;
+    gap: .65rem;
+    margin-bottom: 1rem;
+}
+
+.merchandiser-cta-graphic span {
+    color: #9bb6df;
+    font-size: .9rem;
+}
+
+.merchandiser-handover-cta h4 {
+    color: #26364a;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: .4rem;
+}
+
+.merchandiser-handover-cta p {
+    color: #7b8797;
+    font-size: .85rem;
+    margin: 0 auto 1.2rem;
+    max-width: 330px;
+}
+
+.merchandiser-open-modal {
+    border-radius: 9px;
+    padding: .75rem 1.25rem;
+}
+
+.merchandiser-modal-body {
+    padding: 1.5rem;
+}
+
+.merchandiser-modal-heading {
+    align-items: center;
+    border-bottom: 1px solid #edf0f4;
+    display: flex;
+    gap: .8rem;
+    margin-bottom: 1.4rem;
+    padding-bottom: 1rem;
+}
+
+.merchandiser-modal-heading h4 {
+    color: #26364a;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.merchandiser-modal-heading p {
+    color: #8a96a6;
+    font-size: .78rem;
+    margin: .2rem 0 0;
+}
+
+.merchandiser-insights-kpis .col-xl-3:nth-child(1) {
+    --hrm-card-color: #4778c7;
+    --hrm-card-dark: #315b9d;
+}
+
+.merchandiser-insights-kpis .col-xl-3:nth-child(2) {
+    --hrm-card-color: #e05a47;
+    --hrm-card-dark: #b93d2d;
+}
+
+.merchandiser-insights-kpis .col-xl-3:nth-child(3) {
+    --hrm-card-color: #bd8517;
+    --hrm-card-dark: #8d620d;
+}
+
+.merchandiser-insights-kpis .col-xl-3:nth-child(4) {
+    --hrm-card-color: #2c9567;
+    --hrm-card-dark: #1d704b;
+}
+
+.merchandiser-handover-item {
+    border-bottom: 1px solid #edf0f4;
+    padding: .8rem 0;
+}
+
+.merchandiser-handover-item:first-child {
+    padding-top: 0;
+}
+
+.merchandiser-handover-item strong {
+    color: #315b9d;
+}
+
+.merchandiser-handover-item p {
+    color: #526174;
+    margin: .25rem 0;
+}
+
+.merchandiser-handover-item p span {
+    color: #4778c7;
+    margin: 0 .3rem;
+}
+
+.merchandiser-handover-item small {
+    color: #8a96a6;
+}
+
 .analytics-rejection {
     border-top: 1px solid #edf0f4;
     padding-top: 1rem;

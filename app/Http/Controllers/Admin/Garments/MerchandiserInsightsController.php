@@ -10,23 +10,44 @@ use App\Models\Garments\MerchandiserTask;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class MerchandiserInsightsController extends Controller
 {
     public function index()
     {
-        $today = Carbon::today();
         return view('admin.garments.merchandiser.insights', [
             'title' => __('Merchandiser Dashboard'),
-            'users' => User::where('status', STATUS_ACTIVE)->orderBy('name')->get(),
-            'orderCount' => GarmentOrder::whereHas('merchandisers')->count(),
-            'overdueTasks' => MerchandiserTask::whereDate('due_date', '<', $today)->where('status', STATUS_PENDING)->count(),
-            'deliveryRisk' => GarmentOrder::whereDate('delivery_date', '<=', $today->copy()->addDays(7))->whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->count(),
-            'buyerCount' => Buyer::whereHas('orders.merchandisers')->count(),
-            'handovers' => MerchandiserHandover::with(['order', 'fromUser', 'toUser'])->latest('handed_over_at')->take(15)->get(),
-            'orders' => GarmentOrder::with('buyer')->whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->orderBy('delivery_date')->get(),
             'activeGarments' => 'active', 'activeGarmentMerchandiser' => 'active', 'showGarmentsMenu' => 'show',
+        ]);
+    }
+
+    public function data(): JsonResponse
+    {
+        $today = Carbon::today();
+        $excludedStatuses = [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED];
+        $orders = GarmentOrder::with('buyer')->whereNotIn('status', $excludedStatuses)->orderBy('delivery_date')->get();
+
+        return response()->json([
+            'cards' => [
+                'orders' => GarmentOrder::whereHas('merchandisers')->count(),
+                'overdue_tasks' => MerchandiserTask::whereDate('due_date', '<', $today)->where('status', STATUS_PENDING)->count(),
+                'delivery_risk' => GarmentOrder::whereDate('delivery_date', '<=', $today->copy()->addDays(7))->whereNotIn('status', $excludedStatuses)->count(),
+                'buyers' => Buyer::whereHas('orders.merchandisers')->count(),
+            ],
+            'orders' => $orders->map(fn ($order) => [
+                'id' => $order->id,
+                'label' => trim($order->order_number . ' - ' . ($order->buyer?->company_name ?: __('Buyer not assigned'))),
+            ])->values(),
+            'users' => User::where('status', STATUS_ACTIVE)->orderBy('name')->get(['id', 'name']),
+            'handovers' => MerchandiserHandover::with(['order', 'fromUser', 'toUser'])
+                ->latest('handed_over_at')->take(15)->get()->map(fn ($handover) => [
+                    'order' => $handover->order?->order_number ?: __('Order not assigned'),
+                    'from' => $handover->fromUser?->name ?: __('System'),
+                    'to' => $handover->toUser?->name ?: __('Unknown'),
+                    'date' => $handover->handed_over_at?->format('d M Y, h:i A') ?: __('Not set'),
+                ])->values(),
         ]);
     }
 
