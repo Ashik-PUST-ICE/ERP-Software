@@ -61,14 +61,14 @@
             </li>
 
             <li class="divider"><span>{{ __('Garments ERP') }}</span></li>
-            <li class="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials)) ? 'currrent-menu' : '' }}">
+            <li class="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials) || isset($activeGarmentGrns)) ? 'currrent-menu' : '' }}">
                 <a class="has-arrow" href="#garments-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials)) ? 'true' : 'false' }}'
+                    aria-expanded="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials) || isset($activeGarmentGrns)) ? 'true' : 'false' }}"
                     aria-controls="garments-menu">
                     <i class="fa-solid fa-shirt" style="width: 16px; text-align: center; color: #808080;"></i>
                     {{ __('Garments ERP') }}
                 </a>
-                <ul id="garments-menu" class="collapse {{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials)) ? 'show' : '' }}">
+                <ul id="garments-menu" class="collapse {{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials) || isset($activeGarmentGrns)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentBuyers) && $activeGarmentBuyers == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.buyers.index') }}">{{ __('Buyers') }}</a>
                     </li>
@@ -89,6 +89,9 @@
                     </li>
                     <li class="{{ isset($activeGarmentMaterials) && $activeGarmentMaterials == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.materials.index') }}">{{ __('Raw Material Inventory') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentGrns) && $activeGarmentGrns == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.grns.index') }}">{{ __('GRN / Receiving') }}</a>
                     </li>
                 </ul>
             </li>

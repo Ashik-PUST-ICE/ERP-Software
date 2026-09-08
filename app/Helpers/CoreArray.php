@@ -76,6 +76,15 @@ function garmentMaterialCategories(): array
     ];
 }
 
+function garmentGrnStatuses(): array
+{
+    return [
+        GARMENT_GRN_STATUS_RECEIVED => ['Received', 'zBadge-complete'],
+        GARMENT_GRN_STATUS_PARTIAL => ['Partially Received', 'zBadge-warning'],
+        GARMENT_GRN_STATUS_REJECTED => ['Rejected', 'zBadge-deactive'],
+    ];
+}
+
 
 function country($input = null)
 {

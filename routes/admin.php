@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Garments\CostingController;
 use App\Http\Controllers\Admin\Garments\TnaTaskController;
 use App\Http\Controllers\Admin\Garments\ProductionPlanController;
 use App\Http\Controllers\Admin\Garments\MaterialController;
+use App\Http\Controllers\Admin\Garments\GrnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -254,6 +255,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [MaterialController::class, 'edit'])->name('edit');
             Route::put('/{id}', [MaterialController::class, 'update'])->name('update');
             Route::delete('/{id}', [MaterialController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('grns')->name('grns.')->group(function () {
+            Route::get('/', [GrnController::class, 'index'])->name('index');
+            Route::post('/', [GrnController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [GrnController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [GrnController::class, 'update'])->name('update');
+            Route::delete('/{id}', [GrnController::class, 'destroy'])->name('destroy');
         });
     });
 });
