@@ -96,6 +96,12 @@
                     <li class="{{ isset($activeGarmentIssues) && $activeGarmentIssues == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.issues.index') }}">{{ __('Store Issue Management') }}</a>
                     </li>
+                    <li class="{{ isset($activeGarmentCutting) && $activeGarmentCutting == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.cutting.index') }}">{{ __('Cutting Section') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentSewing) && $activeGarmentSewing == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.sewing.index') }}">{{ __('Sewing Line Production') }}</a>
+                    </li>
                 </ul>
             </li>
 

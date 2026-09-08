@@ -25,6 +25,8 @@ use App\Http\Controllers\Admin\Garments\ProductionPlanController;
 use App\Http\Controllers\Admin\Garments\MaterialController;
 use App\Http\Controllers\Admin\Garments\GrnController;
 use App\Http\Controllers\Admin\Garments\StoreIssueController;
+use App\Http\Controllers\Admin\Garments\CuttingController;
+use App\Http\Controllers\Admin\Garments\SewingProductionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -272,6 +274,22 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [StoreIssueController::class, 'edit'])->name('edit');
             Route::put('/{id}', [StoreIssueController::class, 'update'])->name('update');
             Route::delete('/{id}', [StoreIssueController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('cutting')->name('cutting.')->group(function () {
+            Route::get('/', [CuttingController::class, 'index'])->name('index');
+            Route::post('/', [CuttingController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [CuttingController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [CuttingController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CuttingController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sewing')->name('sewing.')->group(function () {
+            Route::get('/', [SewingProductionController::class, 'index'])->name('index');
+            Route::post('/', [SewingProductionController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [SewingProductionController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [SewingProductionController::class, 'update'])->name('update');
+            Route::delete('/{id}', [SewingProductionController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -94,6 +94,24 @@ function garmentIssueStatuses(): array
     ];
 }
 
+function garmentCuttingStatuses(): array
+{
+    return [
+        GARMENT_CUTTING_STATUS_PLANNED => ['Planned', 'zBadge-warning'],
+        GARMENT_CUTTING_STATUS_IN_PROGRESS => ['In Progress', 'zBadge-primary'],
+        GARMENT_CUTTING_STATUS_COMPLETED => ['Completed', 'zBadge-complete'],
+    ];
+}
+
+function garmentSewingStatuses(): array
+{
+    return [
+        GARMENT_SEWING_STATUS_RUNNING => ['Running', 'zBadge-primary'],
+        GARMENT_SEWING_STATUS_PAUSED => ['Paused', 'zBadge-warning'],
+        GARMENT_SEWING_STATUS_COMPLETED => ['Completed', 'zBadge-complete'],
+    ];
+}
+
 
 function country($input = null)
 {
