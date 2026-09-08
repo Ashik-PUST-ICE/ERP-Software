@@ -61,14 +61,14 @@
             </li>
 
             <li class="divider"><span>{{ __('Garments ERP') }}</span></li>
-            <li class="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna)) ? 'currrent-menu' : '' }}">
+            <li class="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'currrent-menu' : '' }}">
                 <a class="has-arrow" href="#garments-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna)) ? 'true' : 'false' }}"
+                    aria-expanded="{{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'true' : 'false' }}"
                     aria-controls="garments-menu">
                     <i class="fa-solid fa-shirt" style="width: 16px; text-align: center; color: #808080;"></i>
                     {{ __('Garments ERP') }}
                 </a>
-                <ul id="garments-menu" class="collapse {{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna)) ? 'show' : '' }}">
+                <ul id="garments-menu" class="collapse {{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentBuyers) && $activeGarmentBuyers == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.buyers.index') }}">{{ __('Buyers') }}</a>
                     </li>
@@ -83,6 +83,9 @@
                     </li>
                     <li class="{{ isset($activeGarmentTna) && $activeGarmentTna == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.tna.index') }}">{{ __('TNA Calendar') }}</a>
+                    </li>
+                    <li class="{{ isset($activeGarmentPlans) && $activeGarmentPlans == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.plans.index') }}">{{ __('Production Planning') }}</a>
                     </li>
                 </ul>
             </li>

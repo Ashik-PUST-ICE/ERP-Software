@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\Garments\GarmentOrderController;
 use App\Http\Controllers\Admin\Garments\StyleController;
 use App\Http\Controllers\Admin\Garments\CostingController;
 use App\Http\Controllers\Admin\Garments\TnaTaskController;
+use App\Http\Controllers\Admin\Garments\ProductionPlanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -236,6 +237,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [TnaTaskController::class, 'edit'])->name('edit');
             Route::put('/{id}', [TnaTaskController::class, 'update'])->name('update');
             Route::delete('/{id}', [TnaTaskController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('plans')->name('plans.')->group(function () {
+            Route::get('/', [ProductionPlanController::class, 'index'])->name('index');
+            Route::post('/', [ProductionPlanController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [ProductionPlanController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [ProductionPlanController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductionPlanController::class, 'destroy'])->name('destroy');
         });
     });
 });

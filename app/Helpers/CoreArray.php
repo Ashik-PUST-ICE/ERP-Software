@@ -56,6 +56,17 @@ function garmentTnaStatuses(): array
     ];
 }
 
+function garmentPlanStatuses(): array
+{
+    return [
+        GARMENT_PLAN_STATUS_DRAFT => ['Draft', 'zBadge-warning'],
+        GARMENT_PLAN_STATUS_PLANNED => ['Planned', 'zBadge-primary'],
+        GARMENT_PLAN_STATUS_IN_PROGRESS => ['In Progress', 'zBadge-warning'],
+        GARMENT_PLAN_STATUS_COMPLETED => ['Completed', 'zBadge-complete'],
+        GARMENT_PLAN_STATUS_CANCELLED => ['Cancelled', 'zBadge-deactive'],
+    ];
+}
+
 
 function country($input = null)
 {

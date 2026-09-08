@@ -53,4 +53,9 @@ class GarmentOrder extends Model
     {
         return $this->hasMany(TnaTask::class, 'order_id');
     }
+
+    public function productionPlans(): HasMany
+    {
+        return $this->hasMany(ProductionPlan::class, 'order_id');
+    }
 }
