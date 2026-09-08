@@ -25,4 +25,10 @@ class BuyerPortalController extends Controller
             'showGarmentsMenu' => 'show',
         ]);
     }
+
+    public function show($id)
+    {
+        $order = GarmentOrder::with(['buyer', 'shipmentDocuments', 'tnaTasks', 'productionPlans', 'sewingProductions'])->findOrFail($id);
+        return view('admin.garments.buyer-portal.show', ['title' => __('Buyer Order Details'), 'order' => $order, 'activeGarments' => 'active', 'activeGarmentBuyerPortal' => 'active', 'showGarmentsMenu' => 'show']);
+    }
 }

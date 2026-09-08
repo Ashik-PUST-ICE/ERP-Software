@@ -71,6 +71,9 @@
                 <ul id="garments-menu" class="collapse {{ (isset($activeGarments) || isset($showGarmentsMenu) || isset($activeGarmentBuyers) || isset($activeGarmentOrders) || isset($activeGarmentStyles) || isset($activeGarmentCostings) || isset($activeGarmentTna) || isset($activeGarmentPlans) || isset($activeGarmentMaterials) || isset($activeGarmentGrns) || isset($activeGarmentIssues) || isset($activeGarmentFinishing) || isset($activeGarmentPacking)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentDashboard) && $activeGarmentDashboard == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.dashboard') }}">{{ __('Garments Dashboard') }}</a></li>
                     <li class="{{ isset($activeGarmentAnalytics) && $activeGarmentAnalytics == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.analytics.index') }}">{{ __('Production Analytics') }}</a></li>
+                    <li class="{{ isset($activeGarmentMerchandiser) && $activeGarmentMerchandiser == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.merchandiser.index') }}">{{ __('Merchandiser Workspace') }}</a></li>
+                    <li><a href="{{ route('admin.garments.merchandiser.management') }}">{{ __('Merchandiser Activities') }}</a></li>
+                    <li><a href="{{ route('admin.garments.merchandiser.insights') }}">{{ __('Merchandiser Dashboard') }}</a></li>
                     <li class="{{ isset($activeGarmentBuyerPortal) && $activeGarmentBuyerPortal == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.buyer-portal.index') }}">{{ __('Buyer Portal') }}</a></li>
                     <li class="{{ isset($activeGarmentBuyers) && $activeGarmentBuyers == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.buyers.index') }}">{{ __('Buyers') }}</a>
@@ -84,6 +87,7 @@
                     <li class="{{ isset($activeGarmentCostings) && $activeGarmentCostings == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.costings.index') }}">{{ __('Costing Sheets') }}</a>
                     </li>
+                    <li class="{{ isset($activeGarmentCostingVariance) && $activeGarmentCostingVariance == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.costing-variance.index') }}">{{ __('Costing Variance') }}</a></li>
                     <li class="{{ isset($activeGarmentTna) && $activeGarmentTna == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.tna.index') }}">{{ __('TNA Calendar') }}</a>
                     </li>
@@ -93,7 +97,9 @@
                     <li class="{{ isset($activeGarmentMaterials) && $activeGarmentMaterials == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.materials.index') }}">{{ __('Raw Material Inventory') }}</a>
                     </li>
+                    <li><a href="{{ route('admin.garments.materials.scanner') }}">{{ __('Barcode Scanner') }}</a></li>
                     <li class="{{ isset($activeGarmentSuppliers) && $activeGarmentSuppliers == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.suppliers.index') }}">{{ __('Suppliers / Vendors') }}</a></li>
+                    <li class="{{ isset($activeGarmentStockMovements) && $activeGarmentStockMovements == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.stock-movements.index') }}">{{ __('Stock Movement Ledger') }}</a></li>
                     <li class="{{ isset($activeGarmentPurchaseOrders) && $activeGarmentPurchaseOrders == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.purchase-orders.index') }}">{{ __('Purchase Orders') }}</a></li>
                     <li class="{{ isset($activeGarmentGrns) && $activeGarmentGrns == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.grns.index') }}">{{ __('Goods Receiving (GRN)') }}</a>
@@ -128,10 +134,14 @@
                     <li class="{{ isset($activeGarmentShipmentDocuments) && $activeGarmentShipmentDocuments == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.shipment-documents.index') }}">{{ __('Shipment & Export Documents') }}</a>
                     </li>
+                    <li class="{{ isset($activeGarmentInvoices) && $activeGarmentInvoices == 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.garments.invoices.index') }}">{{ __('Commercial Invoices') }}</a>
+                    </li>
                     <li class="{{ isset($activeGarmentProfitLoss) && $activeGarmentProfitLoss == 'active' ? 'active' : '' }}">
                         <a href="{{ route('admin.garments.profit-loss.index') }}">{{ __('Order-wise Profit & Loss') }}</a>
                     </li>
                     <li class="{{ isset($activeGarmentAccounting) && $activeGarmentAccounting == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.accounting.index') }}">{{ __('Accounting Integration') }}</a></li>
+                    <li class="{{ isset($activeGarmentApAr) && $activeGarmentApAr == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.ap-ar.index') }}">{{ __('AP / AR Summary') }}</a></li>
                     <li class="{{ isset($activeGarmentIncentive) && $activeGarmentIncentive == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.incentives.index') }}">{{ __('Piece-rate / Incentives') }}</a></li>
                     <li class="{{ isset($activeGarmentProductionAttendance) && $activeGarmentProductionAttendance == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.production-attendance.index') }}">{{ __('Production Attendance') }}</a></li>
                     <li class="{{ isset($activeGarmentNotifications) && $activeGarmentNotifications == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.notifications.index') }}">{{ __('Notifications') }}</a></li>

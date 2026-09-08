@@ -22,7 +22,7 @@ class PurchaseOrderController extends Controller
                 ->addIndexColumn()
                 ->addColumn('supplier_name', fn ($po) => e($po->supplier->company_name))
                 ->addColumn('status_label', fn ($po) => '<span class="zBadge zBadge-complete">' . e($po->status) . '</span>')
-                ->addColumn('action', fn ($po) => '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.purchase-orders.edit', $po->id) . '\', \'#purchase-order-edit-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.purchase-orders.destroy', $po->id) . '\', \'purchaseOrderDataTable\')">' . __('Delete') . '</a></li></ul></div></div>')
+                ->addColumn('action', fn ($po) => '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="' . route('admin.garments.purchase-orders.print', $po->id) . '" target="_blank">' . __('Print') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.purchase-orders.edit', $po->id) . '\', \'#purchase-order-edit-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.purchase-orders.destroy', $po->id) . '\', \'purchaseOrderDataTable\')">' . __('Delete') . '</a></li></ul></div></div>')
                 ->rawColumns(['status_label', 'action'])
                 ->make(true);
         }
@@ -44,6 +44,13 @@ class PurchaseOrderController extends Controller
     public function edit($id)
     {
         return view('admin.garments.purchase-orders.form', ['purchaseOrder' => PurchaseOrder::with('items')->findOrFail($id), 'suppliers' => Supplier::where('status', STATUS_ACTIVE)->orderBy('company_name')->get(), 'materials' => Material::where('status', STATUS_ACTIVE)->orderBy('item_name')->get()]);
+    }
+
+    public function print($id)
+    {
+        return view('admin.garments.purchase-orders.print', [
+            'purchaseOrder' => PurchaseOrder::with(['supplier', 'items.material'])->findOrFail($id),
+        ]);
     }
 
     public function update(PurchaseOrderRequest $request, $id)

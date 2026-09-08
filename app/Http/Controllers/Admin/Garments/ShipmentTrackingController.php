@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 
 class ShipmentTrackingController extends Controller
 {
+    public function page($id)
+    {
+        return view('admin.garments.shipment-documents.tracking', [
+            'title' => __('Shipment Tracking'),
+            'shipment' => ShipmentDocument::with('order')->findOrFail($id),
+            'events' => ShipmentTrackingEvent::where('shipment_document_id', $id)->latest('event_at')->get(),
+            'activeGarments' => 'active',
+            'activeGarmentShipmentDocuments' => 'active',
+            'showGarmentsMenu' => 'show',
+        ]);
+    }
+
     public function show($id)
     {
         return response()->json([

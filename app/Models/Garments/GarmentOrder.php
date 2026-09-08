@@ -39,6 +39,21 @@ class GarmentOrder extends Model
         return $this->belongsTo(Buyer::class);
     }
 
+    public function merchandisers()
+    {
+        return $this->belongsToMany(\App\Models\User::class, 'garment_order_merchandisers', 'order_id', 'user_id')->withPivot('is_primary');
+    }
+
+    public function merchandiserTasks(): HasMany
+    {
+        return $this->hasMany(MerchandiserTask::class, 'order_id');
+    }
+
+    public function buyerCommunications(): HasMany
+    {
+        return $this->hasMany(BuyerCommunication::class, 'order_id');
+    }
+
     public function style(): BelongsTo
     {
         return $this->belongsTo(Style::class);
@@ -92,5 +107,10 @@ class GarmentOrder extends Model
     public function profitLoss(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(OrderProfitLoss::class, 'order_id');
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'order_id');
     }
 }

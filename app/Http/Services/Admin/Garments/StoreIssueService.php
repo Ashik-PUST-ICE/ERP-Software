@@ -4,6 +4,7 @@ namespace App\Http\Services\Admin\Garments;
 
 use App\Models\Garments\Material;
 use App\Models\Garments\StoreIssue;
+use App\Models\Garments\StockMovement;
 use App\Traits\ResponseTrait;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,7 @@ class StoreIssueService
             }
 
             $material->decrement('current_stock', $data['net_quantity']);
+            StockMovement::create(['material_id' => $material->id, 'warehouse_id' => $material->warehouse_id, 'movement_type' => 'issue', 'quantity' => -$data['net_quantity'], 'balance_after' => $material->fresh()->current_stock, 'reference_type' => 'Store Issue', 'reference_id' => $issue->id]);
             DB::commit();
             return $this->success([], getMessage($request->id ? UPDATED_SUCCESSFULLY : CREATED_SUCCESSFULLY));
         } catch (Exception $e) {

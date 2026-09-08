@@ -10,8 +10,8 @@ class PurchaseOrder extends Model
     use HasFactory;
 
     protected $table = 'garment_purchase_orders';
-    protected $fillable = ['supplier_id', 'po_number', 'order_date', 'expected_date', 'total_amount', 'status', 'notes'];
-    protected $casts = ['order_date' => 'date', 'expected_date' => 'date', 'total_amount' => 'decimal:2'];
+    protected $fillable = ['supplier_id', 'po_number', 'order_date', 'expected_date', 'total_amount', 'status', 'approval_status', 'approved_by', 'approved_at', 'notes'];
+    protected $casts = ['order_date' => 'date', 'expected_date' => 'date', 'approved_at' => 'datetime', 'total_amount' => 'decimal:2'];
 
     public function supplier()
     {

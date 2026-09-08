@@ -46,7 +46,18 @@ use App\Http\Controllers\Admin\Garments\PurchaseOrderController;
 use App\Http\Controllers\Admin\Garments\ShipmentTrackingController;
 use App\Http\Controllers\Admin\Garments\WarehouseController;
 use App\Http\Controllers\Admin\Garments\AuditLogController;
+use App\Http\Controllers\Admin\Garments\StockMovementController;
+use App\Http\Controllers\Admin\Garments\WarehouseTransferController;
+use App\Http\Controllers\Admin\Garments\MaterialScannerController;
+use App\Http\Controllers\Admin\Garments\GarmentExportController;
+use App\Http\Controllers\Admin\Garments\MerchandiserController;
+use App\Http\Controllers\Admin\Garments\ApprovalController;
+use App\Http\Controllers\Admin\Garments\CostingVarianceController;
+use App\Http\Controllers\Admin\Garments\MerchandiserManagementController;
+use App\Http\Controllers\Admin\Garments\MerchandiserInsightsController;
 use App\Http\Controllers\Admin\Garments\ProductionAnalyticsController;
+use App\Http\Controllers\Admin\Garments\InvoiceController;
+use App\Http\Controllers\Admin\Garments\ApArController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -225,16 +236,35 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // Garments ERP
     Route::prefix('garments')->name('garments.')->group(function () {
         Route::get('/dashboard', [GarmentDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/merchandiser', [MerchandiserController::class, 'index'])->name('merchandiser.index');
+        Route::get('/merchandiser/management', [MerchandiserManagementController::class, 'index'])->name('merchandiser.management');
+        Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');
+        Route::post('/merchandiser/handover', [MerchandiserInsightsController::class, 'handover'])->name('merchandiser.handover');
+        Route::post('/merchandiser/assign', [MerchandiserManagementController::class, 'assign'])->name('merchandiser.assign');
+        Route::post('/merchandiser/tasks', [MerchandiserManagementController::class, 'task'])->name('merchandiser.task');
+        Route::post('/merchandiser/communications', [MerchandiserManagementController::class, 'communication'])->name('merchandiser.communication');
+        Route::post('/purchase-orders/{id}/approve', [ApprovalController::class, 'purchaseOrder'])->name('purchase-orders.approve');
+        Route::post('/shipment-documents/{id}/approve', [ApprovalController::class, 'shipment'])->name('shipment-documents.approve');
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
         Route::get('/buyer-portal', [BuyerPortalController::class, 'index'])->name('buyer-portal.index');
+        Route::get('/buyer-portal/orders/{id}', [BuyerPortalController::class, 'show'])->name('buyer-portal.orders.show');
         Route::get('/warehouses', [WarehouseController::class, 'index'])->name('warehouses.index');
+        Route::get('/materials/scanner', [MaterialScannerController::class, 'index'])->name('materials.scanner');
+        Route::post('/materials/scanner/lookup', [MaterialScannerController::class, 'lookup'])->name('materials.scanner.lookup');
+        Route::get('/exports/stock-movements', [GarmentExportController::class, 'stockMovements'])->name('exports.stock-movements');
         Route::post('/warehouses', [WarehouseController::class, 'store'])->name('warehouses.store');
+        Route::get('/stock-movements', [StockMovementController::class, 'index'])->name('stock-movements.index');
+        Route::get('/warehouse-transfers', [WarehouseTransferController::class, 'index'])->name('warehouse-transfers.index');
+        Route::post('/warehouse-transfers', [WarehouseTransferController::class, 'store'])->name('warehouse-transfers.store');
         Route::get('/shipment-documents/{id}/tracking', [ShipmentTrackingController::class, 'show'])->name('shipment-documents.tracking');
+        Route::get('/shipment-documents/{id}/tracking/view', [ShipmentTrackingController::class, 'page'])->name('shipment-documents.tracking.page');
         Route::post('/shipment-documents/{id}/tracking', [ShipmentTrackingController::class, 'store'])->name('shipment-documents.tracking.store');
+        Route::get('/costing-variance', [CostingVarianceController::class, 'index'])->name('costing-variance.index');
         Route::prefix('purchase-orders')->name('purchase-orders.')->group(function () {
             Route::get('/', [PurchaseOrderController::class, 'index'])->name('index');
             Route::post('/', [PurchaseOrderController::class, 'store'])->name('store');
             Route::get('/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('edit');
+            Route::get('/{id}/print', [PurchaseOrderController::class, 'print'])->name('print');
             Route::put('/{id}', [PurchaseOrderController::class, 'update'])->name('update');
             Route::delete('/{id}', [PurchaseOrderController::class, 'destroy'])->name('destroy');
         });
@@ -389,6 +419,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::put('/{id}', [ShipmentDocumentController::class, 'update'])->name('update');
             Route::delete('/{id}', [ShipmentDocumentController::class, 'destroy'])->name('destroy');
         });
+        Route::prefix('invoices')->name('invoices.')->group(function () {
+            Route::get('/', [InvoiceController::class, 'index'])->name('index');
+            Route::post('/', [InvoiceController::class, 'store'])->name('store');
+            Route::post('/{id}/payments', [InvoiceController::class, 'payment'])->name('payments.store');
+            Route::get('/{id}/print', [InvoiceController::class, 'print'])->name('print');
+        });
+        Route::get('/ap-ar', [ApArController::class, 'index'])->name('ap-ar.index');
         Route::prefix('profit-loss')->name('profit-loss.')->group(function () {
             Route::get('/', [OrderProfitLossController::class, 'index'])->name('index');
             Route::post('/', [OrderProfitLossController::class, 'store'])->name('store');
