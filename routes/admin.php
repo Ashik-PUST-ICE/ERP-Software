@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\Garments\BuyerController as GarmentBuyerControlle
 use App\Http\Controllers\Admin\Garments\GarmentOrderController;
 use App\Http\Controllers\Admin\Garments\StyleController;
 use App\Http\Controllers\Admin\Garments\CostingController;
+use App\Http\Controllers\Admin\Garments\TnaTaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -227,6 +228,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [CostingController::class, 'edit'])->name('edit');
             Route::put('/{id}', [CostingController::class, 'update'])->name('update');
             Route::delete('/{id}', [CostingController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('tna')->name('tna.')->group(function () {
+            Route::get('/', [TnaTaskController::class, 'index'])->name('index');
+            Route::post('/', [TnaTaskController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [TnaTaskController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [TnaTaskController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TnaTaskController::class, 'destroy'])->name('destroy');
         });
     });
 });

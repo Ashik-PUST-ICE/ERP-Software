@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GarmentOrder extends Model
 {
@@ -46,5 +47,10 @@ class GarmentOrder extends Model
     public function costing(): HasOne
     {
         return $this->hasOne(Costing::class, 'order_id');
+    }
+
+    public function tnaTasks(): HasMany
+    {
+        return $this->hasMany(TnaTask::class, 'order_id');
     }
 }

@@ -45,6 +45,17 @@ function garmentCostingStatuses(): array
     ];
 }
 
+function garmentTnaStatuses(): array
+{
+    return [
+        GARMENT_TNA_STATUS_PENDING => ['Pending', 'zBadge-warning'],
+        GARMENT_TNA_STATUS_IN_PROGRESS => ['In Progress', 'zBadge-primary'],
+        GARMENT_TNA_STATUS_COMPLETED => ['Completed', 'zBadge-complete'],
+        GARMENT_TNA_STATUS_DELAYED => ['Delayed', 'zBadge-deactive'],
+        GARMENT_TNA_STATUS_CANCELLED => ['Cancelled', 'zBadge-deactive'],
+    ];
+}
+
 
 function country($input = null)
 {
