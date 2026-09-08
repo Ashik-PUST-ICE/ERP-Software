@@ -23,9 +23,10 @@ class GrnService
             if ($request->id) {
                 $grn = Grn::findOrFail($request->id);
                 $oldAccepted = (float) $grn->accepted_quantity;
-                $material = Material::findOrFail($grn->material_id);
-                $material->increment('current_stock', -$oldAccepted);
+                $oldMaterial = Material::findOrFail($grn->material_id);
+                $oldMaterial->decrement('current_stock', $oldAccepted);
                 $grn->update($data);
+                $material = Material::findOrFail($data['material_id']);
             } else {
                 $grn = Grn::create($data);
                 $material = Material::findOrFail($grn->material_id);

@@ -19,9 +19,9 @@ class PurchaseOrderRequest extends FormRequest
             'status' => 'required|in:' . STATUS_PENDING . ',' . STATUS_ACTIVE . ',' . STATUS_CANCELLED,
             'notes' => 'nullable|string',
             'items' => 'nullable|array',
-            'items.*.material_id' => 'required_with:items|exists:garment_materials,id',
-            'items.*.quantity' => 'required_with:items|numeric|min:0.0001',
-            'items.*.unit_rate' => 'required_with:items|numeric|min:0',
+            'items.*.material_id' => 'nullable|exists:garment_materials,id',
+            'items.*.quantity' => 'nullable|numeric|min:0.0001',
+            'items.*.unit_rate' => 'nullable|numeric|min:0',
         ];
     }
 }

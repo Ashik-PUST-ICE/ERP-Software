@@ -52,6 +52,55 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        return view('admin.garments.invoices.form', [
+            'title' => __('Edit Commercial Invoice'),
+            'invoice' => Invoice::findOrFail($id),
+            'orders' => GarmentOrder::with('buyer')->latest()->get(),
+            'activeGarments' => 'active',
+            'activeGarmentInvoices' => 'active',
+            'showGarmentsMenu' => 'show',
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $data = $request->validate([
+            'order_id' => ['required', 'exists:garment_orders,id'],
+            'invoice_number' => ['required', 'string', 'max:80', 'unique:garment_invoices,invoice_number,' . $invoice->id],
+            'issue_date' => ['required', 'date'],
+            'due_date' => ['nullable', 'date', 'after_or_equal:issue_date'],
+            'currency' => ['required', 'string', 'max:8'],
+            'amount' => ['required', 'numeric', 'min:0'],
+            'tax_amount' => ['nullable', 'numeric', 'min:0'],
+            'status' => ['required', 'in:draft,issued,partially_paid,paid,overdue,cancelled'],
+            'notes' => ['nullable', 'string'],
+        ]);
+
+        $data['tax_amount'] = $data['tax_amount'] ?? 0;
+        $data['total_amount'] = (float) $data['amount'] + (float) $data['tax_amount'];
+        if ($data['total_amount'] < (float) $invoice->paid_amount) {
+            abort(422, __('Invoice total cannot be less than the amount already paid.'));
+        }
+        $invoice->update($data);
+
+        return redirect()->route('admin.garments.invoices.index')->with('success', __('Invoice updated successfully.'));
+    }
+
+    public function destroy($id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        if ($invoice->payments()->exists()) {
+            return redirect()->route('admin.garments.invoices.index')
+                ->with('error', __('Paid invoices cannot be deleted. Reverse or refund payments first.'));
+        }
+        $invoice->delete();
+
+        return redirect()->route('admin.garments.invoices.index')->with('success', __('Invoice deleted successfully.'));
+    }
+
     public function payment(Request $request, $id)
     {
         $data = $request->validate([

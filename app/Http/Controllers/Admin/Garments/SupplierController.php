@@ -49,8 +49,8 @@ class SupplierController extends Controller
     public function update(SupplierRequest $request, $id)
     {
         $supplier = Supplier::findOrFail($id);
-        $changes = $supplier->getDirty();
         $supplier->update($request->validated());
+        $changes = $supplier->getChanges();
         app(AuditLogService::class)->record('updated', 'Supplier', $supplier->id, "Supplier {$supplier->supplier_code} updated.", $changes);
         return $this->success([], getMessage(UPDATED_SUCCESSFULLY));
     }

@@ -423,6 +423,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/', [InvoiceController::class, 'index'])->name('index');
             Route::post('/', [InvoiceController::class, 'store'])->name('store');
             Route::post('/{id}/payments', [InvoiceController::class, 'payment'])->name('payments.store');
+            Route::get('/{id}/edit', [InvoiceController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [InvoiceController::class, 'update'])->name('update');
+            Route::delete('/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
             Route::get('/{id}/print', [InvoiceController::class, 'print'])->name('print');
         });
         Route::get('/ap-ar', [ApArController::class, 'index'])->name('ap-ar.index');

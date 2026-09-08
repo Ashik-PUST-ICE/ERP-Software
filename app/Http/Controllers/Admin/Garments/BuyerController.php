@@ -66,7 +66,7 @@ class BuyerController extends Controller
     public function edit($id)
     {
         $buyer = Buyer::findOrFail($id);
-        return view('admin.garments.buyers.edit', compact('buyer'));
+        return view('admin.garments.buyers.form', compact('buyer'));
     }
 
     public function update(BuyerRequest $request, $id)

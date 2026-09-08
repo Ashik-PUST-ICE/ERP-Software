@@ -64,7 +64,10 @@ class PurchaseOrderController extends Controller
     {
         DB::transaction(function () use ($request, $id) {
             $data = $request->validated();
-            $items = $data['items'] ?? [];
+            $items = collect($data['items'] ?? [])
+                ->filter(fn ($item) => filled($item['material_id'] ?? null))
+                ->values()
+                ->all();
             unset($data['items']);
             $total = collect($items)->sum(fn ($item) => (float) $item['quantity'] * (float) $item['unit_rate']);
             if ($items) {
