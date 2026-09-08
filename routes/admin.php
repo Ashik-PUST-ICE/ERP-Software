@@ -237,6 +237,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // Garments ERP
     Route::prefix('garments')->name('garments.')->group(function () {
         Route::get('/dashboard', [GarmentDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard/data', [GarmentDashboardController::class, 'data'])->name('dashboard.data');
         Route::get('/merchandiser', [MerchandiserController::class, 'index'])->name('merchandiser.index');
         Route::get('/merchandiser/management', [MerchandiserManagementController::class, 'index'])->name('merchandiser.management');
         Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');

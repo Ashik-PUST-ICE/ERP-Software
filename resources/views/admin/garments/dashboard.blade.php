@@ -1,7 +1,56 @@
 @extends('auto_posts.admin.layouts.admin')
 @push('title') {{ $title }} @endpush
+
+@push('script')
+<script src="{{ asset('admin/js/garment-dashboard.js') }}?ver={{ env('VERSION', 0) }}"></script>
+@endpush
+
 @section('content')
-<div class="section-title"><h2 class="title">{{ __($title) }}</h2></div>
-<div class="row g-3 mb-4">@foreach([['overdueOrders','Overdue Orders','fa-calendar-xmark','danger'],['lowStock','Low Stock Items','fa-boxes-stacked','warning'],['pendingFinishing','Pending Finishing','fa-shirt','primary'],['readyShipments','Ready Shipments','fa-ship','success']] as $card)<div class="col-xl-3 col-md-6"><div class="section-wrap h-100 p-4"><div class="d-flex justify-content-between align-items-center"><div><p class="mb-2 text-muted">{{ __($card[1]) }}</p><h3 class="mb-0">{{ $stats[$card[0]] }}</h3></div><span class="dashboard-stat-icon text-{{ $card[3] }}"><i class="fa-solid {{ $card[2] }}"></i></span></div></div></div>@endforeach</div>
-<div class="row g-4"><div class="col-xl-8"><div class="section-wrap p-4"><h4 class="mb-3">{{ __('Recent Orders') }}</h4><div class="table-responsive"><table class="table primary-table"><thead><tr><th>{{ __('Order') }}</th><th>{{ __('Buyer') }}</th><th>{{ __('Quantity') }}</th><th>{{ __('Delivery') }}</th></tr></thead><tbody>@forelse($recentOrders as $order)<tr><td>{{ $order->order_number }}</td><td>{{ $order->buyer?->name ?? 'N/A' }}</td><td>{{ number_format($order->quantity) }}</td><td>{{ $order->delivery_date?->format('d M Y') }}</td></tr>@empty<tr><td colspan="4" class="text-center">{{ __('No orders found') }}</td></tr>@endforelse</tbody></table></div></div></div><div class="col-xl-4"><div class="section-wrap p-4"><h4 class="mb-3">{{ __('Latest Notifications') }}</h4>@forelse($notifications as $notification)<div class="border-bottom py-2"><strong>{{ $notification->title }}</strong><p class="small text-muted mb-0">{{ $notification->body }}</p></div>@empty<p class="text-muted">{{ __('No notifications') }}</p>@endforelse</div></div></div>
+<input type="hidden" id="garment-dashboard-data-url" value="{{ route('admin.garments.dashboard.data') }}">
+
+<div class="section-title">
+    <h2 class="title">{{ __($title) }}</h2>
+    <span class="text-muted" style="font-size:1.3rem;">{{ now()->format('l, d F Y') }}</span>
+</div>
+
+<div class="row gy-4 mb-20 garment-dashboard-kpis">
+    @foreach([
+        ['kpiOverdueOrders', 'Overdue Orders', 'fa-calendar-xmark', '#FF4F02', route('admin.garments.orders.index')],
+        ['kpiLowStock', 'Low Stock Items', 'fa-boxes-stacked', '#FFC402', route('admin.garments.materials.index')],
+        ['kpiPendingFinishing', 'Pending Finishing', 'fa-shirt', '#02BCFF', route('admin.garments.finishing.index')],
+        ['kpiReadyShipments', 'Ready Shipments', 'fa-ship', '#0FA958', route('admin.garments.shipment-documents.index')],
+    ] as $card)
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
+            <div class="card-box">
+                <span class="card-icon"><i class="fa-solid {{ $card[2] }}" style="color:white;background:{{ $card[3] }};border-radius:50%;padding:11px;"></i></span>
+                <div class="card-info">
+                    <h2 id="{{ $card[0] }}">--</h2>
+                    <h3>{{ __($card[1]) }}</h3>
+                </div>
+                <span class="card-status up"><a href="{{ $card[4] }}" style="color:inherit;text-decoration:none;">{{ __('View') }}</a><span class="arrow"><i class="fa-solid fa-arrow-up"></i></span></span>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+<div class="row gy-4">
+    <div class="col-xl-8 col-lg-7">
+        <div class="section-wrap h-100">
+            <div class="section-small-title">
+                <h3 class="title">{{ __('Recent Orders') }}</h3>
+                <a href="{{ route('admin.garments.orders.index') }}" class="text-primary" style="font-size:1.2rem;">{{ __('View All') }}</a>
+            </div>
+            <table class="display primary-table w-100" id="garmentRecentOrdersTable" data-url="{{ route('admin.garments.orders.index') }}">
+                <thead><tr><th>{{ __('Order') }}</th><th>{{ __('Buyer') }}</th><th>{{ __('Quantity') }}</th><th>{{ __('Delivery') }}</th></tr></thead>
+                <tbody><tr><td colspan="4" class="text-center text-muted py-3"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading...') }}</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-5">
+        <div class="section-wrap h-100">
+            <div class="section-small-title"><h3 class="title">{{ __('Latest Notifications') }}</h3><i class="fa-regular fa-bell text-primary"></i></div>
+            <div id="garmentNotifications"><div class="text-center text-muted py-3"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading...') }}</div></div>
+        </div>
+    </div>
+</div>
 @endsection

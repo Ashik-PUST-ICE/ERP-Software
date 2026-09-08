@@ -14,11 +14,8 @@ class ProductionAnalyticsController extends Controller
 {
     public function index()
     {
-        $summary = $this->summary();
-
         return view('admin.garments.analytics.index', [
             'title' => __('Production Analytics'),
-            'summary' => $summary,
             'activeGarments' => 'active',
             'activeGarmentAnalytics' => 'active',
             'showGarmentsMenu' => 'show',
@@ -33,12 +30,13 @@ class ProductionAnalyticsController extends Controller
     private function summary(): array
     {
         $from = Carbon::today()->subDays(13);
-        $production = SewingProduction::whereDate('production_date', '>=', $from)
+        $production = SewingProduction::whereBetween('production_date', [$from, Carbon::today()])
             ->selectRaw('production_date, SUM(total_output) as output, SUM(daily_target) as target')
             ->groupBy('production_date')
             ->orderBy('production_date')
             ->get();
         $maxTarget = max(1, (int) $production->max('target'));
+        $productionByDate = $production->keyBy(fn ($row) => Carbon::parse($row->production_date)->toDateString());
 
         $planned = ProductionPlan::sum('planned_quantity');
         $produced = SewingProduction::sum('total_output');
@@ -56,13 +54,20 @@ class ProductionAnalyticsController extends Controller
             'order_status' => GarmentOrder::selectRaw('status, COUNT(*) as total')
                 ->groupBy('status')->orderBy('status')->get()
                 ->map(fn ($row) => ['status' => (int) $row->status, 'total' => (int) $row->total])->values(),
-            'daily_output' => $production->map(fn ($row) => [
-                'date' => Carbon::parse($row->production_date)->format('d M'),
-                'output' => (int) $row->output,
-                'target' => (int) $row->target,
-                'target_width' => min(100, ((int) $row->target / $maxTarget) * 100),
-                'output_width' => min(100, ((int) $row->output / $maxTarget) * 100),
-            ])->values(),
+            'daily_output' => collect(range(0, 13))->map(function ($daysAgo) use ($from, $productionByDate, $maxTarget) {
+                $date = $from->copy()->addDays($daysAgo);
+                $row = $productionByDate->get($date->toDateString());
+                $target = $row ? (int) $row->target : 0;
+                $output = $row ? (int) $row->output : 0;
+
+                return [
+                    'date' => $date->format('d M'),
+                    'output' => $output,
+                    'target' => $target,
+                    'target_width' => min(100, ($target / $maxTarget) * 100),
+                    'output_width' => min(100, ($output / $maxTarget) * 100),
+                ];
+            })->values(),
         ];
     }
 }

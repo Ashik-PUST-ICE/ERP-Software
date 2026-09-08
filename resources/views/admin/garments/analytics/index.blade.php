@@ -1,7 +1,13 @@
 @extends('auto_posts.admin.layouts.admin')
 @push('title') {{ $title }} @endpush
 
+@push('script')
+<script src="{{ asset('admin/js/garment-analytics.js') }}?ver={{ env('VERSION', 0) }}"></script>
+@endpush
+
 @section('content')
+<input type="hidden" id="garment-analytics-data-url" value="{{ route('admin.garments.analytics.data') }}">
+
 <div class="section-title d-flex justify-content-between align-items-center">
     <h2 class="title">{{ __($title) }}</h2>
     <a class="primary-btn" href="{{ route('admin.garments.analytics.data') }}" target="_blank">
@@ -9,13 +15,16 @@
     </a>
 </div>
 
-<div class="row g-3 mb-4">
+<div class="row gy-4 mb-20 garment-analytics-kpis">
     @foreach([['orders','Total Orders','fa-clipboard-list'],['planned_quantity','Planned Quantity','fa-bullseye'],['produced_quantity','Produced Quantity','fa-industry'],['achievement','Plan Achievement','fa-chart-line']] as $card)
         <div class="col-xl-3 col-md-6">
-            <div class="section-wrap p-4">
-                <p class="text-muted mb-2">{{ __($card[1]) }}</p>
-                <h3 class="mb-1">{{ number_format($summary['kpis'][$card[0]], 1) }}{{ $card[0] === 'achievement' ? '%' : '' }}</h3>
-                <i class="fa-solid {{ $card[2] }} text-primary"></i>
+            <div class="card-box">
+                <span class="card-icon"><i class="fa-solid {{ $card[2] }}"></i></span>
+                <div class="card-info">
+                    <h2 id="analyticsKpi{{ ucfirst($card[0]) }}">--</h2>
+                    <h3>{{ __($card[1]) }}</h3>
+                </div>
+                <span class="card-status up">{{ __('Live data') }} <span class="arrow"><i class="fa-solid fa-arrows-rotate"></i></span></span>
             </div>
         </div>
     @endforeach
@@ -23,32 +32,17 @@
 
 <div class="row g-4">
     <div class="col-xl-8">
-        <div class="section-wrap p-4">
+        <div class="section-wrap h-100 garment-analytics-panel">
             <h4 class="mb-4">{{ __('Last 14 Days: Target vs Output') }}</h4>
-            @forelse($summary['daily_output'] as $day)
-                <div class="analytics-row">
-                    <span>{{ $day['date'] }}</span>
-                    <div class="analytics-track">
-                        <div class="analytics-target" style="width: {{ $day['target_width'] }}%"></div>
-                        <div class="analytics-output" style="width: {{ $day['output_width'] }}%"></div>
-                    </div>
-                    <strong>{{ number_format($day['output']) }}</strong>
-                </div>
-            @empty
-                <p class="text-muted">{{ __('No production data available') }}</p>
-            @endforelse
+            <div id="garmentAnalyticsDailyOutput"><div class="text-center text-muted py-4"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading from server...') }}</div></div>
             <div class="small mt-3"><span class="legend target"></span>{{ __('Target') }} <span class="legend output ms-3"></span>{{ __('Output') }}</div>
         </div>
     </div>
     <div class="col-xl-4">
-        <div class="section-wrap p-4">
+        <div class="section-wrap h-100 garment-analytics-panel">
             <h4 class="mb-4">{{ __('Order Status') }}</h4>
-            @forelse($summary['order_status'] as $item)
-                <div class="d-flex justify-content-between border-bottom py-2"><span>{{ __('Status') }} {{ $item['status'] }}</span><strong>{{ $item['total'] }}</strong></div>
-            @empty
-                <p class="text-muted">{{ __('No order data available') }}</p>
-            @endforelse
-            <div class="mt-4"><p class="mb-1 text-muted">{{ __('Quality Rejection Rate') }}</p><h3>{{ $summary['kpis']['rejection_rate'] }}%</h3></div>
+            <div id="garmentAnalyticsOrderStatus"><div class="text-center text-muted py-4"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading from server...') }}</div></div>
+            <div class="mt-4 analytics-rejection"><p class="mb-1 text-muted">{{ __('Quality Rejection Rate') }}</p><h3 id="analyticsKpiRejectionRate">--</h3></div>
         </div>
     </div>
 </div>
@@ -56,6 +50,6 @@
 
 @push('style')
 <style>
-.analytics-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}.analytics-row>span{width:58px;font-size:12px}.analytics-row>strong{width:70px;text-align:right;font-size:12px}.analytics-track{height:16px;background:#f2eeee;border-radius:10px;position:relative;flex:1;overflow:hidden}.analytics-target,.analytics-output{position:absolute;left:0;top:0;height:100%;border-radius:10px}.analytics-target{background:#f4d8ca}.analytics-output{background:#ff6b35}.legend{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}.legend.target{background:#f4d8ca}.legend.output{background:#ff6b35}
+.analytics-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}.analytics-row>span{width:58px;font-size:12px}.analytics-row>strong{width:70px;text-align:right;font-size:12px}.analytics-track{height:16px;background:#eef2f6;border-radius:10px;position:relative;flex:1;overflow:hidden}.analytics-target,.analytics-output{position:absolute;left:0;top:0;height:100%;border-radius:10px}.analytics-target{background:#b8c9e8}.analytics-output{background:#4778c7}.legend{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}.legend.target{background:#b8c9e8}.legend.output{background:#4778c7}
 </style>
 @endpush

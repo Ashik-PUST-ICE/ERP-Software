@@ -60,6 +60,7 @@
         {!! getOption('custom_css') !!}
     </style>
 <link rel="stylesheet" href="{{ asset('admin/css/header-extra.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/css/garment-dashboard.css') }}?ver={{ env('VERSION', 0) }}">
 
     @if(getOption('google_analytics_status', 0))
     <!-- Google tag (gtag.js) -->
