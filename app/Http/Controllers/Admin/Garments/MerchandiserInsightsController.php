@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 
 class MerchandiserInsightsController extends Controller
 {
@@ -27,6 +28,20 @@ class MerchandiserInsightsController extends Controller
             'handovers' => MerchandiserHandover::with(['order', 'fromUser', 'toUser'])->latest('handed_over_at')->take(15)->get(),
             'orders' => GarmentOrder::with('buyer')->whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->orderBy('delivery_date')->get(),
             'activeGarments' => 'active', 'activeGarmentMerchandiser' => 'active', 'showGarmentsMenu' => 'show',
+        ]);
+    }
+
+    public function data(): JsonResponse
+    {
+        $today = Carbon::today();
+
+        return response()->json([
+            'cards' => [
+                'orderCount' => GarmentOrder::whereHas('merchandisers')->count(),
+                'overdueTasks' => MerchandiserTask::whereDate('due_date', '<', $today)->where('status', STATUS_PENDING)->count(),
+                'deliveryRisk' => GarmentOrder::whereDate('delivery_date', '<=', $today->copy()->addDays(7))->whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->count(),
+                'buyerCount' => Buyer::whereHas('orders.merchandisers')->count(),
+            ],
         ]);
     }
 

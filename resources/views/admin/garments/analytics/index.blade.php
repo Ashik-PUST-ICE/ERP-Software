@@ -2,6 +2,7 @@
 @push('title') {{ $title }} @endpush
 
 @section('content')
+<div class="garment-page" data-card-data-url="{{ route('admin.garments.analytics.data') }}">
 <div class="section-title d-flex justify-content-between align-items-center">
     <h2 class="title">{{ __($title) }}</h2>
     <a class="primary-btn" href="{{ route('admin.garments.analytics.data') }}" target="_blank">
@@ -12,9 +13,9 @@
 <div class="row g-3 mb-4">
     @foreach([['orders','Total Orders','fa-clipboard-list'],['planned_quantity','Planned Quantity','fa-bullseye'],['produced_quantity','Produced Quantity','fa-industry'],['achievement','Plan Achievement','fa-chart-line']] as $card)
         <div class="col-xl-3 col-md-6">
-            <div class="section-wrap p-4">
+            <div class="section-wrap p-4" data-card-key="{{ $card[0] }}">
                 <p class="text-muted mb-2">{{ __($card[1]) }}</p>
-                <h3 class="mb-1">{{ number_format($summary['kpis'][$card[0]], 1) }}{{ $card[0] === 'achievement' ? '%' : '' }}</h3>
+                <h3 class="mb-1"><span data-card-value>{{ number_format($summary['kpis'][$card[0]], 1) }}</span>{{ $card[0] === 'achievement' ? '%' : '' }}</h3>
                 <i class="fa-solid {{ $card[2] }} text-primary"></i>
             </div>
         </div>
@@ -52,6 +53,7 @@
         </div>
     </div>
 </div>
+<button type="button" class="mt-2" data-card-retry hidden>{{ __('Retry loading metrics') }}</button>
 @endsection
 
 @push('style')

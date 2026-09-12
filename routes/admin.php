@@ -237,9 +237,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // Garments ERP
     Route::prefix('garments')->name('garments.')->group(function () {
         Route::get('/dashboard', [GarmentDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard/data', [GarmentDashboardController::class, 'data'])->name('dashboard.data');
         Route::get('/merchandiser', [MerchandiserController::class, 'index'])->name('merchandiser.index');
         Route::get('/merchandiser/management', [MerchandiserManagementController::class, 'index'])->name('merchandiser.management');
         Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');
+        Route::get('/merchandiser/insights/data', [MerchandiserInsightsController::class, 'data'])->name('merchandiser.insights.data');
         Route::post('/merchandiser/handover', [MerchandiserInsightsController::class, 'handover'])->name('merchandiser.handover');
         Route::post('/merchandiser/assign', [MerchandiserManagementController::class, 'assign'])->name('merchandiser.assign');
         Route::post('/merchandiser/tasks', [MerchandiserManagementController::class, 'task'])->name('merchandiser.task');
@@ -248,6 +250,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::post('/shipment-documents/{id}/approve', [ApprovalController::class, 'shipment'])->name('shipment-documents.approve');
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
         Route::get('/buyer-portal', [BuyerPortalController::class, 'index'])->name('buyer-portal.index');
+        Route::get('/buyer-portal/data', [BuyerPortalController::class, 'data'])->name('buyer-portal.data');
         Route::get('/buyer-portal/orders/{id}', [BuyerPortalController::class, 'show'])->name('buyer-portal.orders.show');
         Route::get('/warehouses', [WarehouseController::class, 'index'])->name('warehouses.index');
         Route::get('/materials/scanner', [MaterialScannerController::class, 'index'])->name('materials.scanner');

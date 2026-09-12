@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Garments\Buyer;
 use App\Models\Garments\GarmentOrder;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class BuyerPortalController extends Controller
 {
@@ -30,5 +31,21 @@ class BuyerPortalController extends Controller
     {
         $order = GarmentOrder::with(['buyer', 'shipmentDocuments', 'tnaTasks', 'productionPlans', 'sewingProductions'])->findOrFail($id);
         return view('admin.garments.buyer-portal.show', ['title' => __('Buyer Order Details'), 'order' => $order, 'activeGarments' => 'active', 'activeGarmentBuyerPortal' => 'active', 'showGarmentsMenu' => 'show']);
+    }
+
+    public function data(Request $request): JsonResponse
+    {
+        $buyer = $request->filled('buyer_id')
+            ? Buyer::findOrFail($request->integer('buyer_id'))
+            : Buyer::where('status', STATUS_ACTIVE)->orderBy('company_name')->first();
+        $orders = $buyer ? GarmentOrder::where('buyer_id', $buyer->id)->latest('order_date')->get() : collect();
+
+        return response()->json([
+            'cards' => [
+                'buyerName' => $buyer?->company_name ?? __('No active buyers'),
+                'totalOrders' => $orders->count(),
+                'totalQuantity' => (int) $orders->sum('quantity'),
+            ],
+        ]);
     }
 }

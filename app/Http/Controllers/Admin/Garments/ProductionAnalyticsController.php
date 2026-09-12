@@ -27,7 +27,10 @@ class ProductionAnalyticsController extends Controller
 
     public function data(): JsonResponse
     {
-        return response()->json($this->summary());
+        $summary = $this->summary();
+        $summary['cards'] = $summary['kpis'];
+
+        return response()->json($summary);
     }
 
     private function summary(): array
