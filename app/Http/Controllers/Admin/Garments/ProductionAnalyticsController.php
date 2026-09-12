@@ -8,7 +8,6 @@ use App\Models\Garments\GarmentOrder;
 use App\Models\Garments\ProductionPlan;
 use App\Models\Garments\SewingProduction;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 
 class ProductionAnalyticsController extends Controller
 {
@@ -25,12 +24,26 @@ class ProductionAnalyticsController extends Controller
         ]);
     }
 
-    public function data(): JsonResponse
+    public function data()
     {
         $summary = $this->summary();
-        $summary['cards'] = $summary['kpis'];
 
-        return response()->json($summary);
+        return view('admin.garments.analytics.data', [
+            'title' => __('Production Analytics Data'),
+            'summary' => $summary,
+            'activeGarments' => 'active',
+            'activeGarmentAnalytics' => 'active',
+            'showGarmentsMenu' => 'show',
+        ]);
+    }
+
+    public function apiCards()
+    {
+        $summary = $this->summary();
+
+        return response()->json([
+            'cards' => $summary['kpis'],
+        ]);
     }
 
     private function summary(): array

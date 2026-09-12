@@ -274,6 +274,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         });
         Route::get('/analytics', [ProductionAnalyticsController::class, 'index'])->name('analytics.index');
         Route::get('/analytics/data', [ProductionAnalyticsController::class, 'data'])->name('analytics.data');
+        Route::get('/analytics/api/cards', [ProductionAnalyticsController::class, 'apiCards'])->name('analytics.api.cards');
         Route::get('/notifications', [GarmentNotificationController::class, 'index'])->name('notifications.index');
         Route::post('/notifications/{id}/read', [GarmentNotificationController::class, 'markRead'])->name('notifications.read');
         Route::post('/notifications/read-all', [GarmentNotificationController::class, 'markAllRead'])->name('notifications.read-all');

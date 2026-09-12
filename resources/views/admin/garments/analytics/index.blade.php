@@ -2,7 +2,7 @@
 @push('title') {{ $title }} @endpush
 
 @section('content')
-<div class="garment-page" data-card-data-url="{{ route('admin.garments.analytics.data') }}">
+<div class="garment-page" data-card-data-url="{{ route('admin.garments.analytics.api.cards') }}">
 <div class="section-title d-flex justify-content-between align-items-center">
     <h2 class="title">{{ __($title) }}</h2>
     <a class="primary-btn" href="{{ route('admin.garments.analytics.data') }}" target="_blank">
