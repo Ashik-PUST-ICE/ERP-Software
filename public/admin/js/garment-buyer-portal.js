@@ -36,8 +36,52 @@
         return html;
     }
 
+    function updateBuyerDisplay(response) {
+        var buyer = response && response.buyer ? response.buyer : null;
+
+        if (!buyer) {
+            $('#buyerPortalName').text('--');
+            $('#buyerPortalCode').text('N/A');
+            $('#buyerPortalContact').text('--');
+            $('#buyerPortalEmail').text('--').removeAttr('href');
+            $('#buyerPortalPhone').text('--');
+            $('#buyerPortalCountryCurrency').text('--');
+            $('#buyerPortalPaymentTerms').text('--');
+            $('#buyerPortalAddress').text('--');
+
+            $('#buyerPortalTotalOrders').text('0');
+            $('#buyerPortalTotalQuantity').text('0');
+            $('#buyerPortalInProduction').text('0');
+            $('#buyerPortalCompleted').text('0');
+            return;
+        }
+
+        $('#buyerPortalName').text(buyer.company_name || '--');
+        $('#buyerPortalCode').text(buyer.buyer_code || 'N/A');
+        $('#buyerPortalContact').text(buyer.contact_person || '--');
+
+        if (buyer.email) {
+            $('#buyerPortalEmail').text(buyer.email).attr('href', 'mailto:' + buyer.email);
+        } else {
+            $('#buyerPortalEmail').text('--').removeAttr('href');
+        }
+
+        $('#buyerPortalPhone').text(buyer.phone || '--');
+        var countryCurr = (buyer.country || '--') + ' (' + (buyer.currency || 'USD') + ')';
+        $('#buyerPortalCountryCurrency').text(countryCurr);
+        $('#buyerPortalPaymentTerms').text(buyer.payment_terms || '--');
+        $('#buyerPortalAddress').text(buyer.office_address || '--');
+
+        $('#buyerPortalTotalOrders').text(Number(response.total_orders || 0).toLocaleString());
+        $('#buyerPortalTotalQuantity').text(Number(response.total_quantity || 0).toLocaleString());
+        $('#buyerPortalInProduction').text(Number(response.in_production_orders || 0).toLocaleString());
+        $('#buyerPortalCompleted').text(Number(response.completed_orders || 0).toLocaleString());
+    }
+
     function loadBuyerSummary() {
+        var route = $('#buyer-data-route').val();
         var buyerId = $('#buyerPortalBuyerSelect').val();
+
         if (!buyerId) {
             var firstOption = $('#buyerPortalBuyerSelect option').first();
             if (firstOption.length) {
@@ -46,42 +90,28 @@
             }
         }
 
-        if (!buyerId) {
-            $('#buyerPortalName').text('--');
-            $('#buyerPortalEmail').text('');
-            $('#buyerPortalTotalOrders').text('--');
-            $('#buyerPortalTotalQuantity').text('--');
-            return;
-        }
+        if (!buyerId || !route) return;
 
         $.ajax({
-            url: $('#buyer-data-route').val(),
+            url: route,
             type: 'GET',
             data: { section: 'summary', buyer_id: buyerId },
             dataType: 'json',
             cache: false,
             success: function (response) {
-                $('#buyerPortalName').text(response.buyer?.company_name || '--');
-                $('#buyerPortalEmail').text(response.buyer?.email || '');
-                $('#buyerPortalTotalOrders').text(Number(response.total_orders || 0).toLocaleString());
-                $('#buyerPortalTotalQuantity').text(Number(response.total_quantity || 0).toLocaleString());
+                updateBuyerDisplay(response);
             },
             error: function () {
-                $('#buyerPortalName').text('--');
-                $('#buyerPortalEmail').text('');
-                $('#buyerPortalTotalOrders').text('--');
-                $('#buyerPortalTotalQuantity').text('--');
+                // If error, keep server-rendered defaults
             }
         });
     }
 
     $(document).ready(function () {
         var route = $('#buyer-data-route').val();
-        console.log('buyer portal init', route);
         if (!route) return;
 
-        loadBuyerSummary();
-
+        // Initialize DataTable
         var table = $('#buyerPortalOrdersTable').DataTable({
             pageLength: 10,
             ordering: false,
@@ -99,8 +129,12 @@
                     d.buyer_id = $('#buyerPortalBuyerSelect').val();
                 },
                 error: function (xhr, error, thrown) {
-                    console.error('buyer portal ajax error', xhr.status, thrown);
+                    console.error('Buyer portal datatable error', xhr.status, thrown);
                 }
+            },
+            language: {
+                processing: '<div class="text-center py-4 text-primary"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
+                emptyTable: '<div class="text-center py-4 text-muted"><i class="fa-regular fa-folder-open fa-2x mb-2 d-block"></i>No orders found for this buyer</div>'
             },
             dom: 't',
             columnDefs: [
@@ -110,11 +144,13 @@
                 }
             ],
             columns: [
-                { data: 'order_number', name: 'order_number', responsivePriority: 1 },
-                { data: 'description', name: 'description', searchable: false },
-                { data: 'quantity', name: 'quantity', searchable: false, orderable: false },
-                { data: 'delivery_date', name: 'delivery_date', searchable: false, orderable: false },
-                { data: 'status', name: 'status', searchable: false, orderable: false }
+                { data: 'order_number_html', name: 'order_number', responsivePriority: 1 },
+                { data: 'style', name: 'style', orderable: false },
+                { data: 'quantity', name: 'quantity', orderable: false },
+                { data: 'order_date', name: 'order_date' },
+                { data: 'delivery_date', name: 'delivery_date' },
+                { data: 'status', name: 'status', orderable: false },
+                { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-end' }
             ],
             drawCallback: function () {
                 var info = table.page.info();
@@ -136,7 +172,8 @@
             }
         });
 
-        $('#buyerPortalBuyerSelect').change(function () {
+        // Buyer Selection Change Listener
+        $('#buyerPortalBuyerSelect').on('change', function () {
             var buyerId = $(this).val();
             if (buyerId) {
                 $.ajax({
@@ -146,23 +183,14 @@
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
-                        $('#buyerPortalName').text(response.buyer?.company_name || '--');
-                        $('#buyerPortalEmail').text(response.buyer?.email || '');
-                        $('#buyerPortalTotalOrders').text(Number(response.total_orders || 0).toLocaleString());
-                        $('#buyerPortalTotalQuantity').text(Number(response.total_quantity || 0).toLocaleString());
+                        updateBuyerDisplay(response);
                     },
                     error: function () {
-                        $('#buyerPortalName').text('--');
-                        $('#buyerPortalEmail').text('');
-                        $('#buyerPortalTotalOrders').text('--');
-                        $('#buyerPortalTotalQuantity').text('--');
+                        updateBuyerDisplay(null);
                     }
                 });
             } else {
-                $('#buyerPortalName').text('--');
-                $('#buyerPortalEmail').text('');
-                $('#buyerPortalTotalOrders').text('--');
-                $('#buyerPortalTotalQuantity').text('--');
+                updateBuyerDisplay(null);
             }
             table.ajax.reload();
         });

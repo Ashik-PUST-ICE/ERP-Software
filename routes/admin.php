@@ -243,8 +243,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');
         Route::get('/merchandiser/insights/data', [MerchandiserInsightsController::class, 'data'])->name('merchandiser.insights.data');
         Route::post('/merchandiser/handover', [MerchandiserInsightsController::class, 'handover'])->name('merchandiser.handover');
+        Route::get('/merchandiser/assign', [MerchandiserManagementController::class, 'createAssign'])->name('merchandiser.assign.create');
         Route::post('/merchandiser/assign', [MerchandiserManagementController::class, 'assign'])->name('merchandiser.assign');
+        Route::get('/merchandiser/tasks/create', [MerchandiserManagementController::class, 'createTask'])->name('merchandiser.task.create');
         Route::post('/merchandiser/tasks', [MerchandiserManagementController::class, 'task'])->name('merchandiser.task');
+        Route::get('/merchandiser/communications/create', [MerchandiserManagementController::class, 'createCommunication'])->name('merchandiser.communication.create');
         Route::post('/merchandiser/communications', [MerchandiserManagementController::class, 'communication'])->name('merchandiser.communication');
         Route::post('/purchase-orders/{id}/approve', [ApprovalController::class, 'purchaseOrder'])->name('purchase-orders.approve');
         Route::post('/shipment-documents/{id}/approve', [ApprovalController::class, 'shipment'])->name('shipment-documents.approve');
