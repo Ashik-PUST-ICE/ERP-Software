@@ -1,6 +1,48 @@
 @extends('auto_posts.admin.layouts.admin')
 @push('title') {{ $title }} @endpush
+
+@push('script')
+<script src="{{ asset('admin/js/garment-merchandiser.js') }}?ver={{ env('VERSION', 0) }}"></script>
+@endpush
+
 @section('content')
+<input type="hidden" id="merchandiser-data-url" value="{{ route('admin.garments.merchandiser.index') }}">
+
 <div class="section-title"><h2 class="title">{{ __($title) }}</h2></div>
-<div class="row g-4"><div class="col-xl-7"><div class="section-wrap p-4"><h4 class="mb-3">{{ __('Order Follow-up') }}</h4><div class="table-responsive"><table class="table primary-table"><thead><tr><th>{{ __('Order') }}</th><th>{{ __('Buyer') }}</th><th>{{ __('Delivery') }}</th><th>{{ __('Qty') }}</th></tr></thead><tbody>@forelse($orders as $order)<tr><td>{{ $order->order_number }}</td><td>{{ $order->buyer?->company_name }}</td><td>{{ $order->delivery_date?->format('d M Y') }}</td><td>{{ number_format($order->quantity) }}</td></tr>@empty<tr><td colspan="4">{{ __('No active orders') }}</td></tr>@endforelse</tbody></table></div></div></div><div class="col-xl-5"><div class="section-wrap p-4"><h4 class="mb-3">{{ __('Overdue TNA Tasks') }}</h4>@forelse($overdueTasks as $task)<div class="border-bottom py-2"><strong>{{ $task->task_name }}</strong><p class="small text-muted mb-0">{{ $task->order?->order_number }} · {{ $task->planned_date?->format('d M Y') }}</p></div>@empty<p class="text-muted">{{ __('No overdue tasks') }}</p>@endforelse</div></div><div class="col-12"><div class="section-wrap p-4"><h4 class="mb-3">{{ __('Shipment Document Follow-up') }}</h4><div class="row g-3">@forelse($shipments as $shipment)<div class="col-md-4"><div class="border rounded p-3"><strong>{{ $shipment->document_number }}</strong><p class="mb-1">{{ $shipment->order?->order_number }}</p><span class="text-muted">{{ $shipment->carrier ?: __('Carrier not assigned') }}</span></div></div>@empty<p class="text-muted">{{ __('No pending shipments') }}</p>@endforelse</div></div></div></div>
+
+<div class="row g-4">
+    <div class="col-xl-7">
+        <div class="section-wrap p-4">
+            <h4 class="mb-3">{{ __('Order Follow-up') }}</h4>
+            <div class="table-responsive">
+                <table class="display primary-table w-100" id="merchandiserOrdersTable">
+                    <thead>
+                        <tr>
+                            <th class="keep-show">{{ __('Order') }}</th>
+                            <th>{{ __('Buyer') }}</th>
+                            <th>{{ __('Delivery') }}</th>
+                            <th class="keep-show">{{ __('Qty') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="4" class="text-center text-muted py-3"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading...') }}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="merchandiser-orders-pagination-wrap" class="d-flex justify-content-center mt-20 tablePagi"></div>
+        </div>
+    </div>
+    <div class="col-xl-5">
+        <div class="section-wrap p-4">
+            <h4 class="mb-3">{{ __('Overdue TNA Tasks') }}</h4>
+            <div id="merchandiserOverdueTasks"><div class="text-center text-muted py-3"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading...') }}</div></div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="section-wrap p-4">
+            <h4 class="mb-3">{{ __('Shipment Document Follow-up') }}</h4>
+            <div id="merchandiserShipments"><div class="text-center text-muted py-3"><i class="fa fa-spinner fa-spin"></i> {{ __('Loading...') }}</div></div>
+        </div>
+    </div>
+</div>
 @endsection

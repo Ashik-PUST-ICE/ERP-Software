@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-<input type="hidden" id="garment-analytics-data-url" value="{{ route('admin.garments.analytics.data') }}">
+<input type="hidden" id="garment-analytics-data-url" value="{{ route('admin.garments.analytics.api.cards') }}">
 
 <div class="section-title d-flex justify-content-between align-items-center">
     <h2 class="title">{{ __($title) }}</h2>
@@ -15,13 +15,18 @@
     </a>
 </div>
 
-<div class="row gy-4 mb-20 garment-analytics-kpis">
-    @foreach([['orders','Total Orders','fa-clipboard-list'],['planned_quantity','Planned Quantity','fa-bullseye'],['produced_quantity','Produced Quantity','fa-industry'],['achievement','Plan Achievement','fa-chart-line']] as $card)
-        <div class="col-xl-3 col-md-6">
+<div class="row gy-4 mb-20 garment-dashboard-kpis">
+    @foreach([
+        ['kpiAnalyticsOrders', 'Total Orders', 'fa-clipboard-list', '#4778c7'],
+        ['kpiAnalyticsPlanned', 'Planned Quantity', 'fa-bullseye', '#02BCFF'],
+        ['kpiAnalyticsProduced', 'Produced Quantity', 'fa-industry', '#0FA958'],
+        ['kpiAnalyticsAchievement', 'Plan Achievement', 'fa-chart-line', '#FFC402'],
+    ] as $card)
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
             <div class="card-box">
-                <span class="card-icon"><i class="fa-solid {{ $card[2] }}"></i></span>
+                <span class="card-icon"><i class="fa-solid {{ $card[2] }}" style="color:white;background:{{ $card[3] }};border-radius:50%;padding:11px;"></i></span>
                 <div class="card-info">
-                    <h2 id="analyticsKpi{{ ucfirst($card[0]) }}">--</h2>
+                    <h2 id="{{ $card[0] }}">--</h2>
                     <h3>{{ __($card[1]) }}</h3>
                 </div>
                 <span class="card-status up">{{ __('Live data') }} <span class="arrow"><i class="fa-solid fa-arrows-rotate"></i></span></span>

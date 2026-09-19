@@ -54,14 +54,16 @@
             dataType: 'json',
             cache: false,
             success: function (response) {
-                var kpis = response.kpis || {};
-                $('#analyticsKpiOrders').text(number(kpis.orders));
-                $('#analyticsKpiPlanned_quantity').text(number(kpis.planned_quantity));
-                $('#analyticsKpiProduced_quantity').text(number(kpis.produced_quantity));
-                $('#analyticsKpiAchievement').text(Number(kpis.achievement || 0).toFixed(1) + '%');
-                $('#analyticsKpiRejectionRate').text(Number(kpis.rejection_rate || 0).toFixed(1) + '%');
+                var kpis = response.cards || response.kpis || {};
+                $('#kpiAnalyticsOrders').text(Number(kpis.orders || 0).toLocaleString());
+                $('#kpiAnalyticsPlanned').text(Number(kpis.planned_quantity || 0).toLocaleString());
+                $('#kpiAnalyticsProduced').text(Number(kpis.produced_quantity || 0).toLocaleString());
+                $('#kpiAnalyticsAchievement').text(Number(kpis.achievement || 0).toFixed(1) + '%');
                 renderDailyOutput(response.daily_output || []);
                 renderOrderStatus(response.order_status || []);
+                if (response.kpis && response.kpis.rejection_rate !== undefined) {
+                    $('#analyticsKpiRejectionRate').text(Number(response.kpis.rejection_rate || 0).toFixed(1) + '%');
+                }
             },
             error: function () {
                 $('#garmentAnalyticsDailyOutput, #garmentAnalyticsOrderStatus').html('<p class="text-danger mb-0">Failed to load analytics data</p>');

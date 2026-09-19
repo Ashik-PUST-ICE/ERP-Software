@@ -22,9 +22,26 @@ class ProductionAnalyticsController extends Controller
         ]);
     }
 
-    public function data(): JsonResponse
+    public function data()
     {
-        return response()->json($this->summary());
+        $summary = $this->summary();
+
+        return view('admin.garments.analytics.data', [
+            'title' => __('Production Analytics Data'),
+            'summary' => $summary,
+            'activeGarments' => 'active',
+            'activeGarmentAnalytics' => 'active',
+            'showGarmentsMenu' => 'show',
+        ]);
+    }
+
+    public function apiCards()
+    {
+        $summary = $this->summary();
+
+        return response()->json([
+            'cards' => $summary['kpis'],
+        ]);
     }
 
     private function summary(): array

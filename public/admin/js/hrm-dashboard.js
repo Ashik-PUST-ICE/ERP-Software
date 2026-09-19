@@ -131,11 +131,13 @@
                     orderable: false, 
                     searchable: false,
                     render: function (data, type, row) {
-                        var match = data.match(/href="([^"]*approve[^"]*)"/);
-                        if (match) {
-                            return '<a href="' + match[1] + '" class="zBadge zBadge-complete">Approve</a>';
+                        if (data && typeof data === 'string') {
+                            var match = data.match(/href="([^"]*approve[^"]*)"/);
+                            if (match) {
+                                return '<a href="' + match[1] + '" class="zBadge zBadge-complete">Approve</a>';
+                            }
                         }
-                        return data;
+                        return data || '';
                     }
                 },
             ],
