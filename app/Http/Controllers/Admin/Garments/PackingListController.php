@@ -34,7 +34,7 @@ class PackingListController extends Controller
                     [$label, $class] = garmentPackingStatuses()[$row->status] ?? ['Unknown', 'zBadge-warning'];
                     return '<div class="zBadge ' . $class . '">' . __($label) . '</div>';
                 })
-                ->addColumn('action', fn ($row) => '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.packing-lists.edit', $row->id) . '\', \'#edit-packing-list-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.packing-lists.destroy', $row->id) . '\', \'garmentPackingListDataTable\')">' . __('Delete') . '</a></li></ul></div></div>')
+                ->addColumn('action', fn ($row) => '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.packing-lists.edit', $row->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.packing-lists.destroy', $row->id) . '\', \'garmentPackingListDataTable\')">' . __('Delete') . '</a></li></ul></div></div>')
                 ->rawColumns(['status', 'action'])
                 ->make(true);
         }
