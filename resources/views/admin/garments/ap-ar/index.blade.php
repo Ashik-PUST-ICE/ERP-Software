@@ -7,41 +7,45 @@
     <h2 class="title">{{ __($title) }}</h2>
 </div>
 
-<div class="row gy-4 mb-20 garment-ap-ar-kpis">
+<div class="row gy-4 mb-20 garment-dashboard-kpis">
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="card-box">
-            <span class="card-icon"><i class="fa-solid fa-file-invoice-dollar" style="color:white;background:#02BCFF;border-radius:50%;padding:11px;"></i></span>
+            <span class="card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
             <div class="card-info">
                 <h2 id="kpiInvoiceTotal">--</h2>
                 <h3>{{ __('Invoice Total') }}</h3>
             </div>
+            <span class="card-status up">{{ __('Total Billed') }} <span class="arrow"><i class="fa-solid fa-arrow-up"></i></span></span>
         </div>
     </div>
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="card-box">
-            <span class="card-icon"><i class="fa-solid fa-circle-check" style="color:white;background:#0FA958;border-radius:50%;padding:11px;"></i></span>
+            <span class="card-icon"><i class="fa-solid fa-circle-check"></i></span>
             <div class="card-info">
                 <h2 id="kpiCollectedTotal">--</h2>
                 <h3>{{ __('Collected') }}</h3>
             </div>
+            <span class="card-status up">{{ __('Total Received') }} <span class="arrow"><i class="fa-solid fa-arrow-up"></i></span></span>
         </div>
     </div>
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="card-box">
-            <span class="card-icon"><i class="fa-solid fa-hand-holding-dollar" style="color:white;background:#FF4F02;border-radius:50%;padding:11px;"></i></span>
+            <span class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
             <div class="card-info">
                 <h2 id="kpiReceivableTotal">--</h2>
                 <h3>{{ __('Receivable') }}</h3>
             </div>
+            <span class="card-status up">{{ __('Outstanding Balance') }} <span class="arrow"><i class="fa-solid fa-arrow-up"></i></span></span>
         </div>
     </div>
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="card-box">
-            <span class="card-icon"><i class="fa-solid fa-money-bill-transfer" style="color:white;background:#FFC402;border-radius:50%;padding:11px;"></i></span>
+            <span class="card-icon"><i class="fa-solid fa-money-bill-transfer"></i></span>
             <div class="card-info">
                 <h2 id="kpiPayablesTotal">--</h2>
                 <h3>{{ __('Payable Entries') }}</h3>
             </div>
+            <span class="card-status up">{{ __('Accounts Payable') }} <span class="arrow"><i class="fa-solid fa-arrow-up"></i></span></span>
         </div>
     </div>
 </div>
