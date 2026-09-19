@@ -25,7 +25,7 @@
             </li>
             <li class="divider"><span>{{ __('HRM Management') }}</span></li>
             <li class="{{ (isset($activeHrm) || isset($showHrmMenu) || isset($showHRMMenu) || isset($activeHrmDashboard) || isset($activeDepartment) || isset($activeDepartments) || isset($activeDesignation) || isset($activeDesignations) || isset($activeEmployee) || isset($activeEmployees) || isset($activeAttendance) || isset($activeAttendances) || isset($activeLeave) || isset($activeLeaves) || isset($activePayroll) || isset($activePayrolls)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#hrm-menu" data-bs-toggle="collapse" role="button"
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#hrm-menu" data-bs-toggle="collapse" role="button"
                     aria-expanded="{{ (isset($activeHrm) || isset($showHrmMenu) || isset($showHRMMenu) || isset($activeHrmDashboard) || isset($activeDepartment) || isset($activeDepartments) || isset($activeDesignation) || isset($activeDesignations) || isset($activeEmployee) || isset($activeEmployees) || isset($activeAttendance) || isset($activeAttendances) || isset($activeLeave) || isset($activeLeaves) || isset($activePayroll) || isset($activePayrolls)) ? 'true' : 'false' }}"
                     aria-controls="hrm-menu">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,7 +63,7 @@
             {{-- ========== SECTION 1: Merchandising & Sales ========== --}}
             <li class="divider"><span>{{ __('Merchandising & Sales') }}</span></li>
             <li class="{{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-overview-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'true' : 'false' }}" aria-controls="garments-overview-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-overview-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'true' : 'false' }}" aria-controls="garments-overview-menu">
                     <i class="fa-solid fa-chart-line" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Overview & Merchandising') }}
                 </a>
                 <ul id="garments-overview-menu" class="collapse {{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'show' : '' }}">
@@ -79,7 +79,7 @@
             {{-- ========== SECTION 2: Order & Materials ========== --}}
             <li class="divider"><span>{{ __('Order & Materials') }}</span></li>
             <li class="{{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-planning-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'true' : 'false' }}" aria-controls="garments-planning-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-planning-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'true' : 'false' }}" aria-controls="garments-planning-menu">
                     <i class="fa-solid fa-clipboard-list" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Order & Planning') }}
                 </a>
                 <ul id="garments-planning-menu" class="collapse {{ (isset($activeGarmentBuyers) || isset($activeGarmentStyles) || isset($activeGarmentOrders) || isset($activeGarmentCostings) || isset($activeGarmentCostingVariance) || isset($activeGarmentTna) || isset($activeGarmentPlans)) ? 'show' : '' }}">
@@ -93,7 +93,7 @@
                 </ul>
             </li>
             <li class="{{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-materials-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'true' : 'false' }}" aria-controls="garments-materials-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-materials-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'true' : 'false' }}" aria-controls="garments-materials-menu">
                     <i class="fa-solid fa-boxes-stacked" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Materials & Procurement') }}
                 </a>
                 <ul id="garments-materials-menu" class="collapse {{ (isset($activeGarmentMaterials) || isset($activeGarmentSuppliers) || isset($activeGarmentStockMovements) || isset($activeGarmentPurchaseOrders) || isset($activeGarmentGrns) || isset($activeGarmentIssues)) ? 'show' : '' }}">
@@ -110,7 +110,7 @@
             {{-- ========== SECTION 3: Production Floor ========== --}}
             <li class="divider"><span>{{ __('Production Floor') }}</span></li>
             <li class="{{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-production-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'true' : 'false' }}" aria-controls="garments-production-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-production-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'true' : 'false' }}" aria-controls="garments-production-menu">
                     <i class="fa-solid fa-gears" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Production Floor') }}
                 </a>
                 <ul id="garments-production-menu" class="collapse {{ (isset($activeGarmentCutting) || isset($activeGarmentSewing) || isset($activeGarmentEfficiency)) ? 'show' : '' }}">
@@ -123,7 +123,7 @@
             {{-- ========== SECTION 4: Quality & Export ========== --}}
             <li class="divider"><span>{{ __('Quality & Export') }}</span></li>
             <li class="{{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-quality-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'true' : 'false' }}" aria-controls="garments-quality-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-quality-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'true' : 'false' }}" aria-controls="garments-quality-menu">
                     <i class="fa-solid fa-clipboard-check" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Quality Control') }}
                 </a>
                 <ul id="garments-quality-menu" class="collapse {{ (isset($activeGarmentInlineQc) || isset($activeGarmentFinalInspection) || isset($activeGarmentDefects)) ? 'show' : '' }}">
@@ -133,7 +133,7 @@
                 </ul>
             </li>
             <li class="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-export-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'true' : 'false' }}" aria-controls="garments-export-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-export-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'true' : 'false' }}" aria-controls="garments-export-menu">
                     <i class="fa-solid fa-truck-fast" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Finishing & Export') }}
                 </a>
                 <ul id="garments-export-menu" class="collapse {{ (isset($activeGarmentFinishing) || isset($activeGarmentPacking) || isset($activeGarmentShipmentDocuments)) ? 'show' : '' }}">
@@ -146,7 +146,7 @@
             {{-- ========== SECTION 5: Finance & Administration ========== --}}
             <li class="divider"><span>{{ __('Finance & Administration') }}</span></li>
             <li class="{{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-finance-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'true' : 'false' }}" aria-controls="garments-finance-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-finance-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'true' : 'false' }}" aria-controls="garments-finance-menu">
                     <i class="fa-solid fa-coins" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Finance & Payments') }}
                 </a>
                 <ul id="garments-finance-menu" class="collapse {{ (isset($activeGarmentInvoices) || isset($activeGarmentProfitLoss) || isset($activeGarmentAccounting) || isset($activeGarmentApAr) || isset($activeGarmentPaymentGateways)) ? 'show' : '' }}">
@@ -158,7 +158,7 @@
                 </ul>
             </li>
             <li class="{{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-hr-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'true' : 'false' }}" aria-controls="garments-hr-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-hr-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'true' : 'false' }}" aria-controls="garments-hr-menu">
                     <i class="fa-solid fa-users-gear" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('HR Extension') }}
                 </a>
                 <ul id="garments-hr-menu" class="collapse {{ (isset($activeGarmentIncentive) || isset($activeGarmentProductionAttendance)) ? 'show' : '' }}">
@@ -167,7 +167,7 @@
                 </ul>
             </li>
             <li class="{{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#garments-system-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'true' : 'false' }}" aria-controls="garments-system-menu">
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#garments-system-menu" data-bs-toggle="collapse" role="button" aria-expanded="{{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'true' : 'false' }}" aria-controls="garments-system-menu">
                     <i class="fa-solid fa-shield-halved" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('System & Compliance') }}
                 </a>
                 <ul id="garments-system-menu" class="collapse {{ (isset($activeGarmentNotifications) || isset($activeGarmentAuditLogs)) ? 'show' : '' }}">
@@ -178,7 +178,7 @@
 
             <li class="divider"><span>{{ __('Access Control') }}</span></li>
             <li class="{{ isset($activeRoles) && $activeRoles == 'active' ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#roles-menu" data-bs-toggle="collapse" role="button"
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#roles-menu" data-bs-toggle="collapse" role="button"
                     aria-expanded="{{ isset($showRolesMenu) ? 'true' : 'false' }}" aria-controls="roles-menu">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -204,7 +204,7 @@
             <li class="divider"><span>{{ __('Billing Center') }}</span></li>
             <li
                 class="{{ (isset($activeBilling) && $activeBilling == 'active') || (isset($activePricing) && $activePricing == 'active') ? 'currrent-menu' : '' }}">
-                <a class="has-arrow" href="#billing-menu" data-bs-toggle="collapse" role="button"
+                <a class="has-arrow" href="javascript:void(0);" data-bs-target="#billing-menu" data-bs-toggle="collapse" role="button"
                     aria-expanded="{{ isset($showBillingMenu) ? 'true' : 'false' }}" aria-controls="billing-menu">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -244,3 +244,45 @@
     </div>
     <div class="sidebar-overlay"></div>
 </aside>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var container = document.querySelector('.sidebar-area .menu-wrapr');
+    if (!container) return;
+
+    function scrollActiveToCenter(smooth) {
+        var activeEl = container.querySelector('li.active > a, li.currrent-menu > a');
+        if (activeEl) {
+            var containerRect = container.getBoundingClientRect();
+            var elRect = activeEl.getBoundingClientRect();
+            var offset = (elRect.top - containerRect.top) - (containerRect.height / 2) + (elRect.height / 2);
+            container.scrollTo({
+                top: Math.max(0, container.scrollTop + offset),
+                behavior: smooth ? 'smooth' : 'auto'
+            });
+        }
+    }
+
+    // Auto-scroll active menu to middle on page load
+    setTimeout(function () {
+        scrollActiveToCenter(false);
+    }, 150);
+
+    // Keep active header in view on expand
+    container.querySelectorAll('.collapse').forEach(function (collapseEl) {
+        collapseEl.addEventListener('shown.bs.collapse', function () {
+            var parentLi = collapseEl.closest('li');
+            if (parentLi) {
+                var toggleLink = parentLi.querySelector('> a');
+                if (toggleLink) {
+                    var containerRect = container.getBoundingClientRect();
+                    var elRect = toggleLink.getBoundingClientRect();
+                    if (elRect.top < containerRect.top || elRect.bottom > containerRect.bottom) {
+                        toggleLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    }
+                }
+            }
+        });
+    });
+});
+</script>
