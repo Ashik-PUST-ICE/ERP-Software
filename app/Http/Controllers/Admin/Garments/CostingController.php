@@ -42,7 +42,7 @@ class CostingController extends Controller
                     return '<div class="inline-flex"><div class="dropdown options-area">
                         <a class="options-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.costings.edit', $costing->id) . '\', \'#edit-costing-modal\')">' . __('Edit') . '</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.costings.edit', $costing->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.costings.destroy', $costing->id) . '\', \'garmentCostingDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
                     </div></div>';

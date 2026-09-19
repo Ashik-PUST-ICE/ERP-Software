@@ -3,7 +3,7 @@
 @section('content')
 <div class="section-title">
     <h2 class="title">{{ __($title) }}</h2>
-    <button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-final-inspection-modal">
+    <button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal">
         <i class="fa fa-plus me-2"></i>{{ __('Add Inspection') }}
     </button>
 </div>
@@ -38,16 +38,16 @@
 </div>
 
 <!-- Add Modal -->
-<div class="modal fade zModalTwo" id="add-final-inspection-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+<div class="modal fade zModalTwo" id="add-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content zModalTwo-content">
-            @include('admin.garments.final-inspections.form',['inspection'=>null,'orders'=>$orders])
+            @include('admin.garments.final-inspections.form', ['inspection' => null, 'orders' => $orders])
         </div>
     </div>
 </div>
 
 <!-- Edit Modal -->
-<div class="modal fade zModalTwo" id="edit-final-inspection-modal" aria-hidden="true" tabindex="-1">
+<div class="modal fade zModalTwo" id="edit-modal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content zModalTwo-content"></div>
     </div>

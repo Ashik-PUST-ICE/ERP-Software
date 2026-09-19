@@ -55,21 +55,43 @@
         <div class="modal-content zModalTwo-content">
             <form method="post" action="{{ route('admin.garments.merchandiser.handover') }}" id="merchandiserHandoverForm">
                 @csrf
-                <div class="modal-body zModalTwo-body merchandiser-modal-body">
-                    <div class="merchandiser-modal-heading">
-                        <div class="merchandiser-form-icon"><i class="fa-solid fa-right-left"></i></div>
-                        <div><h4>{{ __('Order Handover') }}</h4><p>{{ __('Transfer order ownership') }}</p></div>
-                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
+                <div class="modal-body zModalTwo-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{ __('Order Handover') }}</h4>
+                        <div class="mClose">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
-                    <div class="merchandiser-handover-form">
-                        <label for="insightOrderSelect">{{ __('Order to hand over') }}</label>
-                        <div class="merchandiser-field"><i class="fa-solid fa-box"></i><select name="order_id" id="insightOrderSelect" required><option value="">{{ __('Loading orders...') }}</option></select></div>
-                        <small class="merchandiser-form-hint"><i class="fa-solid fa-circle-info"></i> {{ __('No active order is available. Create an order first from') }} <a href="{{ route('admin.garments.orders.index') }}">{{ __('Orders') }}</a>.</small>
-                        <label for="insightUserSelect">{{ __('Assign to merchandiser') }}</label>
-                        <div class="merchandiser-field"><i class="fa-solid fa-user"></i><select name="to_user_id" id="insightUserSelect" required><option value="">{{ __('Loading merchandisers...') }}</option></select></div>
-                        <label for="insightHandoverNotes">{{ __('Handover notes') }}</label>
-                        <textarea name="notes" id="insightHandoverNotes" rows="4" placeholder="{{ __('Add context or next steps for the new merchandiser...') }}" required></textarea>
-                        <button class="primary-btn merchandiser-submit" type="submit"><i class="fa-solid fa-share me-2"></i>{{ __('Hand Over Order') }}<i class="fa-solid fa-arrow-right ms-auto"></i></button>
+                    <div class="primary-form">
+                        <div class="row gy-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">{{ __('Order to hand over') }} <span class="required">*</span></label>
+                                    <select class="form-control" name="order_id" id="insightOrderSelect" required>
+                                        <option value="">{{ __('Loading orders...') }}</option>
+                                    </select>
+                                    <small class="text-muted d-block mt-1" style="font-size:12px;">{{ __('No active order is available. Create an order first from') }} <a href="{{ route('admin.garments.orders.index') }}">{{ __('Orders') }}</a>.</small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">{{ __('Assign to Merchandiser') }} <span class="required">*</span></label>
+                                    <select class="form-control" name="to_user_id" id="insightUserSelect" required>
+                                        <option value="">{{ __('Loading merchandisers...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">{{ __('Handover Notes') }} <span class="required">*</span></label>
+                                    <textarea class="form-control" name="notes" id="insightHandoverNotes" rows="3" placeholder="{{ __('Add context or next steps for the new merchandiser...') }}" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-list mt-4 pt-3 border-top">
+                        <button type="button" class="primary-btn" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="submit" class="primary-btn">{{ __('Hand Over Order') }}</button>
                     </div>
                 </div>
             </form>

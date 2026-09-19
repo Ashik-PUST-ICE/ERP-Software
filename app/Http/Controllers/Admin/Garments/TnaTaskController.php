@@ -42,7 +42,7 @@ class TnaTaskController extends Controller
                     return '<div class="inline-flex"><div class="dropdown options-area">
                         <a class="options-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.tna.edit', $task->id) . '\', \'#edit-tna-modal\')">' . __('Edit') . '</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.tna.edit', $task->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.tna.destroy', $task->id) . '\', \'garmentTnaDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
                     </div></div>';

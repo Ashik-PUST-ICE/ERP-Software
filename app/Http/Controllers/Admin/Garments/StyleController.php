@@ -37,7 +37,7 @@ class StyleController extends Controller
                     return '<div class="inline-flex"><div class="dropdown options-area">
                         <a class="options-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.styles.edit', $style->id) . '\', \'#edit-style-modal\')">' . __('Edit') . '</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.styles.edit', $style->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.styles.destroy', $style->id) . '\', \'garmentStyleDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
                     </div></div>';

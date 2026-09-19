@@ -47,7 +47,7 @@ class MaterialController extends Controller
                         <a class="options-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="' . route('admin.garments.materials.label', $material->id) . '" target="_blank">' . __('Print Barcode / QR') . '</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.materials.edit', $material->id) . '\', \'#edit-material-modal\')">' . __('Edit') . '</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.materials.edit', $material->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.materials.destroy', $material->id) . '\', \'garmentMaterialDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
                     </div></div>';

@@ -35,7 +35,7 @@ class StoreIssueController extends Controller
                     return '<div class="zBadge ' . $class . '">' . __($label) . '</div>';
                 })
                 ->addColumn('action', function ($issue) {
-                    return '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.issues.edit', $issue->id) . '\', \'#edit-issue-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.issues.destroy', $issue->id) . '\', \'garmentStoreIssueDataTable\')">' . __('Delete') . '</a></li></ul></div></div>';
+                    return '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.issues.edit', $issue->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.issues.destroy', $issue->id) . '\', \'garmentStoreIssueDataTable\')">' . __('Delete') . '</a></li></ul></div></div>';
                 })
                 ->rawColumns(['status', 'action'])->make(true);
         }

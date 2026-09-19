@@ -46,7 +46,7 @@ class GarmentOrderController extends Controller
                                 <i class="fa-solid fa-ellipsis"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.orders.edit', $order->id) . '\', \'#edit-order-modal\')">' . __('Edit') . '</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.orders.edit', $order->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.orders.destroy', $order->id) . '\', \'garmentOrderDataTable\')">' . __('Delete') . '</a></li>
                             </ul>
                         </div>

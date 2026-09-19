@@ -42,7 +42,7 @@ class FinalInspectionController extends Controller
                     return '<div class="inline-flex"><div class="dropdown options-area">
                         <a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.final-inspections.edit', $row->id) . '\', \'#edit-final-inspection-modal\')">' . __('Edit') . '</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.final-inspections.edit', $row->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.final-inspections.destroy', $row->id) . '\', \'garmentFinalInspectionDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
                     </div></div>';
