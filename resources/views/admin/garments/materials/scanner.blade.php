@@ -16,11 +16,8 @@
                             <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#6E5858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </label>
-                    <input type="text" class="search-input" id="searchData" placeholder="{{ __('Scan or enter barcode / item code') }}" />
+                    <input type="text" class="search-input" id="searchData" placeholder="{{ __('Search materials...') }}" />
                     <input type="hidden" id="scanner-data-route" value="{{ route('admin.garments.materials.scanner') }}">
-                    <input type="hidden" id="scanner-lookup-route" value="{{ route('admin.garments.materials.scanner.lookup') }}">
-                    <input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
-                    <button class="primary-btn ms-2" id="material-scanner-lookup" type="button" onclick="window.scannerFilter()">{{ __('Filter') }}</button>
                 </div>
 
                 <div id="material-scanner-result" class="mb-3"></div>

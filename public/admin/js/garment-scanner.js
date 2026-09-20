@@ -74,41 +74,7 @@
             }
         });
 
-        window.scannerFilter = function () {
-            var code = $('#searchData').val();
-            var result = $('#material-scanner-result');
-
-            if (!code) {
-                result.html('<div class="alert alert-danger">Please enter a barcode or item code.</div>');
-                return;
-            }
-
-            $.ajax({
-                url: $('#scanner-lookup-route').val(),
-                type: 'POST',
-                data: { code: code, _token: $('#csrf-token').val() },
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    result.html('<div class="alert alert-success"><strong>' + data.material.item_name + '</strong><br>Code: ' + data.material.item_code + '<br>Stock: ' + data.material.current_stock + ' ' + data.material.unit + '</div>');
-                    table.search(data.material.item_code).draw();
-                },
-                error: function (xhr) {
-                    result.html('<div class="alert alert-danger">' + (xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Material not found.') + '</div>');
-                }
-            });
-        };
-
-        $('#material-scanner-lookup').on('click', function (event) {
-            event.preventDefault();
-            window.scannerFilter();
-        });
-
-        $('#searchData').off('keyup.garmentScanner').on('keyup.garmentScanner', function (e) {
-            if (e.key === 'Enter') {
-                window.scannerFilter();
-                return;
-            }
+        $('#searchData').off('keyup.garmentScanner').on('keyup.garmentScanner', function () {
             table.search(this.value).draw();
         });
     });
