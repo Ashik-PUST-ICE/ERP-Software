@@ -123,5 +123,29 @@ class PayrollController extends Controller
 
         return Excel::download(new PayrollExport($month), 'payroll-' . $month . '.xlsx');
     }
+
+    public function printPayroll(Request $request)
+    {
+        $month = $request->get('month', now()->format('Y-m'));
+        $payrolls = Payroll::with('employee.department')
+            ->where('payroll_month', $month)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $summary = [
+            'total_basic' => Payroll::where('payroll_month', $month)->sum('basic_salary'),
+            'total_allowances' => Payroll::where('payroll_month', $month)->sum('allowances'),
+            'total_deductions' => Payroll::where('payroll_month', $month)->sum('deductions'),
+            'total_net' => Payroll::where('payroll_month', $month)->sum('net_salary'),
+            'paid_count' => Payroll::where('payroll_month', $month)->where('payment_status', PAYMENT_STATUS_PAID)->count(),
+            'unpaid_count' => Payroll::where('payroll_month', $month)->where('payment_status', PAYMENT_STATUS_PENDING)->count(),
+        ];
+
+        return view('admin.hrm.payroll.print', [
+            'month' => $month,
+            'payrolls' => $payrolls,
+            'summary' => $summary,
+        ]);
+    }
 }
 

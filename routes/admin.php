@@ -232,6 +232,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/mark-paid', [HrmPayrollController::class, 'markPaid'])->name('markPaid');
             Route::post('/bulk-pay', [HrmPayrollController::class, 'bulkPay'])->name('bulkPay');
             Route::get('/export', [HrmPayrollController::class, 'export'])->name('export');
+            Route::get('/print', [HrmPayrollController::class, 'printPayroll'])->name('print');
         });
     });
 
