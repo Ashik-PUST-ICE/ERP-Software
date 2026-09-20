@@ -53,6 +53,23 @@
                     </button>
                 </form>
 
+                <button class="primary-btn" type="button" onclick="window.print()">
+                    <i class="fa fa-print me-1"></i>{{ __('Print') }}
+                </button>
+
+                <div class="dropdown">
+                    <button class="primary-btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fa fa-download me-1"></i>{{ __('Export') }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.hrm.payroll.export', ['month' => $month]) }}">
+                                <i class="fa fa-file-excel me-2"></i>{{ __('Export Excel') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
                 @if($summary['unpaid_count'] > 0)
                 <form method="POST" action="{{ route('admin.hrm.payroll.bulkPay') }}">
                     @csrf

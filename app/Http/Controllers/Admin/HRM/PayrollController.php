@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin\HRM;
 
+use App\Exports\PayrollExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\HRM\PayrollRequest;
 use App\Http\Requests\Admin\HRM\PayrollPaymentRequest;
+use App\Http\Requests\Admin\HRM\PayrollRequest;
 use App\Http\Services\Admin\HRM\PayrollService;
 use App\Models\HRM\Payroll;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PayrollController extends Controller
 {
@@ -114,4 +116,12 @@ class PayrollController extends Controller
         }
         return back()->with('error', $data->message);
     }
+
+    public function export(Request $request)
+    {
+        $month = $request->get('month', now()->format('Y-m'));
+
+        return Excel::download(new PayrollExport($month), 'payroll-' . $month . '.xlsx');
+    }
 }
+
