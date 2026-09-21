@@ -231,6 +231,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::post('/generate', [HrmPayrollController::class, 'generate'])->name('generate');
             Route::get('/{id}/mark-paid', [HrmPayrollController::class, 'markPaid'])->name('markPaid');
             Route::post('/bulk-pay', [HrmPayrollController::class, 'bulkPay'])->name('bulkPay');
+            Route::get('/export', [HrmPayrollController::class, 'export'])->name('export');
+            Route::get('/print', [HrmPayrollController::class, 'printPayroll'])->name('print');
         });
     });
 
@@ -240,19 +242,24 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::get('/dashboard/data', [GarmentDashboardController::class, 'data'])->name('dashboard.data');
         Route::get('/merchandiser', [MerchandiserController::class, 'index'])->name('merchandiser.index');
         Route::get('/merchandiser/management', [MerchandiserManagementController::class, 'index'])->name('merchandiser.management');
+        Route::get('/merchandiser/management/data', [MerchandiserManagementController::class, 'data'])->name('merchandiser.management.data');
+        Route::get('/merchandiser/management/orders', [MerchandiserManagementController::class, 'orders'])->name('merchandiser.orders');
+        Route::get('/merchandiser/management/tasks', [MerchandiserManagementController::class, 'tasks'])->name('merchandiser.tasks');
+        Route::get('/merchandiser/management/communications', [MerchandiserManagementController::class, 'communications'])->name('merchandiser.communications');
         Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');
         Route::get('/merchandiser/insights/data', [MerchandiserInsightsController::class, 'data'])->name('merchandiser.insights.data');
         Route::post('/merchandiser/handover', [MerchandiserInsightsController::class, 'handover'])->name('merchandiser.handover');
-        Route::get('/merchandiser/assign', [MerchandiserManagementController::class, 'createAssign'])->name('merchandiser.assign.create');
+        Route::get('/merchandiser/assign/edit', [MerchandiserManagementController::class, 'editAssign'])->name('merchandiser.assign.create');
         Route::post('/merchandiser/assign', [MerchandiserManagementController::class, 'assign'])->name('merchandiser.assign');
-        Route::get('/merchandiser/tasks/create', [MerchandiserManagementController::class, 'createTask'])->name('merchandiser.task.create');
         Route::post('/merchandiser/tasks', [MerchandiserManagementController::class, 'task'])->name('merchandiser.task');
-        Route::get('/merchandiser/communications/create', [MerchandiserManagementController::class, 'createCommunication'])->name('merchandiser.communication.create');
+        Route::delete('/merchandiser/tasks/{id}', [MerchandiserManagementController::class, 'destroyTask'])->name('merchandiser.task.destroy');
         Route::post('/merchandiser/communications', [MerchandiserManagementController::class, 'communication'])->name('merchandiser.communication');
+        Route::delete('/merchandiser/communications/{id}', [MerchandiserManagementController::class, 'destroyCommunication'])->name('merchandiser.communication.destroy');
         Route::post('/purchase-orders/{id}/approve', [ApprovalController::class, 'purchaseOrder'])->name('purchase-orders.approve');
         Route::post('/shipment-documents/{id}/approve', [ApprovalController::class, 'shipment'])->name('shipment-documents.approve');
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
         Route::get('/buyer-portal', [BuyerPortalController::class, 'index'])->name('buyer-portal.index');
+        Route::get('/buyer-portal/data', [BuyerPortalController::class, 'data'])->name('buyer-portal.data');
         Route::get('/buyer-portal/orders/{id}', [BuyerPortalController::class, 'show'])->name('buyer-portal.orders.show');
         Route::get('/warehouses', [WarehouseController::class, 'index'])->name('warehouses.index');
         Route::get('/materials/scanner', [MaterialScannerController::class, 'index'])->name('materials.scanner');

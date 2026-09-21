@@ -5,12 +5,27 @@ namespace App\Http\Controllers\Admin\Garments;
 use App\Http\Controllers\Controller;
 use App\Models\Garments\Material;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class MaterialScannerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.garments.materials.scanner', ['title' => __('Material Barcode Scanner'), 'activeGarments' => 'active', 'activeGarmentMaterials' => 'active', 'showGarmentsMenu' => 'show']);
+        if ($request->ajax()) {
+            $materials = Material::query()->orderByDesc('id');
+
+            return DataTables::of($materials)
+                ->addIndexColumn()
+                ->addColumn('current_stock', fn ($material) => (float) $material->current_stock)
+                ->make(true);
+        }
+
+        return view('admin.garments.materials.scanner', [
+            'title' => __('Material Barcode Scanner'),
+            'activeGarments' => 'active',
+            'activeGarmentMaterials' => 'active',
+            'showGarmentsMenu' => 'show',
+        ]);
     }
 
     public function lookup(Request $request)

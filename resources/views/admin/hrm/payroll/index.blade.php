@@ -10,29 +10,41 @@
 <div class="settings-page-area">
     <div class="settings-page-right">
         {{-- Summary Cards --}}
-        <div class="row gy-3 mb-4">
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Total Basic') }}</p>
-                    <h4 class="fw-700">{{ showPrice($summary['total_basic']) }}</h4>
+        <div class="row gy-4 mb-20 garment-dashboard-kpis">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="card-box">
+                    <span class="card-icon"><i class="fa-solid fa-money-bill" style="color:white;background:#4778c7;border-radius:50%;padding:11px;"></i></span>
+                    <div class="card-info">
+                        <h2>{{ showPrice($summary['total_basic']) }}</h2>
+                        <h3>{{ __('Total Basic') }}</h3>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Total Allowances') }}</p>
-                    <h4 class="fw-700 text-success">{{ showPrice($summary['total_allowances']) }}</h4>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="card-box">
+                    <span class="card-icon"><i class="fa-solid fa-hand-holding-dollar" style="color:white;background:#0FA958;border-radius:50%;padding:11px;"></i></span>
+                    <div class="card-info">
+                        <h2>{{ showPrice($summary['total_allowances']) }}</h2>
+                        <h3>{{ __('Total Allowances') }}</h3>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Total Deductions') }}</p>
-                    <h4 class="fw-700 text-danger">{{ showPrice($summary['total_deductions']) }}</h4>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="card-box">
+                    <span class="card-icon"><i class="fa-solid fa-circle-minus" style="color:white;background:#FF6B35;border-radius:50%;padding:11px;"></i></span>
+                    <div class="card-info">
+                        <h2>{{ showPrice($summary['total_deductions']) }}</h2>
+                        <h3>{{ __('Total Deductions') }}</h3>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="section-wrap text-center">
-                    <p class="text-muted mb-1">{{ __('Net Payroll') }}</p>
-                    <h4 class="fw-700 text-primary">{{ showPrice($summary['total_net']) }}</h4>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="card-box">
+                    <span class="card-icon"><i class="fa-solid fa-sack-dollar" style="color:white;background:#FFC402;border-radius:50%;padding:11px;"></i></span>
+                    <div class="card-info">
+                        <h2>{{ showPrice($summary['total_net']) }}</h2>
+                        <h3>{{ __('Net Payroll') }}</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,6 +64,23 @@
                         <i class="fa fa-cog me-1"></i>{{ __('Generate Payroll') }}
                     </button>
                 </form>
+
+                <a class="primary-btn" href="{{ route('admin.hrm.payroll.print', ['month' => $month]) }}" target="_blank">
+                    <i class="fa fa-print me-1"></i>{{ __('Print') }}
+                </a>
+
+                <div class="dropdown">
+                    <button class="primary-btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fa fa-download me-1"></i>{{ __('Export') }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.hrm.payroll.export', ['month' => $month]) }}">
+                                <i class="fa fa-file-excel me-2"></i>{{ __('Export Excel') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
                 @if($summary['unpaid_count'] > 0)
                 <form method="POST" action="{{ route('admin.hrm.payroll.bulkPay') }}">

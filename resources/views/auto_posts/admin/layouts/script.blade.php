@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 @endif
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('common/js/common.js') }}"></script>
+<script src="{{ asset('admin/js/garment-card-loader.js') }}"></script>
 
 @stack('script')
 
