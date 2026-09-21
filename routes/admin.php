@@ -200,6 +200,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/', [HrmEmployeeController::class, 'index'])->name('index');
             Route::get('/create', [HrmEmployeeController::class, 'create'])->name('create');
             Route::post('/', [HrmEmployeeController::class, 'store'])->name('store');
+            Route::get('/export', [HrmEmployeeController::class, 'export'])->name('export');
+            Route::get('/print', [HrmEmployeeController::class, 'printReport'])->name('print');
             Route::get('/{id}', [HrmEmployeeController::class, 'show'])->name('show');
             Route::get('/{id}/edit', [HrmEmployeeController::class, 'edit'])->name('edit');
             Route::put('/{id}', [HrmEmployeeController::class, 'update'])->name('update');
@@ -213,6 +215,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         // Attendance
         Route::prefix('attendance')->name('attendance.')->group(function () {
             Route::get('/', [HrmAttendanceController::class, 'index'])->name('index');
+            Route::get('/export', [HrmAttendanceController::class, 'export'])->name('export');
+            Route::get('/print', [HrmAttendanceController::class, 'printReport'])->name('print');
             Route::post('/mark', [HrmAttendanceController::class, 'markAttendance'])->name('mark');
             Route::post('/bulk-mark', [HrmAttendanceController::class, 'bulkMark'])->name('bulkMark');
         });
@@ -220,6 +224,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         // Leave Requests
         Route::prefix('leaves')->name('leaves.')->group(function () {
             Route::get('/', [HrmLeaveController::class, 'index'])->name('index');
+            Route::get('/export', [HrmLeaveController::class, 'export'])->name('export');
+            Route::get('/print', [HrmLeaveController::class, 'printReport'])->name('print');
             Route::post('/', [HrmLeaveController::class, 'store'])->name('store');
             Route::get('/{id}/approve', [HrmLeaveController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [HrmLeaveController::class, 'reject'])->name('reject');

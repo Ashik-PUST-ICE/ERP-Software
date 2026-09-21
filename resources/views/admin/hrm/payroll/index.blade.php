@@ -1,4 +1,4 @@
-@extends('auto_posts.admin.layouts.admin')
+﻿@extends('auto_posts.admin.layouts.admin')
 
 @push('title') {{ $title }} @endpush
 
@@ -10,10 +10,10 @@
 <div class="settings-page-area">
     <div class="settings-page-right">
         {{-- Summary Cards --}}
-        <div class="row gy-4 mb-20 garment-dashboard-kpis">
+        <div class="row gy-4 mb-20 hrm-dashboard-kpis payroll-summary-kpis">
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div class="card-box">
-                    <span class="card-icon"><i class="fa-solid fa-money-bill" style="color:white;background:#4778c7;border-radius:50%;padding:11px;"></i></span>
+                    <span class="card-icon"><i class="fa-solid fa-money-bill"></i></span>
                     <div class="card-info">
                         <h2>{{ showPrice($summary['total_basic']) }}</h2>
                         <h3>{{ __('Total Basic') }}</h3>
@@ -22,7 +22,7 @@
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div class="card-box">
-                    <span class="card-icon"><i class="fa-solid fa-hand-holding-dollar" style="color:white;background:#0FA958;border-radius:50%;padding:11px;"></i></span>
+                    <span class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
                     <div class="card-info">
                         <h2>{{ showPrice($summary['total_allowances']) }}</h2>
                         <h3>{{ __('Total Allowances') }}</h3>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div class="card-box">
-                    <span class="card-icon"><i class="fa-solid fa-circle-minus" style="color:white;background:#FF6B35;border-radius:50%;padding:11px;"></i></span>
+                    <span class="card-icon"><i class="fa-solid fa-circle-minus"></i></span>
                     <div class="card-info">
                         <h2>{{ showPrice($summary['total_deductions']) }}</h2>
                         <h3>{{ __('Total Deductions') }}</h3>
@@ -40,7 +40,7 @@
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div class="card-box">
-                    <span class="card-icon"><i class="fa-solid fa-sack-dollar" style="color:white;background:#FFC402;border-radius:50%;padding:11px;"></i></span>
+                    <span class="card-icon"><i class="fa-solid fa-sack-dollar"></i></span>
                     <div class="card-info">
                         <h2>{{ showPrice($summary['total_net']) }}</h2>
                         <h3>{{ __('Net Payroll') }}</h3>

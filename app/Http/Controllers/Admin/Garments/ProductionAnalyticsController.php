@@ -43,6 +43,9 @@ class ProductionAnalyticsController extends Controller
 
         return response()->json([
             'cards' => $summary['kpis'],
+            'kpis' => $summary['kpis'],
+            'daily_output' => $summary['daily_output'],
+            'order_status' => $summary['order_status'],
         ]);
     }
 
