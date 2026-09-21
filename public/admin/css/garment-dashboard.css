@@ -278,6 +278,25 @@
     --hrm-card-dark: #653b9d;
 }
 
+.department-headcount-kpis .col-xl-4:nth-child(1) {
+    --hrm-card-color: #4778c7;
+    --hrm-card-dark: #315b9d;
+}
+
+.department-headcount-kpis .col-xl-4:nth-child(2) {
+    --hrm-card-color: #2c9567;
+    --hrm-card-dark: #1d704b;
+}
+
+.department-headcount-kpis .col-xl-4:nth-child(3) {
+    --hrm-card-color: #8b5fc7;
+    --hrm-card-dark: #653b9d;
+}
+
+.department-headcount-kpis .card-box {
+    min-height: 12.5rem;
+}
+
 .hrm-dashboard-kpis-secondary .col-xl-3:nth-child(1) {
     --hrm-card-color: #bd8517;
     --hrm-card-dark: #8d620d;

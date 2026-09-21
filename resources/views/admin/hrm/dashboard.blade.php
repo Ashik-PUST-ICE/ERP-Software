@@ -284,7 +284,7 @@
             <div class="section-small-title mb-20">
                 <h3 class="title">{{ __('Department Headcount') }}</h3>
             </div>
-            <div class="row gy-3" id="departmentStatsContainer">
+            <div class="row gy-3 hrm-dashboard-kpis department-headcount-kpis" id="departmentStatsContainer">
                 @php
                     $topDepartments = $departmentStats->sortByDesc('employees_count')->take(3);
                 @endphp
