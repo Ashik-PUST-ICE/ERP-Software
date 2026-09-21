@@ -40,7 +40,7 @@ function getSettingImage($option_key)
 
     if ($option_key && $option_key != null) {
         $setting = Setting::where('option_key', $option_key)->first();
-        if (isset($setting->option_value) && isset($setting->option_value) != null) {
+        if ($setting && filled($setting->option_value)) {
 
             $file = FileManager::select('path', 'storage_type')->find($setting->option_value);
 

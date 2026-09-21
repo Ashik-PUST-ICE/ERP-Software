@@ -510,6 +510,32 @@ class SettingController extends Controller
 
         $inputs = Arr::except($request->all(), ['_token']);
 
+        // Process image uploads explicitly because uploaded files may not be
+        // included in Request::all() when the form is submitted via AJAX.
+        $imageKeys = [
+            'app_preloader', 'app_logo', 'app_black_logo', 'app_fav_icon',
+            'login_left_image', 'page_breadcrumb', 'banner_background_breadcrumb',
+            'join_us_left_icon', 'join_us_middle_icon', 'join_us_right_icon',
+            'about_us_background_breadcrumb', 'upcoming_events_background',
+            'welcome_speech_image', 'hero_background_image', 'feature_image',
+            'about_us_image',
+        ];
+
+        foreach ($imageKeys as $key) {
+            if (!$request->hasFile($key)) {
+                continue;
+            }
+
+            $option = Setting::firstOrCreate(['option_key' => $key]);
+            $option->option_value = settingImageStoreUpdate(
+                $option->option_value,
+                $request->file($key)
+            );
+            $option->save();
+
+            unset($inputs[$key]);
+        }
+
         foreach ($inputs as $key => $value) {
 
             $option = Setting::firstOrCreate(['option_key' => $key]);

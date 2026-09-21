@@ -101,3 +101,21 @@
 .min-height-fix {
     min-height: calc(100vh - 110px);
 }
+
+/* Keep the sidebar image clear of the left edge and visually centered. */
+.sidebar-area .brand-logo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0 1rem 0 0.75rem;
+    transform: translateY(-0.4rem);
+}
+
+.sidebar-area .brand-logo img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin-left: auto;
+    object-fit: contain;
+    object-position: right top;
+}
