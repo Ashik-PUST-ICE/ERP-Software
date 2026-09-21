@@ -1,8 +1,6 @@
 @extends('auto_posts.admin.layouts.admin')
 
-@push('title')
-    {{ $title }}
-@endpush
+@push('title') {{ $title }} @endpush
 
 @section('content')
 <div class="section-title">
@@ -37,7 +35,7 @@
                                 <select name="order_id" class="form-control" required>
                                     <option value="">{{ __('Select order...') }}</option>
                                     @foreach($orders as $order)
-                                        <option value="{{ $order->id }}">
+                                        <option value="{{ $order->id }}" {{ old('order_id') == $order->id ? 'selected' : '' }}>
                                             {{ $order->order_number }}
                                             @if($order->buyer) ({{ $order->buyer->company_name }}) @endif
                                             @if($order->style) - {{ $order->style->style_code }} @endif
@@ -52,10 +50,10 @@
                             <div class="form-group">
                                 <label class="form-label">{{ __('Communication Channel') }} <span class="required">*</span></label>
                                 <select name="channel" class="form-control" required>
-                                    <option value="email">{{ __('Email') }}</option>
-                                    <option value="phone">{{ __('Phone Call') }}</option>
-                                    <option value="meeting">{{ __('In-person / Online Meeting') }}</option>
-                                    <option value="whatsapp">{{ __('WhatsApp / Messaging') }}</option>
+                                    <option value="email" {{ old('channel') == 'email' ? 'selected' : '' }}>{{ __('Email') }}</option>
+                                    <option value="phone" {{ old('channel') == 'phone' ? 'selected' : '' }}>{{ __('Phone Call') }}</option>
+                                    <option value="meeting" {{ old('channel') == 'meeting' ? 'selected' : '' }}>{{ __('In-person / Online Meeting') }}</option>
+                                    <option value="whatsapp" {{ old('channel') == 'whatsapp' ? 'selected' : '' }}>{{ __('WhatsApp / Messaging') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -64,7 +62,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Date & Time') }} <span class="required">*</span></label>
-                                <input type="datetime-local" name="communicated_at" class="form-control" value="{{ now()->format('Y-m-d\TH:i') }}" required>
+                                <input type="datetime-local" name="communicated_at" class="form-control"
+                                    value="{{ old('communicated_at', now()->format('Y-m-d\TH:i')) }}" required>
                             </div>
                         </div>
 
@@ -72,7 +71,8 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Subject / Topic') }}</label>
-                                <input type="text" name="subject" class="form-control" placeholder="{{ __('e.g. Fit sample approval & bulk fabric delivery update') }}">
+                                <input type="text" name="subject" class="form-control" value="{{ old('subject') }}"
+                                    placeholder="{{ __('e.g. Fit sample approval & bulk fabric delivery update') }}">
                             </div>
                         </div>
 
@@ -80,14 +80,15 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Discussion Summary / Notes') }} <span class="required">*</span></label>
-                                <textarea name="notes" class="form-control" rows="5" placeholder="{{ __('Provide detailed summary of communication, decisions made, buyer expectations, or next action items...') }}" required></textarea>
+                                <textarea name="notes" class="form-control" rows="5" required
+                                    placeholder="{{ __('Provide detailed summary of communication, decisions made, buyer expectations, or next action items...') }}">{{ old('notes') }}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- Action Buttons --}}
-                <div class="btn-list mt-4 pt-3" style="border-top:2px solid #f1f5f9;">
+                <div class="btn-list mt-4 pt-3" style="border-top: 2px solid #f1f5f9;">
                     <a href="{{ route('admin.garments.merchandiser.management') }}" class="primary-btn-outline d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i>{{ __('Cancel') }}
                     </a>

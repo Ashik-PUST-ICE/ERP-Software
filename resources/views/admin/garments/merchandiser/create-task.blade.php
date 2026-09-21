@@ -1,8 +1,6 @@
 @extends('auto_posts.admin.layouts.admin')
 
-@push('title')
-    {{ $title }}
-@endpush
+@push('title') {{ $title }} @endpush
 
 @section('content')
 <div class="section-title">
@@ -37,7 +35,7 @@
                                 <select name="order_id" class="form-control" required>
                                     <option value="">{{ __('Select order...') }}</option>
                                     @foreach($orders as $order)
-                                        <option value="{{ $order->id }}">
+                                        <option value="{{ $order->id }}" {{ old('order_id') == $order->id ? 'selected' : '' }}>
                                             {{ $order->order_number }}
                                             @if($order->buyer) ({{ $order->buyer->company_name }}) @endif
                                             @if($order->style) - {{ $order->style->style_code }} @endif
@@ -46,7 +44,6 @@
                                 </select>
                             </div>
                         </div>
-
                         {{-- Merchandiser --}}
                         <div class="col-md-6">
                             <div class="form-group">
@@ -54,7 +51,9 @@
                                 <select name="user_id" class="form-control" required>
                                     <option value="">{{ __('Select merchandiser...') }}</option>
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }} ({{ $user->email }})
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -64,7 +63,8 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Task Title') }} <span class="required">*</span></label>
-                                <input type="text" name="title" class="form-control" placeholder="{{ __('e.g. Submit lab dip / trim card to buyer') }}" required>
+                                <input type="text" name="title" class="form-control"
+                                    value="{{ old('title') }}" placeholder="{{ __('e.g. Submit lab dip / trim card to buyer') }}" required>
                             </div>
                         </div>
 
@@ -73,9 +73,9 @@
                             <div class="form-group">
                                 <label class="form-label">{{ __('Priority') }} <span class="required">*</span></label>
                                 <select name="priority" class="form-control" required>
-                                    <option value="1">{{ __('Low') }}</option>
-                                    <option value="2" selected>{{ __('Medium') }}</option>
-                                    <option value="3">{{ __('High') }}</option>
+                                    <option value="1" {{ old('priority', 2) == 1 ? 'selected' : '' }}>{{ __('Low') }}</option>
+                                    <option value="2" {{ old('priority', 2) == 2 ? 'selected' : '' }}>{{ __('Medium') }}</option>
+                                    <option value="3" {{ old('priority', 2) == 3 ? 'selected' : '' }}>{{ __('High') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Due Date') }}</label>
-                                <input type="date" name="due_date" class="form-control">
+                                <input type="date" name="due_date" class="form-control" value="{{ old('due_date') }}">
                             </div>
                         </div>
 
@@ -92,14 +92,15 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Notes & Instructions') }}</label>
-                                <textarea name="notes" class="form-control" rows="4" placeholder="{{ __('Provide detailed task instructions, buyer feedback, or milestones...') }}"></textarea>
+                                <textarea name="notes" class="form-control" rows="4"
+                                    placeholder="{{ __('Provide detailed task instructions, buyer feedback, or milestones...') }}">{{ old('notes') }}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- Action Buttons --}}
-                <div class="btn-list mt-4 pt-3" style="border-top:2px solid #f1f5f9;">
+                <div class="btn-list mt-4 pt-3" style="border-top: 2px solid #f1f5f9;">
                     <a href="{{ route('admin.garments.merchandiser.management') }}" class="primary-btn-outline d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i>{{ __('Cancel') }}
                     </a>

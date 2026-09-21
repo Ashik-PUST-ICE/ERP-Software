@@ -1,61 +1,6 @@
 @extends('auto_posts.admin.layouts.admin')
 
-@push('title')
-    {{ $title }}
-@endpush
-
-@push('style')
-{{-- Select2 4.1.0-rc.0 CSS is already bundled in assets/css/plugins.css (loaded globally by the admin layout) --}}
-<style>
-.select2-container--default .select2-selection--multiple {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    min-height: 45px;
-    padding: 4px 10px;
-    background-color: #fff;
-    transition: border-color .2s ease;
-}
-.select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: #4778c7;
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba(71, 120, 199, 0.15);
-}
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #4778c7;
-    border: 1px solid #3b66aa;
-    color: #ffffff;
-    border-radius: 6px;
-    padding: 3px 10px;
-    font-size: 13px;
-    font-weight: 500;
-    margin-top: 4px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-    color: #ffffff;
-    margin-right: 6px;
-    border-right: 1px solid rgba(255, 255, 255, 0.35);
-    padding-right: 6px;
-    font-weight: bold;
-}
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-    color: #fee2e2;
-    background-color: transparent;
-}
-.select2-dropdown {
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
-    z-index: 9999;
-}
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-    background-color: #4778c7;
-    color: #fff;
-}
-</style>
-@endpush
+@push('title') {{ $title }} @endpush
 
 @section('content')
 <div class="section-title">
@@ -71,6 +16,12 @@
             <form action="{{ route('admin.garments.merchandiser.assign') }}" method="POST">
                 @csrf
 
+                @php
+                    $primaryId = old('primary_user_id', $selectedOrder?->merchandisers->firstWhere('pivot.is_primary', true)?->id);
+                    $assignedIds = collect(old('user_ids', $selectedOrder ? $selectedOrder->merchandisers->pluck('id')->all() : []))
+                        ->map(fn ($id) => (int) $id)->all();
+                @endphp
+
                 <div class="primary-form">
                     <div class="row gy-3">
                         {{-- Section Title --}}
@@ -83,11 +34,6 @@
                             <hr style="border-color:#f1f5f9;margin-bottom:16px;">
                         </div>
 
-                        @php
-                            $primaryId = $selectedOrder?->merchandisers->firstWhere('pivot.is_primary', true)?->id;
-                            $assignedIds = $selectedOrder ? $selectedOrder->merchandisers->pluck('id')->all() : [];
-                        @endphp
-
                         {{-- Select Order --}}
                         <div class="col-md-6">
                             <div class="form-group">
@@ -95,7 +41,8 @@
                                 <select name="order_id" class="form-control" required>
                                     <option value="">{{ __('Select order...') }}</option>
                                     @foreach($orders as $order)
-                                        <option value="{{ $order->id }}" @selected(isset($selectedOrder) && $selectedOrder->id === $order->id)>
+                                        <option value="{{ $order->id }}"
+                                            {{ old('order_id', $selectedOrder->id ?? '') == $order->id ? 'selected' : '' }}>
                                             {{ $order->order_number }}
                                             @if($order->buyer) ({{ $order->buyer->company_name }}) @endif
                                             @if($order->style) - {{ $order->style->style_code }} @endif
@@ -105,14 +52,14 @@
                             </div>
                         </div>
 
-                        {{-- Primary Merchandiser --}}
+                        {{-- Lead / Primary Merchandiser --}}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Lead / Primary Merchandiser') }}</label>
                                 <select name="primary_user_id" class="form-control">
                                     <option value="">{{ __('Select lead merchandiser (optional)...') }}</option>
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}" @selected(isset($primaryId) && $primaryId === $user->id)>
+                                        <option value="{{ $user->id }}" {{ (int) $primaryId === $user->id ? 'selected' : '' }}>
                                             {{ $user->name }} ({{ $user->email }})
                                         </option>
                                     @endforeach
@@ -120,13 +67,14 @@
                             </div>
                         </div>
 
-                        {{-- Merchandisers Team Multi-Select using multipleSelect2 from package create --}}
+                        {{-- Merchandisers Team Multi-Select --}}
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">{{ __('Assign Merchandisers (Team)') }} <span class="required">*</span></label>
-                                <select class="multipleSelect2" multiple="true" name="user_ids[]" required>
+                                <select class="form-control multiple-basic-single" multiple="multiple" name="user_ids[]" required>
+                                    <option value=""></option>
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}" @selected(in_array($user->id, $assignedIds))>
+                                        <option value="{{ $user->id }}" {{ in_array($user->id, $assignedIds) ? 'selected' : '' }}>
                                             {{ $user->name }} ({{ $user->email }})
                                         </option>
                                     @endforeach
@@ -141,7 +89,7 @@
                 </div>
 
                 {{-- Submit Buttons --}}
-                <div class="btn-list mt-4 pt-3" style="border-top:2px solid #f1f5f9;">
+                <div class="btn-list mt-4 pt-3" style="border-top: 2px solid #f1f5f9;">
                     <a href="{{ route('admin.garments.merchandiser.management') }}" class="primary-btn-outline d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i>{{ __('Cancel') }}
                     </a>
@@ -154,17 +102,3 @@
     </div>
 </div>
 @endsection
-
-@push('script')
-{{-- Select2 4.1.0-rc.0 JS is already bundled in assets/js/plugins.js (loaded globally by the admin layout) --}}
-<script>
-$(document).ready(function() {
-    // Select2 multi-select using the bundled (plugins.js) library
-    $(".multipleSelect2").select2({
-        placeholder: "{{ __('Select Merchandisers...') }}",
-        allowClear: true,
-        width: '100%'
-    });
-});
-</script>
-@endpush
