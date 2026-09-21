@@ -5,7 +5,9 @@ use App\Models\User;
 use App\Models\Garments\GarmentOrder;
 use App\Models\Garments\MerchandiserTask;
 use App\Models\Garments\BuyerCommunication;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class MerchandiserManagementController extends Controller
@@ -14,11 +16,51 @@ class MerchandiserManagementController extends Controller
     {
         return view('admin.garments.merchandiser.management', [
             'title' => __('Merchandiser Assignments & Activities'),
-            'orders' => GarmentOrder::with('merchandisers')->latest()->take(30)->get(),
-            'users' => User::where('status', STATUS_ACTIVE)->orderBy('name')->get(),
-            'tasks' => MerchandiserTask::with('order')->latest()->take(30)->get(),
-            'communications' => BuyerCommunication::with('order')->latest('communicated_at')->take(30)->get(),
             'activeGarments' => 'active', 'activeGarmentMerchandiser' => 'active', 'showGarmentsMenu' => 'show',
+        ]);
+    }
+
+    public function data(): JsonResponse
+    {
+        $orders = GarmentOrder::with(['buyer', 'style', 'merchandisers'])->latest()->take(30)->get();
+        $tasks = MerchandiserTask::with('order')->latest()->take(30)->get();
+        $communications = BuyerCommunication::with('order')->latest('communicated_at')->take(30)->get();
+
+        return response()->json([
+            'cards' => [
+                'orders' => $orders->count(),
+                'tasks' => $tasks->count(),
+                'communications' => $communications->count(),
+            ],
+            'orders' => $orders->map(fn ($order) => [
+                'id' => $order->id,
+                'label' => trim($order->order_number . ' - ' . ($order->buyer?->company_name ?: __('Buyer not assigned'))),
+                'order_number' => $order->order_number,
+                'buyer' => $order->buyer?->company_name ?: __('Not assigned'),
+                'style' => $order->style?->style_code ?: __('Not assigned'),
+                'primary' => $order->merchandisers->firstWhere('pivot.is_primary', true)?->name,
+                'team' => $order->merchandisers->map(fn ($merchandiser) => [
+                    'name' => $merchandiser->name,
+                    'is_primary' => (bool) $merchandiser->pivot->is_primary,
+                ])->values(),
+                'manage_url' => route('admin.garments.merchandiser.assign.create', ['order_id' => $order->id]),
+            ])->values(),
+            'tasks' => $tasks->map(fn ($task) => [
+                'id' => $task->id,
+                'title' => $task->title,
+                'order' => $task->order?->order_number ?: __('Not assigned'),
+                'due_date' => $task->due_date?->format('d M Y'),
+                'status_label' => $task->status == 3 ? __('Done') : ($task->status == 2 ? __('Active') : __('Pending')),
+                'status_class' => $task->status == 3 ? 'zBadge-complete' : ($task->status == 2 ? 'zBadge-primary' : 'zBadge-warning'),
+            ])->values(),
+            'communications' => $communications->map(fn ($communication) => [
+                'id' => $communication->id,
+                'channel' => ucfirst((string) $communication->channel),
+                'order' => $communication->order?->order_number ?: __('Not assigned'),
+                'subject' => $communication->subject ?: Str::limit((string) $communication->notes, 90),
+                'date' => $communication->communicated_at?->format('d M Y, H:i'),
+            ])->values(),
+            'users' => User::where('status', STATUS_ACTIVE)->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
