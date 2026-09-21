@@ -3,15 +3,17 @@
 @push('title') {{ $title }} @endpush
 
 @section('content')
-<div class="section-title">
+<div class="section-title d-flex justify-content-between align-items-center flex-wrap gap-2">
     <h2 class="title">{{ __($title) }}
         @if($pendingCount > 0)
             <span class="zBadge zBadge-warning ms-2">{{ $pendingCount }} {{ __('Pending') }}</span>
         @endif
     </h2>
-    <button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal">
-        <i class="fa fa-plus me-2"></i>{{ __('New Request') }}
-    </button>
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <a class="primary-btn hrm-report-link" href="{{ route('admin.hrm.leaves.print') }}" data-base-url="{{ route('admin.hrm.leaves.print') }}" data-filters="filterStatus:status,filterEmployee:employee_id" target="_blank"><i class="fa fa-print me-1"></i>{{ __('Print') }}</a>
+        <a class="primary-btn hrm-report-link" href="{{ route('admin.hrm.leaves.export') }}" data-base-url="{{ route('admin.hrm.leaves.export') }}" data-filters="filterStatus:status,filterEmployee:employee_id"><i class="fa fa-download me-1"></i>{{ __('Export') }}</a>
+        <button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal"><i class="fa fa-plus me-2"></i>{{ __('New Request') }}</button>
+    </div>
 </div>
 
 <div class="settings-page-area">
@@ -169,5 +171,6 @@
 @endsection
 
 @push('script')
+<script src="{{ asset('admin/js/hrm-report-actions.js') }}"></script>
 <script src="{{ asset('admin/js/hrm-leaves.js') }}"></script>
 @endpush

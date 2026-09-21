@@ -170,6 +170,35 @@ class EmployeeController extends Controller
         return $this->employeeService->destroy($id);
     }
 
+    public function export(Request $request)
+    {
+        $employees = $this->reportQuery($request)->get();
+        return response()->streamDownload(function () use ($employees) {
+            $output = fopen('php://output', 'w');
+            fputcsv($output, ['Employee Code', 'Employee', 'Department', 'Designation', 'Phone', 'Status']);
+            foreach ($employees as $employee) {
+                fputcsv($output, [$employee->employee_code, trim($employee->first_name . ' ' . $employee->last_name), $employee->department?->name ?? 'N/A', $employee->designation?->name ?? 'N/A', $employee->phone, $employee->status == EMPLOYEE_STATUS_ACTIVE ? 'Active' : ($employee->status == EMPLOYEE_STATUS_ON_LEAVE ? 'On Leave' : 'Terminated')]);
+            }
+            fclose($output);
+        }, 'employees-' . now()->format('Y-m-d') . '.csv', ['Content-Type' => 'text/csv']);
+    }
+
+    public function printReport(Request $request)
+    {
+        $rows = $this->reportQuery($request)->get()->map(fn ($employee) => [
+            $employee->employee_code, trim($employee->first_name . ' ' . $employee->last_name), $employee->department?->name ?? 'N/A', $employee->designation?->name ?? 'N/A', $employee->phone, $employee->status == EMPLOYEE_STATUS_ACTIVE ? 'Active' : ($employee->status == EMPLOYEE_STATUS_ON_LEAVE ? 'On Leave' : 'Terminated'),
+        ])->all();
+        return view('admin.hrm.reports.print', ['title' => __('Employees'), 'columns' => ['Employee Code', 'Employee', 'Department', 'Designation', 'Phone', 'Status'], 'rows' => $rows]);
+    }
+
+    private function reportQuery(Request $request)
+    {
+        $query = HrmEmployee::with(['department', 'designation'])->orderByDesc('id');
+        if ($request->filled('department_id')) $query->where('department_id', $request->department_id);
+        if ($request->filled('status')) $query->where('status', $request->status);
+        return $query;
+    }
+
     public function getDesignations(Request $request)
     {
         $designations = Designation::where('department_id', $request->department_id)

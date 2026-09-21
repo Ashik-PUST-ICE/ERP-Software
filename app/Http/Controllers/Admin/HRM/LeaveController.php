@@ -112,4 +112,48 @@ class LeaveController extends Controller
         }
         return back()->with('error', $response->getData()->message);
     }
+
+    public function export(Request $request)
+    {
+        $leaves = $this->reportQuery($request)->get();
+
+        return response()->streamDownload(function () use ($leaves) {
+            $output = fopen('php://output', 'w');
+            fputcsv($output, ['Employee', 'Leave Type', 'Start Date', 'End Date', 'Days', 'Status']);
+            foreach ($leaves as $leave) {
+                fputcsv($output, [
+                    $leave->employee ? trim($leave->employee->first_name . ' ' . $leave->employee->last_name) : 'N/A',
+                    ucfirst($leave->leave_type ?? 'N/A'),
+                    optional($leave->start_date)->format('d M Y'),
+                    optional($leave->end_date)->format('d M Y'),
+                    $leave->days_count ?? 0,
+                    $leave->status == LEAVE_STATUS_APPROVED ? 'Approved' : ($leave->status == LEAVE_STATUS_REJECTED ? 'Rejected' : 'Pending'),
+                ]);
+            }
+            fclose($output);
+        }, 'leave-requests-' . now()->format('Y-m-d') . '.csv', ['Content-Type' => 'text/csv']);
+    }
+
+    public function printReport(Request $request)
+    {
+        $leaves = $this->reportQuery($request)->get();
+        $rows = $leaves->map(fn ($leave) => [
+            $leave->employee ? trim($leave->employee->first_name . ' ' . $leave->employee->last_name) : 'N/A',
+            ucfirst($leave->leave_type ?? 'N/A'),
+            optional($leave->start_date)->format('d M Y'),
+            optional($leave->end_date)->format('d M Y'),
+            $leave->days_count ?? 0,
+            $leave->status == LEAVE_STATUS_APPROVED ? 'Approved' : ($leave->status == LEAVE_STATUS_REJECTED ? 'Rejected' : 'Pending'),
+        ])->all();
+
+        return view('admin.hrm.reports.print', ['title' => __('Leave Requests'), 'columns' => ['Employee', 'Leave Type', 'Start Date', 'End Date', 'Days', 'Status'], 'rows' => $rows]);
+    }
+
+    private function reportQuery(Request $request)
+    {
+        $query = LeaveModel::with('employee')->orderByDesc('id');
+        if ($request->filled('status')) $query->where('status', $request->status);
+        if ($request->filled('employee_id')) $query->where('employee_id', $request->employee_id);
+        return $query;
+    }
 }

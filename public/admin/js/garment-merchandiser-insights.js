@@ -46,10 +46,10 @@
             cache: false,
             success: function (response) {
                 var cards = response.cards || {};
-                $('#insightOrders').text(number(cards.orders));
-                $('#insightOverdueTasks').text(number(cards.overdue_tasks));
-                $('#insightDeliveryRisk').text(number(cards.delivery_risk));
-                $('#insightBuyers').text(number(cards.buyers));
+                $('#insightOrders').text(number(cards.orders ?? cards.orderCount));
+                $('#insightOverdueTasks').text(number(cards.overdue_tasks ?? cards.overdueTasks));
+                $('#insightDeliveryRisk').text(number(cards.delivery_risk ?? cards.deliveryRisk));
+                $('#insightBuyers').text(number(cards.buyers ?? cards.buyerCount));
                 renderOptions('#insightOrderSelect', response.orders, 'Select Order', null);
                 renderOptions('#insightUserSelect', response.users, 'New Merchandiser', 'name');
                 renderHistory(response.handovers || []);

@@ -125,4 +125,33 @@ class AttendanceController extends Controller
         }
         return back()->with('error', $response->getData()->message);
     }
+
+    public function export(Request $request)
+    {
+        $attendances = $this->reportQuery($request)->get();
+        return response()->streamDownload(function () use ($attendances) {
+            $output = fopen('php://output', 'w');
+            fputcsv($output, ['Date', 'Employee Code', 'Employee', 'Department', 'Check In', 'Check Out', 'Status']);
+            foreach ($attendances as $attendance) {
+                fputcsv($output, [$attendance->date?->format('d M Y'), $attendance->employee?->employee_code ?? 'N/A', $attendance->employee?->full_name ?? 'N/A', $attendance->employee?->department?->name ?? 'N/A', $attendance->check_in ?? '—', $attendance->check_out ?? '—', ucfirst($attendance->status)]);
+            }
+            fclose($output);
+        }, 'attendance-' . ($request->get('date', today()->toDateString())) . '.csv', ['Content-Type' => 'text/csv']);
+    }
+
+    public function printReport(Request $request)
+    {
+        $rows = $this->reportQuery($request)->get()->map(fn ($attendance) => [
+            $attendance->date?->format('d M Y'), $attendance->employee?->employee_code ?? 'N/A', $attendance->employee?->full_name ?? 'N/A', $attendance->employee?->department?->name ?? 'N/A', $attendance->check_in ?? '—', $attendance->check_out ?? '—', ucfirst($attendance->status),
+        ])->all();
+        return view('admin.hrm.reports.print', ['title' => __('Attendance'), 'columns' => ['Date', 'Employee Code', 'Employee', 'Department', 'Check In', 'Check Out', 'Status'], 'rows' => $rows]);
+    }
+
+    private function reportQuery(Request $request)
+    {
+        $query = Attendance::with(['employee.department'])->whereDate('date', $request->get('date', today()->toDateString()))->orderByDesc('id');
+        if ($request->filled('status')) $query->where('status', $request->status);
+        if ($request->filled('department_id')) $query->whereHas('employee', fn ($q) => $q->where('department_id', $request->department_id));
+        return $query;
+    }
 }

@@ -3,8 +3,12 @@
 @push('title') {{ $title }} @endpush
 
 @section('content')
-<div class="section-title">
+<div class="section-title d-flex justify-content-between align-items-center flex-wrap gap-2">
     <h2 class="title">{{ __($title) }}</h2>
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <a class="primary-btn hrm-report-link" href="{{ route('admin.hrm.attendance.print') }}" data-base-url="{{ route('admin.hrm.attendance.print') }}" data-filters="filterDate:date,filterStatus:status,filterDepartment:department_id" target="_blank"><i class="fa fa-print me-1"></i>{{ __('Print') }}</a>
+        <a class="primary-btn hrm-report-link" href="{{ route('admin.hrm.attendance.export') }}" data-base-url="{{ route('admin.hrm.attendance.export') }}" data-filters="filterDate:date,filterStatus:status,filterDepartment:department_id"><i class="fa fa-download me-1"></i>{{ __('Export') }}</a>
+    </div>
 </div>
 
 <div class="settings-page-area">
@@ -133,5 +137,6 @@
 @endsection
 
 @push('script')
+<script src="{{ asset('admin/js/hrm-report-actions.js') }}"></script>
 <script src="{{ asset('admin/js/hrm-attendance.js') }}"></script>
 @endpush

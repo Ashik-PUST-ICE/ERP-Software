@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin\Garments;
 
 use App\Http\Controllers\Controller;
+use App\Models\Garments\Buyer;
 use App\Models\Garments\FinishingEntry;
 use App\Models\Garments\GarmentOrder;
+use App\Models\Garments\InlineQc;
 use App\Models\Garments\Material;
+use App\Models\Garments\ProductionPlan;
 use App\Models\Garments\ShipmentDocument;
 use App\Models\Notification;
 use Carbon\Carbon;
@@ -15,11 +18,28 @@ class GarmentDashboardController extends Controller
 {
     public function index()
     {
+        $overdueOrders = GarmentOrder::whereDate('delivery_date', '<', Carbon::today())->whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->count();
+        $lowStock = Material::whereColumn('current_stock', '<=', 'reorder_level')->count();
+        $pendingFinishing = FinishingEntry::whereIn('status', [GARMENT_FINISHING_STATUS_PENDING, GARMENT_FINISHING_STATUS_IN_PROGRESS])->count();
+        $readyShipments = ShipmentDocument::where('status', GARMENT_SHIPMENT_STATUS_READY)->count();
+        $totalActiveOrders = GarmentOrder::whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->count();
+        $totalBuyers = Buyer::count();
+        $pendingProductionPlans = ProductionPlan::where('status', '!=', 'completed')->count();
+        $pendingQc = InlineQc::where('status', 'pending')->count();
+
         return view('admin.garments.dashboard', [
             'title' => __('Garments Dashboard'),
             'activeGarments' => 'active',
             'activeGarmentDashboard' => 'active',
             'showGarmentsMenu' => 'show',
+            'overdueOrders' => $overdueOrders,
+            'lowStock' => $lowStock,
+            'pendingFinishing' => $pendingFinishing,
+            'readyShipments' => $readyShipments,
+            'totalActiveOrders' => $totalActiveOrders,
+            'totalBuyers' => $totalBuyers,
+            'pendingProductionPlans' => $pendingProductionPlans,
+            'pendingQc' => $pendingQc,
         ]);
     }
 
@@ -37,6 +57,10 @@ class GarmentDashboardController extends Controller
                 'lowStock' => Material::whereColumn('current_stock', '<=', 'reorder_level')->count(),
                 'pendingFinishing' => FinishingEntry::whereIn('status', [GARMENT_FINISHING_STATUS_PENDING, GARMENT_FINISHING_STATUS_IN_PROGRESS])->count(),
                 'readyShipments' => ShipmentDocument::where('status', GARMENT_SHIPMENT_STATUS_READY)->count(),
+                'totalActiveOrders' => GarmentOrder::whereNotIn('status', [GARMENT_ORDER_STATUS_COMPLETED, GARMENT_ORDER_STATUS_CANCELLED])->count(),
+                'totalBuyers' => Buyer::count(),
+                'pendingProductionPlans' => ProductionPlan::where('status', '!=', 'completed')->count(),
+                'pendingQc' => InlineQc::where('status', 'pending')->count(),
             ],
             'orders' => $orders->map(fn ($order) => [
                 'number' => $order->order_number,
