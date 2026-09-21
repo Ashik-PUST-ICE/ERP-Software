@@ -133,7 +133,7 @@ class AttendanceController extends Controller
             $output = fopen('php://output', 'w');
             fputcsv($output, ['Date', 'Employee Code', 'Employee', 'Department', 'Check In', 'Check Out', 'Status']);
             foreach ($attendances as $attendance) {
-                fputcsv($output, [$attendance->date?->format('d M Y'), $attendance->employee?->employee_code ?? 'N/A', $attendance->employee?->full_name ?? 'N/A', $attendance->employee?->department?->name ?? 'N/A', $attendance->check_in ?? '—', $attendance->check_out ?? '—', ucfirst($attendance->status)]);
+                fputcsv($output, [$attendance->date?->format('d M Y'), $attendance->employee?->employee_code ?? 'N/A', $attendance->employee?->full_name ?? 'N/A', $attendance->employee?->department?->name ?? 'N/A', $attendance->check_in ?? '—', $attendance->check_out ?? '—', $this->statusLabel($attendance->status)]);
             }
             fclose($output);
         }, 'attendance-' . ($request->get('date', today()->toDateString())) . '.csv', ['Content-Type' => 'text/csv']);
@@ -142,7 +142,7 @@ class AttendanceController extends Controller
     public function printReport(Request $request)
     {
         $rows = $this->reportQuery($request)->get()->map(fn ($attendance) => [
-            $attendance->date?->format('d M Y'), $attendance->employee?->employee_code ?? 'N/A', $attendance->employee?->full_name ?? 'N/A', $attendance->employee?->department?->name ?? 'N/A', $attendance->check_in ?? '—', $attendance->check_out ?? '—', ucfirst($attendance->status),
+            $attendance->date?->format('d M Y'), $attendance->employee?->employee_code ?? 'N/A', $attendance->employee?->full_name ?? 'N/A', $attendance->employee?->department?->name ?? 'N/A', $attendance->check_in ?? '—', $attendance->check_out ?? '—', $this->statusLabel($attendance->status),
         ])->all();
         return view('admin.hrm.reports.print', ['title' => __('Attendance'), 'columns' => ['Date', 'Employee Code', 'Employee', 'Department', 'Check In', 'Check Out', 'Status'], 'rows' => $rows]);
     }
@@ -153,5 +153,17 @@ class AttendanceController extends Controller
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('department_id')) $query->whereHas('employee', fn ($q) => $q->where('department_id', $request->department_id));
         return $query;
+    }
+
+    private function statusLabel($status): string
+    {
+        return match ((int) $status) {
+            ATTENDANCE_STATUS_PRESENT => 'Present',
+            ATTENDANCE_STATUS_LATE => 'Late',
+            ATTENDANCE_STATUS_ABSENT => 'Absent',
+            ATTENDANCE_STATUS_HALF_DAY => 'Half Day',
+            ATTENDANCE_STATUS_ON_LEAVE => 'On Leave',
+            default => ucfirst((string) $status),
+        };
     }
 }

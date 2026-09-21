@@ -33,17 +33,12 @@
         <div class="col-xl-6">
             <div class="section-wrap p-4 h-100 merchandiser-panel">
                 <div class="section-small-title"><h3 class="title">{{ __('Order Handover') }}</h3><i class="fa-solid fa-right-left text-primary"></i></div>
-                <form method="post" action="{{ route('admin.garments.merchandiser.handover') }}" class="merchandiser-handover-form">
-                    @csrf
-                    <div class="merchandiser-form-heading"><span class="merchandiser-form-icon"><i class="fa-solid fa-people-arrows"></i></span><div><h4>{{ __('Assign a new merchandiser') }}</h4><p>{{ __('Keep order ownership and notes in one place.') }}</p></div></div>
-                    <label for="insightOrderSelect">{{ __('Order') }}</label>
-                    <div class="merchandiser-field"><i class="fa-solid fa-box"></i><select name="order_id" id="insightOrderSelect" required><option value="">{{ __('Select Order') }}</option>@foreach($orders as $order)<option value="{{ $order->id }}">{{ $order->order_number }} - {{ $order->buyer?->company_name }}</option>@endforeach</select></div>
-                    <label for="insightUserSelect">{{ __('New Merchandiser') }}</label>
-                    <div class="merchandiser-field"><i class="fa-solid fa-user"></i><select name="to_user_id" id="insightUserSelect" required><option value="">{{ __('New Merchandiser') }}</option>@foreach($users as $user)<option value="{{ $user->id }}">{{ $user->name }}</option>@endforeach</select></div>
-                    <label for="handoverNotes">{{ __('Handover Notes') }}</label>
-                    <textarea name="notes" id="handoverNotes" placeholder="{{ __('Handover notes') }}" required></textarea>
-                    <button class="primary-btn merchandiser-submit" type="submit"><i class="fa-solid fa-paper-plane"></i>{{ __('Hand Over Order') }}</button>
-                </form>
+                <div class="merchandiser-handover-cta">
+                    <div class="merchandiser-cta-graphic"><i class="fa-solid fa-people-arrows"></i><span><i class="fa-solid fa-arrow-right"></i></span><i class="fa-solid fa-user-tie"></i></div>
+                    <h4>{{ __('Assign a new merchandiser') }}</h4>
+                    <p>{{ __('Move an order to another merchandiser with notes and a complete handover history.') }}</p>
+                    <button type="button" class="primary-btn merchandiser-open-modal" data-bs-toggle="modal" data-bs-target="#orderHandoverModal"><i class="fa-solid fa-right-left me-1"></i>{{ __('Hand Over Order') }}</button>
+                </div>
             </div>
         </div>
         <div class="col-xl-6">
@@ -60,5 +55,44 @@
         </div>
     </div>
     <button type="button" class="mt-2" data-card-retry hidden>{{ __('Retry loading metrics') }}</button>
+</div>
+
+<div class="modal fade zModalTwo" id="orderHandoverModal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content zModalTwo-content">
+            <form method="post" action="{{ route('admin.garments.merchandiser.handover') }}" class="merchandiser-handover-form">
+                @csrf
+                <div class="modal-body zModalTwo-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="merchandiser-form-heading mb-0 pb-0 border-0"><span class="merchandiser-form-icon"><i class="fa-solid fa-people-arrows"></i></span><div><h4>{{ __('Assign a new merchandiser') }}</h4><p>{{ __('Keep order ownership and notes in one place.') }}</p></div></div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="primary-form">
+                        <div class="row gy-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="insightOrderSelect">{{ __('Order') }} <span class="required">*</span></label>
+                                    <select class="form-control" name="order_id" id="insightOrderSelect" required><option value="">{{ __('Select Order') }}</option>@foreach($orders as $order)<option value="{{ $order->id }}">{{ $order->order_number }} - {{ $order->buyer?->company_name }}</option>@endforeach</select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="insightUserSelect">{{ __('New Merchandiser') }} <span class="required">*</span></label>
+                                    <select class="form-control" name="to_user_id" id="insightUserSelect" required><option value="">{{ __('New Merchandiser') }}</option>@foreach($users as $user)<option value="{{ $user->id }}">{{ $user->name }}</option>@endforeach</select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="handoverNotes">{{ __('Handover Notes') }} <span class="required">*</span></label>
+                                    <textarea class="form-control" name="notes" id="handoverNotes" rows="3" placeholder="{{ __('Handover notes') }}" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-list mt-4 pt-3 border-top"><button type="button" class="primary-btn" data-bs-dismiss="modal">{{ __('Cancel') }}</button><button class="primary-btn merchandiser-submit" type="submit"><i class="fa-solid fa-paper-plane"></i>{{ __('Hand Over Order') }}</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
