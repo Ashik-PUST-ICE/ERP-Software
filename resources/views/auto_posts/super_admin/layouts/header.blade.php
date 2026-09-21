@@ -59,6 +59,8 @@
         {{ getOption('custom_css') }}
     </style>
 
+    <link rel="stylesheet" href="{{ asset('admin/css/header-extra.css') }}">
+
     @if(getOption('google_analytics_status', 0))
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ getOption('google_analytics_tracking_id') }}"></script>
