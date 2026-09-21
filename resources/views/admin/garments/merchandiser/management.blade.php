@@ -13,76 +13,30 @@
         <div class="col-xl-4">
             <div class="section-wrap p-4">
                 <h4>{{ __('Assign Merchandisers') }}</h4>
-                <form method="post" action="{{ route('admin.garments.merchandiser.assign') }}">
-                    @csrf
-                    <select name="order_id" class="form-control mb-2" required>
-                        <option value="">{{ __('Order') }}</option>
-                        @foreach($orders as $order)
-                            <option value="{{ $order->id }}">{{ $order->order_number }}</option>
-                        @endforeach
-                    </select>
-                    <select name="user_ids[]" class="form-control mb-2" multiple required>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    <select name="primary_user_id" class="form-control mb-2">
-                        <option value="">{{ __('Primary merchandiser') }}</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    <button class="primary-btn">{{ __('Assign') }}</button>
-                </form>
+                <p class="text-muted mb-3">{{ __('Assign primary and team merchandisers to a garment order on a dedicated page.') }}</p>
+                <a href="{{ route('admin.garments.merchandiser.assign.create') }}" class="primary-btn d-inline-flex align-items-center gap-2">
+                    <i class="fa-solid fa-user-gear"></i>{{ __('Assign') }}
+                </a>
             </div>
         </div>
 
         <div class="col-xl-4">
             <div class="section-wrap p-4">
                 <h4>{{ __('Create Task') }}</h4>
-                <form method="post" action="{{ route('admin.garments.merchandiser.task') }}">
-                    @csrf
-                    <select name="order_id" class="form-control mb-2" required>
-                        <option value="">{{ __('Order') }}</option>
-                        @foreach($orders as $order)
-                            <option value="{{ $order->id }}">{{ $order->order_number }}</option>
-                        @endforeach
-                    </select>
-                    <select name="user_id" class="form-control mb-2" required>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    <input name="title" class="form-control mb-2" placeholder="{{ __('Task title') }}" required>
-                    <input type="date" name="due_date" class="form-control mb-2">
-                    <textarea name="notes" class="form-control mb-2" placeholder="{{ __('Notes') }}"></textarea>
-                    <input type="hidden" name="priority" value="2">
-                    <button class="primary-btn">{{ __('Create Task') }}</button>
-                </form>
+                <p class="text-muted mb-3">{{ __('Delegate a follow-up task to a merchandiser on a dedicated page.') }}</p>
+                <a href="{{ route('admin.garments.merchandiser.task.create') }}" class="primary-btn d-inline-flex align-items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i>{{ __('Create Task') }}
+                </a>
             </div>
         </div>
 
         <div class="col-xl-4">
             <div class="section-wrap p-4">
                 <h4>{{ __('Buyer Communication') }}</h4>
-                <form method="post" action="{{ route('admin.garments.merchandiser.communication') }}">
-                    @csrf
-                    <select name="order_id" class="form-control mb-2" required>
-                        <option value="">{{ __('Order') }}</option>
-                        @foreach($orders as $order)
-                            <option value="{{ $order->id }}">{{ $order->order_number }}</option>
-                        @endforeach
-                    </select>
-                    <select name="channel" class="form-control mb-2">
-                        @foreach(['email', 'phone', 'meeting', 'whatsapp'] as $channel)
-                            <option value="{{ $channel }}">{{ ucfirst($channel) }}</option>
-                        @endforeach
-                    </select>
-                    <input type="datetime-local" name="communicated_at" class="form-control mb-2" required>
-                    <input name="subject" class="form-control mb-2" placeholder="{{ __('Subject') }}">
-                    <textarea name="notes" class="form-control mb-2" placeholder="{{ __('Communication notes') }}" required></textarea>
-                    <button class="primary-btn">{{ __('Save Log') }}</button>
-                </form>
+                <p class="text-muted mb-3">{{ __('Log buyer communication entries (email, phone, meeting, WhatsApp) on a dedicated page.') }}</p>
+                <a href="{{ route('admin.garments.merchandiser.communication.create') }}" class="primary-btn d-inline-flex align-items-center gap-2">
+                    <i class="fa-solid fa-comments"></i>{{ __('Log Entry') }}
+                </a>
             </div>
         </div>
     </div>
