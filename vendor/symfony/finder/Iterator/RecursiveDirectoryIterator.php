@@ -51,6 +51,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
     /**
      * Return an instance of SplFileInfo with support for relative paths.
      */
+    #[\ReturnTypeWillChange]
     public function current(): SplFileInfo
     {
         // the logic here avoids redoing the same work in all iterations

@@ -40,6 +40,6 @@
         });
         $('#costingSearchData').off('keyup.garmentCosting').on('keyup.garmentCosting', function () { table.search(this.value).draw(); });
         $(document).on('input', '.costing-component, #costing-fob-input', updateCostingSummary);
-        $(document).on('shown.bs.modal', '#add-costing-modal, #edit-costing-modal', updateCostingSummary);
+        $(document).on('shown.bs.modal', '#add-modal, #edit-modal', updateCostingSummary);
     });
 })(jQuery);

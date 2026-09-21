@@ -15,7 +15,7 @@
 </div>
 
 {{-- KPI Cards (card-box style matching super admin) --}}
-<div class="row gy-4 mb-20">
+<div class="row gy-4 mb-20 hrm-dashboard-kpis">
 
     {{-- Total Employees --}}
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">
@@ -103,7 +103,7 @@
 </div>
 
 {{-- Second row: Today details + Department count --}}
-<div class="row gy-4 mb-20">
+<div class="row gy-4 mb-20 hrm-dashboard-kpis hrm-dashboard-kpis-secondary">
 
     {{-- Today Late --}}
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6">

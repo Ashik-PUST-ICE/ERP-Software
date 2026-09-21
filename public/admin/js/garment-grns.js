@@ -34,6 +34,6 @@
         });
         $('#grnSearchData').off('keyup.garmentGrn').on('keyup.garmentGrn', function () { table.search(this.value).draw(); });
         $(document).on('input', '#grn-received-quantity, #grn-rejected-quantity', updateAcceptedQuantity);
-        $(document).on('shown.bs.modal', '#add-grn-modal, #edit-grn-modal', updateAcceptedQuantity);
+        $(document).on('shown.bs.modal', '#add-modal, #edit-modal', updateAcceptedQuantity);
     });
 })(jQuery);

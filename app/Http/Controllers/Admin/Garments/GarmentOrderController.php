@@ -32,8 +32,8 @@ class GarmentOrderController extends Controller
                 })
                 ->addColumn('style_name', fn ($order) => e($order->style ? $order->style->style_code . ' - ' . $order->style->style_name : 'N/A'))
                 ->addColumn('buyer_name', fn ($order) => e($order->buyer?->company_name ?? 'N/A'))
-                ->addColumn('quantity_display', fn ($order) => number_format($order->quantity))
-                ->addColumn('delivery_date_display', fn ($order) => $order->delivery_date?->format('d M Y') ?? 'N/A')
+                ->addColumn('quantity_display', fn ($order) => number_format((float) ($order->quantity ?? 0)))
+                ->addColumn('delivery_date_display', fn ($order) => $order->delivery_date ? \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') : 'N/A')
                 ->addColumn('status', function ($order) {
                     $labels = garmentOrderStatuses();
                     [$label, $class] = $labels[$order->status] ?? ['Unknown', 'zBadge-warning'];
@@ -46,7 +46,7 @@ class GarmentOrderController extends Controller
                                 <i class="fa-solid fa-ellipsis"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.orders.edit', $order->id) . '\', \'#edit-order-modal\')">' . __('Edit') . '</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.orders.edit', $order->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.orders.destroy', $order->id) . '\', \'garmentOrderDataTable\')">' . __('Delete') . '</a></li>
                             </ul>
                         </div>

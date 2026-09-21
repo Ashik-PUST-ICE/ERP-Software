@@ -7,13 +7,68 @@ use App\Models\Garments\GarmentOrder;
 use App\Models\Garments\Invoice;
 use App\Models\Garments\GarmentPaymentGateway;
 use App\Http\Services\Payment\Payment as GatewayPayment;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
-    public function index()
+    use ResponseTrait;
+
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $invoices = Invoice::with('order.buyer')->latest('issue_date');
+
+            return datatables($invoices)
+                ->addIndexColumn()
+                ->addColumn('sl', function ($row) {
+                    static $count = 0;
+                    return ++$count;
+                })
+                ->addColumn('invoice_number', fn ($row) => e($row->invoice_number))
+                ->addColumn('order_number', fn ($row) => e($row->order?->order_number ?? '-'))
+                ->addColumn('buyer_name', fn ($row) => e($row->order?->buyer?->company_name ?? '-'))
+                ->addColumn('issue_date_display', fn ($row) => $row->issue_date ? $row->issue_date->format('d M Y') : '-')
+                ->addColumn('due_date_display', fn ($row) => $row->due_date ? $row->due_date->format('d M Y') : '-')
+                ->addColumn('total_display', fn ($row) => e($row->currency) . ' ' . number_format((float) $row->total_amount, 2))
+                ->addColumn('paid_display', fn ($row) => number_format((float) $row->paid_amount, 2))
+                ->addColumn('status', function ($row) {
+                    $statusClass = match ($row->status) {
+                        'paid' => 'zBadge-complete',
+                        'partially_paid' => 'zBadge-warning',
+                        'overdue', 'cancelled' => 'zBadge-deactive',
+                        default => 'zBadge-active',
+                    };
+                    return '<div class="zBadge ' . $statusClass . '">' . __(ucwords(str_replace('_', ' ', $row->status))) . '</div>';
+                })
+                ->addColumn('action', function ($row) {
+                    $hasOutstanding = ((float) $row->total_amount > (float) $row->paid_amount);
+                    $paymentBtn = '<li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#payment-modal-' . $row->id . '">' . __('Record Payment') . '</a></li>';
+                    $onlineBtn = $hasOutstanding ? '<li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gateway-payment-modal-' . $row->id . '">' . __('Online Payment') . '</a></li>' : '';
+                    $editBtn = '<li><a class="dropdown-item" href="' . route('admin.garments.invoices.edit', $row->id) . '">' . __('Edit') . '</a></li>';
+                    $printBtn = '<li><a class="dropdown-item" target="_blank" href="' . route('admin.garments.invoices.print', $row->id) . '">' . __('Print') . '</a></li>';
+                    $deleteBtn = '<li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.invoices.destroy', $row->id) . '\', \'garmentInvoiceDataTable\')">' . __('Delete') . '</a></li>';
+
+                    return '<div class="inline-flex">
+                        <div class="dropdown options-area">
+                            <a class="options-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                ' . $paymentBtn . '
+                                ' . $onlineBtn . '
+                                ' . $editBtn . '
+                                ' . $printBtn . '
+                                ' . $deleteBtn . '
+                            </ul>
+                        </div>
+                    </div>';
+                })
+                ->rawColumns(['status', 'action'])
+                ->make(true);
+        }
+
         return view('admin.garments.invoices.index', [
             'title' => __('Commercial Invoices'),
             'orders' => GarmentOrder::with('buyer')->latest()->get(),
@@ -47,6 +102,10 @@ class InvoiceController extends Controller
         $data['paid_amount'] = $data['paid_amount'] ?? 0;
         $data['total_amount'] = (float) $data['amount'] + (float) $data['tax_amount'];
         Invoice::create($data);
+
+        if ($request->ajax()) {
+            return $this->success([], __('Invoice created successfully.'));
+        }
 
         return redirect()->route('admin.garments.invoices.index')->with('success', __('Invoice created successfully.'));
     }
@@ -88,9 +147,16 @@ class InvoiceController extends Controller
         $data['tax_amount'] = $data['tax_amount'] ?? 0;
         $data['total_amount'] = (float) $data['amount'] + (float) $data['tax_amount'];
         if ($data['total_amount'] < (float) $invoice->paid_amount) {
+            if ($request->ajax()) {
+                return $this->error([], __('Invoice total cannot be less than the amount already paid.'));
+            }
             abort(422, __('Invoice total cannot be less than the amount already paid.'));
         }
         $invoice->update($data);
+
+        if ($request->ajax()) {
+            return $this->success([], __('Invoice updated successfully.'));
+        }
 
         return redirect()->route('admin.garments.invoices.index')->with('success', __('Invoice updated successfully.'));
     }
@@ -99,10 +165,17 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($id);
         if ($invoice->payments()->exists()) {
+            if (request()->ajax()) {
+                return $this->error([], __('Paid invoices cannot be deleted. Reverse or refund payments first.'));
+            }
             return redirect()->route('admin.garments.invoices.index')
                 ->with('error', __('Paid invoices cannot be deleted. Reverse or refund payments first.'));
         }
         $invoice->delete();
+
+        if (request()->ajax()) {
+            return $this->success([], __('Invoice deleted successfully.'));
+        }
 
         return redirect()->route('admin.garments.invoices.index')->with('success', __('Invoice deleted successfully.'));
     }
@@ -133,6 +206,10 @@ class InvoiceController extends Controller
             $invoice->status = (float) $invoice->paid_amount >= (float) $invoice->total_amount ? 'paid' : 'partially_paid';
             $invoice->save();
         });
+
+        if ($request->ajax()) {
+            return $this->success([], __('Payment recorded successfully.'));
+        }
 
         return redirect()->route('admin.garments.invoices.index')->with('success', __('Payment recorded successfully.'));
     }

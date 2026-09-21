@@ -23,8 +23,12 @@
                     <div class="row gy-3">
                         {{-- Personal Info --}}
                         <div class="col-12">
-                            <h5 class="fw-600 mb-2">{{ __('Personal Information') }}</h5>
-                            <hr>
+                            <h5 class="fw-600 mb-2 d-flex align-items-center gap-2" style="color:#0f172a;">
+                                <span style="width:4px;height:20px;background:#4778c7;border-radius:4px;display:inline-block;"></span>
+                                <i class="fa-solid fa-user text-primary"></i>
+                                {{ __('Personal Information') }}
+                            </h5>
+                            <hr style="border-color:#f1f5f9;margin-bottom:16px;">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -88,8 +92,12 @@
 
                         {{-- Job Info --}}
                         <div class="col-12 mt-3">
-                            <h5 class="fw-600 mb-2">{{ __('Job Information') }}</h5>
-                            <hr>
+                            <h5 class="fw-600 mb-2 d-flex align-items-center gap-2" style="color:#0f172a;">
+                                <span style="width:4px;height:20px;background:#2c9567;border-radius:4px;display:inline-block;"></span>
+                                <i class="fa-solid fa-briefcase text-success"></i>
+                                {{ __('Job Information') }}
+                            </h5>
+                            <hr style="border-color:#f1f5f9;margin-bottom:16px;">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -149,9 +157,14 @@
                     </div>
                 </div>
 
-                <div class="btn-list mt-4 pt-3 border-top">
-                    <a href="{{ route('admin.hrm.employees.index') }}" class="primary-btn">{{ __('Cancel') }}</a>
-                    <button type="submit" class="primary-btn">{{ $isEdit ? __('Update Employee') : __('Save Employee') }}</button>
+                <div class="btn-list mt-4 pt-3" style="border-top: 2px solid #f1f5f9;">
+                    <a href="{{ route('admin.hrm.employees.index') }}" class="primary-btn-outline d-inline-flex align-items-center gap-2">
+                        <i class="fa fa-arrow-left"></i>{{ __('Cancel') }}
+                    </a>
+                    <button type="submit" class="primary-btn d-inline-flex align-items-center gap-2">
+                        <i class="fa-solid {{ $isEdit ? 'fa-floppy-disk' : 'fa-user-plus' }}"></i>
+                        {{ $isEdit ? __('Update Employee') : __('Save Employee') }}
+                    </button>
                 </div>
             </form>
         </div>

@@ -37,13 +37,16 @@ class LeaveController extends Controller
                     return ++$count;
                 })
                 ->addColumn('employee', function ($data) {
-                    return $data->employee->first_name . ' ' . $data->employee->last_name;
+                    return $data->employee ? trim($data->employee->first_name . ' ' . $data->employee->last_name) : 'N/A';
                 })
                 ->addColumn('leave_type', function ($data) {
-                    return ucfirst($data->leave_type);
+                    return ucfirst($data->leave_type ?? 'N/A');
                 })
                 ->addColumn('duration', function ($data) {
-                    return $data->start_date . ' to ' . $data->end_date . ' (' . $data->days_count . ' Days)';
+                    $start = $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('d M Y') : '';
+                    $end = $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('d M Y') : '';
+                    $days = $data->days_count ?? 0;
+                    return ($start && $end) ? ($start . ' to ' . $end . ' (' . $days . ' Days)') : ($days . ' Days');
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->status == LEAVE_STATUS_APPROVED) {

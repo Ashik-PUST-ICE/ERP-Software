@@ -1,11 +1,76 @@
 @extends('auto_posts.admin.layouts.admin')
 @push('title') {{ $title }} @endpush
 @section('content')
-<div class="section-title"><h2 class="title">{{ __($title) }}</h2><button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-accounting-modal"><i class="fa fa-plus me-2"></i>{{ __('Add Entry') }}</button></div>
-<div class="settings-page-area"><div class="settings-page-right"><div class="section-wrap"><div class="table-waraper"><input type="hidden" id="accounting-route" value="{{ route('admin.garments.accounting.index') }}"><table class="display primary-table dataTable dtr-inline" id="garmentAccountingDataTable"><thead><tr><th class="keep-show">SL</th><th>Order</th><th>Type</th><th>Account</th><th>Debit</th><th>Credit</th><th>Status</th><th class="keep-show">Action</th></tr></thead><tbody></tbody></table></div></div></div></div>
-<div class="modal fade zModalTwo" id="add-accounting-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content zModalTwo-content">@include('admin.garments.accounting.form',['entry'=>null,'orders'=>$orders])</div></div></div><div class="modal fade zModalTwo" id="edit-accounting-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content zModalTwo-content"></div></div></div>
+<div class="section-title">
+    <h2 class="title">{{ __($title) }}</h2>
+    <button class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal">
+        <i class="fa fa-plus me-2"></i>{{ __('Add Entry') }}
+    </button>
+</div>
+<div class="settings-page-area">
+    <div class="settings-page-right">
+        <div class="section-wrap">
+            <div class="table-waraper">
+                <input type="hidden" id="accounting-route" value="{{ route('admin.garments.accounting.index') }}">
+                <table class="display primary-table dataTable dtr-inline" id="garmentAccountingDataTable">
+                    <thead>
+                        <tr>
+                            <th class="keep-show">{{ __('SL') }}</th>
+                            <th>{{ __('Order') }}</th>
+                            <th>{{ __('Type') }}</th>
+                            <th>{{ __('Account') }}</th>
+                            <th>{{ __('Debit') }}</th>
+                            <th>{{ __('Credit') }}</th>
+                            <th>{{ __('Status') }}</th>
+                            <th class="keep-show">{{ __('Action') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade zModalTwo" id="add-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content zModalTwo-content">
+            @include('admin.garments.accounting.form', ['entry' => null, 'orders' => $orders])
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade zModalTwo" id="edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content zModalTwo-content"></div>
+    </div>
+</div>
 @endsection
-@push('style')<style>
-#add-accounting-modal .modal-dialog,#edit-accounting-modal .modal-dialog{max-width:720px}.modal-form-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}.modal-form-header h4{font-size:20px;font-weight:500;line-height:28px;color:#1b1c17;margin:0 0 4px}.modal-form-header p{font-size:13px;color:#808080;margin:0}.accounting-form-section{border:0;border-bottom:1px solid #eee8e5;border-radius:0;background:transparent;padding:0 0 18px}.accounting-form-section+.accounting-form-section{margin-top:18px}.accounting-section-title{display:flex;align-items:center;gap:10px;margin-bottom:14px}.accounting-section-title>span{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:7px;color:#ff4f02;background:#fff2ec}.accounting-section-title h5{font-size:14px;font-weight:600;color:#1b1c17;margin:0 0 2px}.accounting-section-title p{font-size:12px;color:#808080;margin:0}.accounting-form .form-group{margin-bottom:0}.accounting-form .form-control{min-height:42px}
-</style>@endpush
-@push('script')<script>$(function(){var t=$('#garmentAccountingDataTable').DataTable({pageLength:10,ordering:false,serverSide:true,processing:true,responsive:true,dom:'t',ajax:$('#accounting-route').val(),columns:[{data:'sl'},{data:'order_number'},{data:'type_display'},{data:'account_name'},{data:'debit'},{data:'credit'},{data:'status'},{data:'action'}],columnDefs:[{targets:'keep-show',className:'all'}]});});</script>@endpush
+@push('script')
+<script>
+$(function () {
+    var t = $('#garmentAccountingDataTable').DataTable({
+        pageLength: 10,
+        ordering: false,
+        serverSide: true,
+        processing: true,
+        responsive: true,
+        dom: 't',
+        ajax: $('#accounting-route').val(),
+        columns: [
+            { data: 'sl' },
+            { data: 'order_number' },
+            { data: 'type_display' },
+            { data: 'account_name' },
+            { data: 'debit' },
+            { data: 'credit' },
+            { data: 'status' },
+            { data: 'action' }
+        ],
+        columnDefs: [{ targets: 'keep-show', className: 'all' }]
+    });
+});
+</script>
+@endpush

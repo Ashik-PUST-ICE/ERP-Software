@@ -21,7 +21,7 @@ class SupplierController extends Controller
                 ->addColumn('status_label', fn ($supplier) => $supplier->status == STATUS_ACTIVE
                     ? '<span class="zBadge zBadge-complete">' . __('Active') . '</span>'
                     : '<span class="zBadge zBadge-deactive">' . __('Deactivate') . '</span>')
-                ->addColumn('action', fn ($supplier) => '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.suppliers.edit', $supplier->id) . '\', \'#supplier-edit-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.suppliers.destroy', $supplier->id) . '\', \'supplierDataTable\')">' . __('Delete') . '</a></li></ul></div></div>')
+                ->addColumn('action', fn ($supplier) => '<div class="inline-flex"><div class="dropdown options-area"><a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.suppliers.edit', $supplier->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li><li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.suppliers.destroy', $supplier->id) . '\', \'supplierDataTable\')">' . __('Delete') . '</a></li></ul></div></div>')
                 ->rawColumns(['status_label', 'action'])
                 ->make(true);
         }

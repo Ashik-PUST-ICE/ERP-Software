@@ -42,7 +42,7 @@ class InlineQcController extends Controller
                     return '<div class="inline-flex"><div class="dropdown options-area">
                         <a class="options-btn" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.inline-qc.edit', $row->id) . '\', \'#edit-inline-qc-modal\')">' . __('Edit') . '</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.garments.inline-qc.edit', $row->id) . '\', \'#edit-modal\')">' . __('Edit') . '</a></li>
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.inline-qc.destroy', $row->id) . '\', \'garmentInlineQcDataTable\')">' . __('Delete') . '</a></li>
                         </ul>
                     </div></div>';
