@@ -44,7 +44,7 @@
 </div>
 <!-- Add Modal -->
 <div class="modal fade zModalTwo" id="add-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content zModalTwo-content">
             <form class="ajax reset" action="{{ route('admin.garments.merchandiser.assign') }}" method="post"
                 data-handler="commonResponseForModal">
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="form-group">
+                                <div class="form-group merchandiser-team-wrap">
                                     <label class="form-label">{{ __('Assign Merchandisers (Team)') }} <span class="required">*</span></label>
                                     <select class="form-control multiple-basic-single" multiple="multiple" name="user_ids[]" required>
                                         <option value=""></option>
@@ -104,7 +104,7 @@
 </div>
 <!-- Edit Modal -->
 <div class="modal fade zModalTwo" id="edit-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content zModalTwo-content">
             <!-- Content loaded via AJAX -->
         </div>
@@ -112,6 +112,23 @@
 </div>
 <!-- PART2 -->
 @endsection
+
+@push('style')
+<style>
+#add-modal .select2-container.select2-container--open,
+#edit-modal .select2-container.select2-container--open {
+    z-index: 9999;
+}
+#add-modal .modal-body,
+#edit-modal .modal-body {
+    overflow: visible;
+}
+#add-modal .modal-content,
+#edit-modal .modal-content {
+    overflow: visible;
+}
+</style>
+@endpush
 
 @push('script')
 <script src="{{ asset('admin/js/garment-merchandiser-orders.js') }}"></script>

@@ -352,6 +352,19 @@
             success: function (data) {
                 $(document).find(modalId).find('.modal-content').html(data);
 
+                if ($(document).find(modalId).find('.multiple-basic-single').length) {
+                    $(document).find(modalId).find('.multiple-basic-single').each(function () {
+                        var $select = $(this);
+                        if ($select.hasClass('select2-hidden-accessible')) {
+                            $select.select2('destroy');
+                        }
+                        $select.select2({
+                            placeholder: "Select Option",
+                            dropdownParent: $(modalId),
+                        });
+                    });
+                }
+
                 if ($(document).find(modalId).find('.sf-select-edit-modal').length) {
                     $(document).find(modalId).find('.sf-select-edit-modal').select2({
                         dropdownCssClass: "sf-select-dropdown",

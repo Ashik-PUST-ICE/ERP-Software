@@ -37,6 +37,25 @@
     }
 
     $(document).ready(function () {
+        function initModalSelect2($modal) {
+            $modal.find('.multiple-basic-single').each(function () {
+                var $select = $(this);
+                if ($select.hasClass('select2-hidden-accessible')) {
+                    $select.select2('destroy');
+                }
+                $select.select2({
+                    placeholder: "Select Option",
+                    dropdownParent: $modal
+                });
+            });
+        }
+
+        initModalSelect2($('#add-modal'));
+
+        $('#add-modal').on('shown.bs.modal', function () {
+            initModalSelect2($(this));
+        });
+
         var table = $('#merchandiserOrderDataTable').DataTable({
             pageLength: 10,
             ordering: false,
