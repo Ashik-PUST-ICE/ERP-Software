@@ -10,6 +10,13 @@
     </button>
 </div>
 
+<div class="invoice-summary-grid">
+    <div class="invoice-summary-card total"><span class="invoice-summary-icon"><i class="fa-solid fa-file-invoice"></i></span><div><strong>{{ $invoiceSummary['total'] }}</strong><small>{{ __('Total Invoices') }}</small></div></div>
+    <div class="invoice-summary-card paid"><span class="invoice-summary-icon"><i class="fa-solid fa-circle-check"></i></span><div><strong>{{ $invoiceSummary['paid'] }}</strong><small>{{ __('Paid Invoices') }}</small></div></div>
+    <div class="invoice-summary-card outstanding"><span class="invoice-summary-icon"><i class="fa-solid fa-clock"></i></span><div><strong>{{ $invoiceSummary['outstanding'] }}</strong><small>{{ __('Outstanding') }}</small></div></div>
+    <div class="invoice-summary-card overdue"><span class="invoice-summary-icon"><i class="fa-solid fa-triangle-exclamation"></i></span><div><strong>{{ $invoiceSummary['overdue'] }}</strong><small>{{ __('Overdue') }}</small></div></div>
+</div>
+
 <div class="settings-page-area">
     <div class="settings-page-right">
         <div class="section-wrap">
@@ -258,4 +265,11 @@
 
 @push('script')
 <script src="{{ asset('admin/js/garment-invoices.js') }}"></script>
+@endpush
+
+@push('style')
+<style>
+.invoice-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0 0 22px; }.invoice-summary-card { display: flex; align-items: center; gap: 12px; min-height: 84px; padding: 16px; border: 1px solid #e8edf3; border-radius: 10px; background: #fff; }.invoice-summary-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; font-size: 17px; }.invoice-summary-card strong, .invoice-summary-card small { display: block; }.invoice-summary-card strong { color: #1b1c17; font-size: 22px; line-height: 1.15; }.invoice-summary-card small { color: #64748b; font-size: 11px; margin-top: 4px; }.invoice-summary-card.total .invoice-summary-icon { color: #2455a4; background: #eff6ff; }.invoice-summary-card.paid .invoice-summary-icon { color: #16734a; background: #eaf8f0; }.invoice-summary-card.outstanding .invoice-summary-icon { color: #946200; background: #fff7df; }.invoice-summary-card.overdue .invoice-summary-icon { color: #b42318; background: #fff0ee; }
+@media (max-width: 991px) { .invoice-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } } @media (max-width: 575px) { .invoice-summary-grid { grid-template-columns: 1fr; gap: 10px; } }
+</style>
 @endpush

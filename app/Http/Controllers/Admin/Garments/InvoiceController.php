@@ -75,10 +75,18 @@ class InvoiceController extends Controller
                 ->make(true);
         }
 
+        $invoiceSummary = [
+            'total' => Invoice::count(),
+            'paid' => Invoice::where('status', 'paid')->count(),
+            'outstanding' => Invoice::whereNotIn('status', ['paid', 'cancelled'])->whereColumn('paid_amount', '<', 'total_amount')->count(),
+            'overdue' => Invoice::where('status', 'overdue')->count(),
+        ];
+
         return view('admin.garments.invoices.index', [
             'title' => __('Commercial Invoices'),
             'orders' => GarmentOrder::with('buyer')->latest()->get(),
             'invoices' => Invoice::with('order.buyer')->latest('issue_date')->get(),
+            'invoiceSummary' => $invoiceSummary,
             'gateways' => GarmentPaymentGateway::with('currencies')
                 ->where('status', STATUS_ACTIVE)
                 ->orderBy('title')
