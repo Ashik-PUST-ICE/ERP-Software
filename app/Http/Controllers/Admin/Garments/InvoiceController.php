@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Garments;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendInvoiceEmailJob;
 use App\Models\Garments\GarmentOrder;
 use App\Models\Garments\Invoice;
 use App\Models\Garments\GarmentPaymentGateway;
+use App\Models\MailHistory;
 use App\Http\Services\Payment\Payment as GatewayPayment;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -46,6 +48,9 @@ class InvoiceController extends Controller
                     $hasOutstanding = ((float) $row->total_amount > (float) $row->paid_amount);
                     $paymentBtn = '<li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#payment-modal-' . $row->id . '">' . __('Record Payment') . '</a></li>';
                     $onlineBtn = $hasOutstanding ? '<li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gateway-payment-modal-' . $row->id . '">' . __('Online Payment') . '</a></li>' : '';
+                    $sendEmailBtn = $row->order?->buyer?->email
+                        ? '<li><form method="POST" action="' . route('admin.garments.invoices.send-email', $row->id) . '">' . csrf_field() . '<button type="submit" class="dropdown-item" onclick="return confirm(\'' . __('Send this invoice to the buyer by email?') . '\')"><i class="fa-regular fa-envelope me-2"></i>' . __('Send Invoice Email') . '</button></form></li>'
+                        : '';
                     $editBtn = '<li><a class="dropdown-item" href="' . route('admin.garments.invoices.edit', $row->id) . '">' . __('Edit') . '</a></li>';
                     $printBtn = '<li><a class="dropdown-item" target="_blank" href="' . route('admin.garments.invoices.print', $row->id) . '">' . __('Print') . '</a></li>';
                     $deleteBtn = '<li><a class="dropdown-item" href="javascript:void(0)" onclick="deleteItem(\'' . route('admin.garments.invoices.destroy', $row->id) . '\', \'garmentInvoiceDataTable\')">' . __('Delete') . '</a></li>';
@@ -58,6 +63,7 @@ class InvoiceController extends Controller
                             <ul class="dropdown-menu dropdown-menu-end">
                                 ' . $paymentBtn . '
                                 ' . $onlineBtn . '
+                                ' . $sendEmailBtn . '
                                 ' . $editBtn . '
                                 ' . $printBtn . '
                                 ' . $deleteBtn . '
@@ -115,6 +121,34 @@ class InvoiceController extends Controller
         return view('admin.garments.invoices.print', [
             'invoice' => Invoice::with('order.buyer')->findOrFail($id),
         ]);
+    }
+
+    public function sendEmail($id)
+    {
+        if ((int) getOption('app_mail_status', STATUS_ACTIVE) !== STATUS_ACTIVE) {
+            return back()->with('error', __('Email sending is disabled. Enable email settings first.'));
+        }
+
+        $invoice = Invoice::with('order.buyer')->findOrFail($id);
+        $email = $invoice->order?->buyer?->email;
+        if (!$email) {
+            return back()->with('error', __('The buyer does not have an email address.'));
+        }
+
+        $history = MailHistory::create([
+            'owner_user_id' => auth()->id(),
+            'host' => config('mail.mailers.' . config('mail.default') . '.host'),
+            'email' => $email,
+            'subject' => __('Invoice :invoice', ['invoice' => $invoice->invoice_number]),
+            'message' => __('Invoice email queued for delivery.'),
+            'status' => 2,
+            'user_id' => auth()->id(),
+            'date' => now(),
+        ]);
+
+        SendInvoiceEmailJob::dispatch($history->id, $invoice->id);
+
+        return back()->with('success', __('Invoice email queued successfully.'));
     }
 
     public function edit($id)

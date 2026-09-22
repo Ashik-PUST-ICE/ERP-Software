@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('common/js/common.js') }}"></script>
 <script src="{{ asset('admin/js/garment-card-loader.js') }}"></script>
+<script src="{{ asset('admin/js/queue-assistant.js') }}"></script>
 
 @stack('script')
 

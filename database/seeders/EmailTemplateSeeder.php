@@ -38,6 +38,13 @@ class EmailTemplateSeeder extends Seeder
                 'body' => "Hello {{name}},\n\nA garments operation needs your attention. Please sign in to {{app_name}} to review the latest update.\n\nRegards,\n{{app_name}}",
                 'variables' => '{{name}}, {{email}}, {{app_name}}, {{date}}',
             ],
+            [
+                'name' => 'Invoice Issued',
+                'slug' => 'invoice-issued',
+                'subject' => 'Invoice {{invoice_number}} from {{app_name}}',
+                'body' => "Hello {{name}},\n\nYour invoice has been issued.\n\nInvoice: {{invoice_number}}\nOrder: {{order_number}}\nTotal: {{total}}\nDue date: {{due_date}}\n\nYou can view the invoice using the link below.\n{{invoice_link}}\n\nRegards,\n{{app_name}}",
+                'variables' => '{{name}}, {{email}}, {{app_name}}, {{invoice_number}}, {{order_number}}, {{total}}, {{due_date}}, {{invoice_link}}',
+            ],
         ];
 
         foreach ($templates as $template) {

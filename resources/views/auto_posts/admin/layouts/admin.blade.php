@@ -37,6 +37,7 @@
     </div>
     @endif
     @include('auto_posts.admin.layouts.ai-assistant')
+    @include('auto_posts.admin.layouts.queue-assistant')
     @include('auto_posts.admin.layouts.script')
 </body>
 

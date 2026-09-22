@@ -11,6 +11,7 @@ use App\Http\Controllers\AutoPost\Admin\UserController;
 use App\Http\Controllers\AutoPost\Admin\AIContentGenerationController;
 use App\Http\Controllers\AutoPost\Admin\AIChatController;
 use App\Http\Controllers\AutoPost\Admin\EmailController;
+use App\Http\Controllers\AutoPost\Admin\QueueController;
 use App\Http\Controllers\Admin\HRM\HrmDashboardController;
 use App\Http\Controllers\Admin\HRM\DepartmentController as HrmDepartmentController;
 use App\Http\Controllers\Admin\HRM\DesignationController as HrmDesignationController;
@@ -102,6 +103,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::post('/send', [EmailController::class, 'send'])->middleware('throttle:10,1')->name('send');
         Route::post('/{id}/retry', [EmailController::class, 'retry'])->middleware('throttle:10,1')->name('retry');
     });
+
+    Route::get('/queue/status', [QueueController::class, 'status'])->name('queue.status');
+    Route::post('/queue/start', [QueueController::class, 'start'])->middleware('throttle:5,1')->name('queue.start');
 
     // Billing
     Route::prefix('billing')->name('billings.')->group(function () {
@@ -461,6 +465,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::put('/{id}', [InvoiceController::class, 'update'])->name('update');
             Route::delete('/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
             Route::get('/{id}/print', [InvoiceController::class, 'print'])->name('print');
+            Route::post('/{id}/send-email', [InvoiceController::class, 'sendEmail'])->name('send-email');
         });
         Route::get('/ap-ar', [ApArController::class, 'index'])->name('ap-ar.index');
         Route::get('/payment-gateways', [GarmentPaymentGatewayController::class, 'index'])->name('payment-gateways.index');
