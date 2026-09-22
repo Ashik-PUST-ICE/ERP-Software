@@ -109,6 +109,10 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="email-history-route" value="{{ route('admin.email.history') }}">
+<input type="hidden" id="email-retry-route" value="{{ route('admin.email.retry', ['id' => '__ID__']) }}">
+<input type="hidden" id="email-app-name" value="{{ getOption('app_name') }}">
+<script type="application/json" id="email-templates-data">@json($templates->keyBy('id')->map(fn ($template) => ['name' => $template->name, 'subject' => $template->subject, 'body' => $template->body]))</script>
 @endsection
 
 @push('style')
@@ -143,83 +147,5 @@
 @endpush
 
 @push('script')
-<script>
-$(function () {
-    const templates = @json($templates->keyBy('id')->map(fn ($template) => ['name' => $template->name, 'subject' => $template->subject, 'body' => $template->body]));
-    const $modal = $('#send-template-modal');
-    const $templateId = $('#modal_template_id');
-    const $subject = $('#modal_email_subject');
-    const $message = $('#modal_email_message');
-    const $templateName = $('#selected-template-name');
-    const $previewSubject = $('#modal_preview_subject');
-    const $previewMessage = $('#modal_preview_message');
-
-    function previewText(value, fallback) {
-        return value
-            .replaceAll('\u007b\u007bname\u007d\u007d', 'Recipient Name')
-            .replaceAll('\u007b\u007bemail\u007d\u007d', 'recipient@example.com')
-            .replaceAll('\u007b\u007bapp_name\u007d\u007d', @json(getOption('app_name')))
-            .replaceAll('\u007b\u007bdate\u007d\u007d', new Date().toLocaleDateString()) || fallback;
-    }
-
-    function refreshPreview() {
-        $previewSubject.text(previewText($subject.val() || '', @json(__('Your subject will appear here'))));
-        $previewMessage.text(previewText($message.val() || '', @json(__('Your message preview will appear here.'))));
-    }
-
-    function statusMarkup(history) {
-        if (history.status === 1) return '<span class="email-status sent"><i class="fa-solid fa-check"></i>{{ __('Sent') }}</span>';
-        if (history.status === 2) return '<span class="email-status pending"><i class="fa-solid fa-clock"></i>{{ __('Pending') }}</span>';
-        return '<span class="email-status failed"><i class="fa-solid fa-xmark"></i>{{ __('Failed') }}</span>' + (history.error ? '<div class="small text-danger mt-1">' + escapeHtml(history.error.substring(0, 70)) + '</div>' : '');
-    }
-
-    function escapeHtml(value) {
-        return $('<div>').text(value || '').html();
-    }
-
-    function loadHistory(page = 1) {
-        const $body = $('#email-history-body');
-        $body.html('<tr><td colspan="5" class="text-muted text-center py-4"><i class="fa-solid fa-spinner fa-spin me-2"></i>{{ __('Loading email history...') }}</td></tr>');
-        $.get('{{ route('admin.email.history') }}', { page: page })
-            .done(function (response) {
-                if (!response.data.length) {
-                    $body.html('<tr><td colspan="5" class="text-muted text-center py-4">{{ __('No email history found') }}</td></tr>');
-                    $('#email-history-pagination').empty();
-                    return;
-                }
-                $body.html(response.data.map(function (history) {
-                    const retry = history.status === 0 ? '<form method="POST" action="{{ url('/admin/email') }}/' + history.id + '/retry"><input type="hidden" name="_token" value="{{ csrf_token() }}"><button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-rotate-right"></i> {{ __('Retry') }}</button></form>' : '<span class="text-muted">—</span>';
-                    return '<tr><td class="fw-500">' + escapeHtml(history.email) + '</td><td>' + escapeHtml((history.subject || '').substring(0, 45)) + '</td><td>' + statusMarkup(history) + '</td><td>' + escapeHtml(history.date || '') + '</td><td class="text-end">' + retry + '</td></tr>';
-                }).join(''));
-                let pagination = '';
-                if (response.pagination.last_page > 1) {
-                    for (let pageNo = 1; pageNo <= response.pagination.last_page; pageNo++) {
-                        pagination += '<button type="button" class="btn btn-sm ' + (pageNo === response.pagination.current_page ? 'primary-btn' : 'btn-outline-secondary') + ' me-1 history-page" data-page="' + pageNo + '">' + pageNo + '</button>';
-                    }
-                }
-                $('#email-history-pagination').html(pagination);
-            })
-            .fail(function () { $body.html('<tr><td colspan="5" class="text-danger text-center py-4">{{ __('Unable to load email history.') }}</td></tr>'); });
-    }
-
-    $modal.on('show.bs.modal', function (event) {
-        const id = $(event.relatedTarget).data('template-id') || '';
-        const template = templates[id];
-        $templateId.val(id);
-        if (template) {
-            $templateName.html('<i class="fa-solid fa-layer-group"></i>' + $('<div>').text(template.name).html());
-            $subject.val(template.subject);
-            $message.val(template.body);
-        } else {
-            $templateName.html('<i class="fa-solid fa-pen-to-square"></i>{{ __('Custom email') }}');
-            $subject.val('');
-            $message.val('');
-        }
-        refreshPreview();
-    });
-    $subject.add($message).on('input', refreshPreview);
-    $('#email-history-pagination').on('click', '.history-page', function () { loadHistory($(this).data('page')); });
-    loadHistory();
-});
-</script>
+<script src="{{ asset('admin/js/email-center.js') }}"></script>
 @endpush
