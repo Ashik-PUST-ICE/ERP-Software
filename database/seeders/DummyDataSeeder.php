@@ -42,6 +42,8 @@ class DummyDataSeeder extends Seeder
             return;
         }
 
+        $this->call(EmailTemplateSeeder::class);
+
         $packagesCount = (int) env('DUMMY_PACKAGES_COUNT', 5);
         $packagesImages = filter_var(env('DUMMY_PACKAGES_IMAGES', true), FILTER_VALIDATE_BOOLEAN);
         $couponsCount = (int) env('DUMMY_COUPONS_COUNT', 10);

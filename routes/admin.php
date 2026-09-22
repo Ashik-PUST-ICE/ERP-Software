@@ -10,6 +10,7 @@ use App\Http\Controllers\AutoPost\Admin\SettingController;
 use App\Http\Controllers\AutoPost\Admin\UserController;
 use App\Http\Controllers\AutoPost\Admin\AIContentGenerationController;
 use App\Http\Controllers\AutoPost\Admin\AIChatController;
+use App\Http\Controllers\AutoPost\Admin\EmailController;
 use App\Http\Controllers\Admin\HRM\HrmDashboardController;
 use App\Http\Controllers\Admin\HRM\DepartmentController as HrmDepartmentController;
 use App\Http\Controllers\Admin\HRM\DesignationController as HrmDesignationController;
@@ -93,6 +94,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/checkout-success', function () {
         return view('auto_posts.admin.checkout-success');
     })->name('checkout-success');
+
+    // Email Center
+    Route::prefix('email')->name('email.')->group(function () {
+        Route::get('/', [EmailController::class, 'index'])->name('index');
+        Route::get('/history', [EmailController::class, 'history'])->name('history');
+        Route::post('/send', [EmailController::class, 'send'])->middleware('throttle:10,1')->name('send');
+        Route::post('/{id}/retry', [EmailController::class, 'retry'])->middleware('throttle:10,1')->name('retry');
+    });
 
     // Billing
     Route::prefix('billing')->name('billings.')->group(function () {

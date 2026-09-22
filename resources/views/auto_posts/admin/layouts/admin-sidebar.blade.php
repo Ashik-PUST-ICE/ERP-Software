@@ -222,6 +222,12 @@
                     {{ __('Profile') }}
                 </a>
             </li>
+            <li class="{{ isset($activeEmailCenter) && $activeEmailCenter == 'active' ? 'currrent-menu' : '' }}">
+                <a href="{{ route('admin.email.index') }}">
+                    <i class="fa-solid fa-envelope" style="width: 16px; text-align: center; color: #808080;"></i>
+                    {{ __('Email Center') }}
+                </a>
+            </li>
         </ul>
     </div>
     <div class="sidebar-overlay"></div>
