@@ -110,13 +110,6 @@
             $('#template_name').trigger('focus');
         });
 
-        var $deleteModal = $('#template-delete-modal');
-        $deleteModal.on('show.bs.modal', function (event) {
-            var $button = $(event.relatedTarget);
-            $('#template-delete-name').text($button.data('template-name') || '');
-            $('#template-delete-form').attr('action', $('#template-delete-route').val().replace('__ID__', $button.data('template-id')));
-        });
-
         $modal.on('show.bs.modal', function (event) {
             var id = $(event.relatedTarget).data('template-id') || '';
             var template = templates[id];

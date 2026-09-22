@@ -86,7 +86,7 @@
                         <div class="template-list-item">
                             <div class="template-list-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
                             <div class="template-list-info"><div class="d-flex align-items-center gap-2 flex-wrap"><strong>{{ $template->name }}</strong><span class="template-status {{ $template->status ? 'is-active' : 'is-inactive' }}">{{ $template->status ? __('Active') : __('Inactive') }}</span></div><div class="template-list-subject">{{ \Illuminate\Support\Str::limit($template->subject, 90) }}</div><div class="template-list-vars">{{ $template->variables ?: __('No variables added') }}</div></div>
-                            <div class="template-list-actions"><button type="button" class="btn btn-sm btn-outline-primary template-edit-btn" data-template-id="{{ $template->id }}"><i class="fa-solid fa-pen-to-square me-1"></i>{{ __('Edit') }}</button><button type="button" class="btn btn-sm btn-outline-danger template-delete-btn" data-bs-toggle="modal" data-bs-target="#template-delete-modal" data-template-id="{{ $template->id }}" data-template-name="{{ $template->name }}"><i class="fa-regular fa-trash-can me-1"></i>{{ __('Delete') }}</button></div>
+                            <div class="template-list-actions"><button type="button" class="btn btn-sm btn-outline-primary template-edit-btn" data-template-id="{{ $template->id }}"><i class="fa-solid fa-pen-to-square me-1"></i>{{ __('Edit') }}</button><form id="delete-template-{{ $template->id }}" method="POST" action="{{ route('admin.email.templates.destroy', $template->id) }}" class="d-inline">@csrf @method('DELETE')</form><button type="button" class="btn btn-sm btn-outline-danger deleteItem" data-formid="delete-template-{{ $template->id }}"><i class="fa-regular fa-trash-can me-1"></i>{{ __('Delete') }}</button></div>
                         </div>
                     @empty
                         <div class="template-list-empty"><i class="fa-regular fa-folder-open"></i><span>{{ __('No saved templates yet.') }}</span></div>
@@ -95,12 +95,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade zModalTwo" id="template-delete-modal" tabindex="-1" aria-labelledby="template-delete-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm"><div class="modal-content zModalTwo-content template-delete-content">
-        <div class="modal-body text-center p-4"><div class="template-delete-icon"><i class="fa-regular fa-trash-can"></i></div><h5 id="template-delete-modal-label" class="mb-2">{{ __('Delete template?') }}</h5><p class="text-muted small mb-4">{{ __('This template will be permanently removed.') }}<br><strong id="template-delete-name"></strong></p><form id="template-delete-form" method="POST" action="">@csrf @method('DELETE')<div class="d-flex justify-content-center gap-2"><button type="button" class="primary-btn-outline" data-bs-dismiss="modal">{{ __('Cancel') }}</button><button type="submit" class="primary-btn template-delete-confirm"><i class="fa-regular fa-trash-can me-1"></i>{{ __('Delete') }}</button></div></form></div>
-    </div></div>
 </div>
 
 <div class="modal fade zModalTwo" id="send-template-modal" tabindex="-1" aria-labelledby="send-template-modal-label" aria-hidden="true">
@@ -153,7 +147,6 @@
 </div>
 <input type="hidden" id="email-history-route" value="{{ route('admin.email.history') }}">
 <input type="hidden" id="email-retry-route" value="{{ route('admin.email.retry', ['id' => '__ID__']) }}">
-<input type="hidden" id="template-delete-route" value="{{ route('admin.email.templates.destroy', ['id' => '__ID__']) }}">
 <input type="hidden" id="email-app-name" value="{{ getOption('app_name') }}">
 <script type="application/json" id="email-templates-data">@json($templateData)</script>
 @endsection
@@ -202,7 +195,6 @@
     .template-status { border-radius: 12px; padding: 3px 7px; font-size: 10px; font-weight: 600; }.template-status.is-active { color: #16734a; background: #eaf8f0; }.template-status.is-inactive { color: #64748b; background: #f1f5f9; }
     .template-list-actions { display: flex; flex: 0 0 auto; gap: 6px; }.template-list-actions .btn { border-radius: 5px; font-size: 11px; padding: 5px 9px; }
     .template-list-empty { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 26px; color: #94a3b8; border: 1px dashed #dbe2eb; border-radius: 9px; font-size: 12px; }.template-list-empty i { font-size: 20px; }
-    .template-delete-content { border: 0; }.template-delete-icon { width: 48px; height: 48px; display: grid; place-items: center; margin: 0 auto 13px; color: #b42318; background: #fff0ee; border-radius: 50%; font-size: 19px; }.template-delete-content h5 { color: #1b1c17; font-size: 17px; }.template-delete-content strong { color: #475569; }
     .email-modal-preview { height: 100%; min-height: 275px; padding: 16px; border: 1px solid #e5eaf0; border-radius: 10px; background: #f8fafc; }
     .email-modal-preview-heading { color: #4778c7; font-weight: 600; font-size: 13px; padding-bottom: 12px; margin-bottom: 15px; border-bottom: 1px solid #e5eaf0; }
     .email-modal-preview-heading i { margin-right: 7px; }
