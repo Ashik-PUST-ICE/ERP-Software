@@ -9,9 +9,9 @@
     </div>
 
     {{-- Top SaaS Metric Cards (admin-style) --}}
-    <div class="row gy-4 mb-4">
+    <div class="row gy-4 mb-4 super-admin-dashboard-kpis">
         {{-- Total Customer --}}
-        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 sa-customer">
             <div class="card-box">
                 <span class="card-icon">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@
         </div>
 
         {{-- Active Package --}}
-        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 sa-packages">
             <div class="card-box">
                 <span class="card-icon">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@
         </div>
 
         {{-- Current Subscriptions --}}
-        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 sa-subscriptions">
             <div class="card-box">
                 <span class="card-icon">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +75,7 @@
         </div>
 
         {{-- Total Earn --}}
-        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 sa-earnings">
             <div class="card-box">
                 <span class="card-icon">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,6 +117,19 @@
         </div>
     </div>
 @endsection
+
+@push('style')
+<style>
+    .super-admin-dashboard-kpis .card-box { border: 0; border-top: 4px solid var(--sa-card-dark); border-radius: 12px; background: var(--sa-card-color); box-shadow: 0 6px 20px rgba(30, 41, 59, .07); min-height: 15.5rem; overflow: hidden; transition: box-shadow .2s ease, transform .2s ease; }
+    .super-admin-dashboard-kpis .card-box:hover { box-shadow: 0 12px 28px rgba(30, 41, 59, .15); transform: translateY(-3px); }
+    .super-admin-dashboard-kpis .card-info h2, .super-admin-dashboard-kpis .card-info h3, .super-admin-dashboard-kpis .card-status { color: #fff !important; }
+    .super-admin-dashboard-kpis .card-status .arrow { color: #fff; }
+    .super-admin-dashboard-kpis .sa-customer { --sa-card-color: #4778c7; --sa-card-dark: #315b9d; }
+    .super-admin-dashboard-kpis .sa-packages { --sa-card-color: #2c9567; --sa-card-dark: #1d704b; }
+    .super-admin-dashboard-kpis .sa-subscriptions { --sa-card-color: #8b5fc7; --sa-card-dark: #653b9d; }
+    .super-admin-dashboard-kpis .sa-earnings { --sa-card-color: #e05a47; --sa-card-dark: #b93d2d; }
+</style>
+@endpush
 
 @push('script')
     <script src="{{ asset('common/js/apexcharts.min.js') }}"></script>
