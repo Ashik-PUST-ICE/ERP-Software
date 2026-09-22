@@ -89,6 +89,7 @@
     </div>
     @endif
 
+    @include('auto_posts.admin.layouts.ai-assistant')
     <!-- Loading Overlay -->
     <div id="create-post-loading-overlay" class="loading-overlay" style="display:none;">
         <div class="loading-modal">

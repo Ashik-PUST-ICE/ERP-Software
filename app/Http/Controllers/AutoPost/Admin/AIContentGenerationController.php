@@ -112,29 +112,6 @@ class AIContentGenerationController extends Controller
             ], 400);
         }
 
-        if ($request->has('debug_ai')) {
-            dd([
-                'api_key' => getOption('openai_api_key'),
-                'model' => getOption('openai_model', config('ai.openai_default_model', 'gpt-4o-mini')),
-                'configured' => $openaiService->isConfigured(),
-                'prompt' => $request->prompt,
-                'max_tokens' => $request->max_tokens,
-                'full_config' => config('ai')
-            ]);
-        }
-
-        // --- DEBUG LOGGING START ---
-        $debugKey = getOption('openai_api_key');
-        $debugModel = getOption('openai_model', config('ai.openai_default_model', 'gpt-4o-mini'));
-        \Illuminate\Support\Facades\Log::info('AI Generation Debug Trace', [
-            'user_id' => auth()->id(),
-            'key_snippet' => substr($debugKey, 0, 8) . '...' . substr($debugKey, -4),
-            'model' => $debugModel,
-            'prompt' => $prompt,
-            'max_tokens' => $maxTokens
-        ]);
-        // --- DEBUG LOGGING END ---
-
         $result = $openaiService->generateContent($prompt, $maxTokens);
         $model = getOption('openai_model', config('ai.openai_default_model', 'gpt-4o-mini'));
 

@@ -193,14 +193,7 @@ class OpenAIService
                 $body = $response->json();
                 $message = $body['error']['message'] ?? $response->body();
                 // 429/400 with quota or billing = OpenAI account limit, not application bug
-                $maskedKey = substr($this->apiKey, 0, 7) . '...' . substr($this->apiKey, -4);
-                Log::error('OpenAI API failure debug', [
-                    'status' => $response->status(),
-                    'key_used' => $maskedKey,
-                    'error_message' => $message,
-                    'full_body' => $body
-                ]);
-                Log::warning('OpenAI API error (check account quota/billing at platform.openai.com)', ['status' => $response->status(), 'body' => $body]);
+                Log::warning('OpenAI API request failed', ['status' => $response->status(), 'error' => $message]);
                 return ['success' => false, 'error' => $message];
             }
 
@@ -211,6 +204,38 @@ class OpenAIService
         } catch (\Exception $e) {
             Log::error('OpenAI request failed', ['message' => $e->getMessage()]);
             return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Generate a response from a short, server-built conversation.
+     * The API key remains server-side and is never returned to the browser.
+     */
+    public function generateChat(array $messages, ?int $maxTokens = null): array
+    {
+        if (!$this->isConfigured()) {
+            return ['success' => false, 'error' => __('OpenAI API key is not configured.')];
+        }
+
+        try {
+            $response = Http::withToken($this->apiKey)
+                ->timeout(60)
+                ->post("{$this->baseUrl}/chat/completions", [
+                    'model' => $this->model,
+                    'messages' => $messages,
+                    'max_tokens' => $maxTokens ?? $this->maxTokens,
+                    'temperature' => $this->temperature,
+                ]);
+
+            if (!$response->successful()) {
+                Log::warning('OpenAI chat request failed', ['status' => $response->status()]);
+                return ['success' => false, 'error' => __('AI request failed.')];
+            }
+
+            return ['success' => true, 'text' => trim((string) data_get($response->json(), 'choices.0.message.content', ''))];
+        } catch (\Throwable $e) {
+            Log::error('OpenAI chat request failed', ['message' => $e->getMessage()]);
+            return ['success' => false, 'error' => __('AI request failed.')];
         }
     }
 }

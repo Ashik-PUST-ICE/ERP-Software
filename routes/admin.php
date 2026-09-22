@@ -9,6 +9,7 @@ use App\Http\Controllers\AutoPost\Admin\ProfileController;
 use App\Http\Controllers\AutoPost\Admin\SettingController;
 use App\Http\Controllers\AutoPost\Admin\UserController;
 use App\Http\Controllers\AutoPost\Admin\AIContentGenerationController;
+use App\Http\Controllers\AutoPost\Admin\AIChatController;
 use App\Http\Controllers\Admin\HRM\HrmDashboardController;
 use App\Http\Controllers\Admin\HRM\DepartmentController as HrmDepartmentController;
 use App\Http\Controllers\Admin\HRM\DesignationController as HrmDesignationController;
@@ -121,6 +122,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     // AI Content Generation (Admin)
     Route::prefix('ai')->name('ai.')->group(function () {
+        Route::get('/chat/history', [AIChatController::class, 'history'])->name('chat.history');
+        Route::post('/chat/message', [AIChatController::class, 'send'])->middleware('throttle:20,1')->name('chat.message');
         Route::get('/generate', [AIContentGenerationController::class, 'generateContentPage'])->name('generate-content');
         Route::post('/generate', [AIContentGenerationController::class, 'generateContent'])->name('generate-content.submit');
         Route::get('/generated-content', [AIContentGenerationController::class, 'generateContentList'])->name('generated-content.list');
