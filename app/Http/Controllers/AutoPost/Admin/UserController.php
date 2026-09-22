@@ -24,7 +24,10 @@ class UserController extends Controller
             'showUsersMenu' => 'show',
             'title' => __('Team Members'),
             'breadcrumb' => __('User Management') . ' / ' . __('Team Members'),
-            'roles' => Role::where('user_type', USER_ROLE_ADMIN)->where('status', STATUS_ACTIVE)->orderBy('display_name')->get(),
+            'roles' => Role::where('user_type', USER_ROLE_ADMIN)
+                ->where('status', STATUS_ACTIVE)
+                ->where('name', '!=', 'Admin')
+                ->orderBy('display_name')->get(),
         ];
 
         return view('auto_posts.admin.users.index', $data);
@@ -37,6 +40,10 @@ class UserController extends Controller
 
         $users = User::with('roles:id,display_name')->select('id', 'name', 'email', 'role', 'mobile', 'status')
             ->where('role', USER_ROLE_ADMIN)
+            ->where('id', '!=', $authUser->id)
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'Admin');
+            })
             // Super admin can see all admins across tenants
             ->when($authUser->role != USER_ROLE_SUPER_ADMIN, function ($q) use ($tenantId, $authUser) {
                 if (!empty($tenantId)) {
@@ -104,7 +111,10 @@ class UserController extends Controller
             $user = $query->firstOrFail();
             $data = [
                 'user' => $user,
-                'roles' => Role::where('user_type', USER_ROLE_ADMIN)->where('status', STATUS_ACTIVE)->orderBy('display_name')->get(),
+                'roles' => Role::where('user_type', USER_ROLE_ADMIN)
+                    ->where('status', STATUS_ACTIVE)
+                    ->where('name', '!=', 'Admin')
+                    ->orderBy('display_name')->get(),
             ];
 
             return view('auto_posts.admin.users.edit', $data);
@@ -135,7 +145,7 @@ class UserController extends Controller
             $user->status = $request->status;
             $user->tenant_id = auth()->user()->tenant_id;
             $user->save();
-            $role = Role::where('user_type', USER_ROLE_ADMIN)->whereKey($request->input('role_id'))->first()
+            $role = Role::where('user_type', USER_ROLE_ADMIN)->where('name', '!=', 'Admin')->whereKey($request->input('role_id'))->first()
                 ?: Role::where('user_type', USER_ROLE_ADMIN)->where('name', 'Team Member')->first();
             if ($role) $user->syncRoles([$role]);
 
@@ -185,7 +195,10 @@ class UserController extends Controller
                 $user->password = Hash::make($request->password);
             }
             $user->save();
-            $role = Role::where('user_type', USER_ROLE_ADMIN)->whereKey($request->input('role_id'))->firstOrFail();
+            $role = Role::where('user_type', USER_ROLE_ADMIN)
+                ->where('name', '!=', 'Admin')
+                ->whereKey($request->input('role_id'))
+                ->firstOrFail();
             $user->syncRoles([$role]);
 
             DB::commit();
