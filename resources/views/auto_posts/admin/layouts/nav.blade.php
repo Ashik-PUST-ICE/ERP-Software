@@ -73,6 +73,29 @@ $unreadNotificationsCount = $adminNotifications->where('view_status', 0)->count(
         @endif
 
         {{-- Notifications --}}
+        @php
+            $headerNotifications = \App\Models\Notification::where(function ($query) {
+                $query->whereNull('user_id')->orWhere('user_id', auth()->id());
+            })->where('status', 1)->latest()->take(5)->get();
+            $headerUnreadNotifications = $headerNotifications->where('view_status', 0)->count();
+        @endphp
+        <div class="dropdown notifications-dropdown">
+            <button class="notifications-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{{ __('Notifications') }}">
+                <i class="fa-regular fa-bell"></i>
+                @if($headerUnreadNotifications > 0)<span class="notifications-badge">{{ $headerUnreadNotifications > 9 ? '9+' : $headerUnreadNotifications }}</span>@endif
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+                <div class="d-flex justify-content-between align-items-center mb-2"><strong>{{ __('Notifications') }}</strong><small class="text-muted">{{ $headerUnreadNotifications }} {{ __('unread') }}</small></div>
+                <ul class="notifications-list">
+                    @forelse($headerNotifications as $notification)
+                        <li><div class="notifications-text"><i class="fa-regular fa-bell"></i><p class="mb-0 {{ $notification->view_status ? '' : 'fw-bold' }}">{{ $notification->title ?: __('Notification') }}<small class="d-block text-muted">{{ \Illuminate\Support\Str::limit($notification->body, 60) }}</small>@if($notification->link)<a href="{{ $notification->link }}" class="see-more-btn">{{ __('See More') }}</a>@endif</p></div><span class="notifications-time">{{ $notification->created_at->diffForHumans() }}</span></li>
+                    @empty
+                        <li class="text-center py-3"><p class="text-muted mb-0">{{ __('No notifications') }}</p></li>
+                    @endforelse
+                </ul>
+                <a href="{{ route('admin.garments.notifications.index') }}" class="primary-btn">{{ __('View all notifications') }}</a>
+            </div>
+        </div>
         <!-- <div class="dropdown notifications-dropdown">
             <button class="notifications-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
