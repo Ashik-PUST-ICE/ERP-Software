@@ -1,9 +1,9 @@
-<form class="ajax reset" action="{{ route('admin.users.update', $user->id) }}" method="post" data-handler="commonResponseWithPageLoad">
+<form class="ajax reset" action="{{ route('admin.team-members.update', $user->id) }}" method="post" data-handler="commonResponseWithPageLoad">
     @csrf
     @method('PUT')
     <div class="modal-body zModalTwo-body">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{__('Edit User')}}</h4>
+            <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{__('Edit Team Member')}}</h4>
             <div class="mClose">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
@@ -11,6 +11,20 @@
         </div>
         <div class="primary-form">
             <div class="row gy-3">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label">{{ __('New Password') }}</label>
+                        <input type="password" class="form-control" name="password" minlength="6" placeholder="{{ __('Leave blank to keep current password') }}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label">{{ __('Role') }}<span class="required">*</span></label>
+                        <select class="form-control select wide" name="role_id" required>
+                            @foreach($roles as $role)<option value="{{ $role->id }}" @selected($user->roles->contains('id', $role->id))>{{ $role->display_name }}</option>@endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="form-group">
                         <label for="name" class="form-label">{{ __('Name') }}<span class="required">*</span></label>

@@ -32,9 +32,15 @@
                 <ul id="garments-overview-menu" class="collapse {{ (isset($activeGarmentDashboard) || isset($activeGarmentAnalytics) || isset($activeGarmentMerchandiser) || isset($activeGarmentBuyerPortal)) ? 'show' : '' }}">
                     <li class="{{ isset($activeGarmentDashboard) && $activeGarmentDashboard == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.dashboard') }}">{{ __('Garments Dashboard') }}</a></li>
                     <li class="{{ isset($activeGarmentAnalytics) && $activeGarmentAnalytics == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.analytics.index') }}">{{ __('Production Analytics') }}</a></li>
-                    <li class="{{ isset($activeGarmentMerchandiser) && $activeGarmentMerchandiser == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.merchandiser.index') }}">{{ __('Merchandiser Workspace') }}</a></li>
-                    <li><a href="{{ route('admin.garments.merchandiser.management') }}">{{ __('Merchandiser Activities') }}</a></li>
-                    <li><a href="{{ route('admin.garments.merchandiser.insights') }}">{{ __('Merchandiser Dashboard') }}</a></li>
+                    @if(adminCan('admin.merchandiser.view'))
+                        <li class="{{ isset($activeGarmentMerchandiser) && $activeGarmentMerchandiser == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.merchandiser.index') }}">{{ __('Merchandiser Workspace') }}</a></li>
+                    @endif
+                    @if(adminCan('admin.merchandiser.manage'))
+                        <li><a href="{{ route('admin.garments.merchandiser.management') }}">{{ __('Merchandiser Activities') }}</a></li>
+                    @endif
+                    @if(adminCan('admin.merchandiser.insights.view'))
+                        <li><a href="{{ route('admin.garments.merchandiser.insights') }}">{{ __('Merchandiser Dashboard') }}</a></li>
+                    @endif
                     <li class="{{ isset($activeGarmentBuyerPortal) && $activeGarmentBuyerPortal == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.buyer-portal.index') }}">{{ __('Buyer Portal') }}</a></li>
                 </ul>
             </li>
@@ -138,6 +144,21 @@
                     <li class="{{ isset($activeGarmentAuditLogs) && $activeGarmentAuditLogs == 'active' ? 'active' : '' }}"><a href="{{ route('admin.garments.audit-logs.index') }}">{{ __('Audit Log') }}</a></li>
                 </ul>
             </li>
+
+            @if(adminCan('admin.team-members.manage'))
+                <li class="divider"><span>{{ __('Team Management') }}</span></li>
+                <li class="{{ isset($activeTeamMembers) && $activeTeamMembers == 'active' ? 'currrent-menu' : '' }}">
+                    <a class="has-arrow" href="javascript:void(0);" data-bs-target="#team-management-menu" data-bs-toggle="collapse" role="button"
+                        aria-expanded="{{ isset($activeTeamMembers) && $activeTeamMembers == 'active' ? 'true' : 'false' }}" aria-controls="team-management-menu">
+                        <i class="fa-solid fa-user-group" style="width: 16px; text-align: center; color: #808080;"></i> {{ __('Team Members') }}
+                    </a>
+                    <ul id="team-management-menu" class="collapse {{ isset($activeTeamMembers) && $activeTeamMembers == 'active' ? 'show' : '' }}">
+                        <li class="{{ isset($activeTeamMembers) && $activeTeamMembers == 'active' ? 'active' : '' }}">
+                            <a href="{{ route('admin.team-members.index') }}">{{ __('All Team Members') }}</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
 <li class="divider"><span>{{ __('HRM Management') }}</span></li>
 <li class="{{ (isset($activeHrm) || isset($showHrmMenu) || isset($showHRMMenu) || isset($activeHrmDashboard) || isset($activeDepartment) || isset($activeDepartments) || isset($activeDesignation) || isset($activeDesignations) || isset($activeEmployee) || isset($activeEmployees) || isset($activeAttendance) || isset($activeAttendances) || isset($activeLeave) || isset($activeLeaves) || isset($activePayroll) || isset($activePayrolls)) ? 'currrent-menu' : '' }}">

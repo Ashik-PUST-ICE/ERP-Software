@@ -9,7 +9,7 @@
 <div class="section-title">
     <h2 class="title">{{ __($title) }}</h2>
     <button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal">
-        <i class="fa fa-plus me-2"></i>{{ __('Add New User') }}
+        <i class="fa fa-plus me-2"></i>{{ __('Add Team Member') }}
     </button>
 </div>
 <div class="settings-page-area">
@@ -34,7 +34,7 @@
                     <input type="text" class="search-input" id="searchData"
                         placeholder="{{ __('Search By Name or Email...') }}" />
                 </div>
-                <input type="hidden" id="users-data-route" value="{{ route('admin.users.data') }}">
+                <input type="hidden" id="users-data-route" value="{{ route('admin.team-members.data') }}">
                 <table class="display primary-table dataTable dtr-inline" id="usersDataTable">
                     <thead>
                         <tr>
@@ -59,12 +59,12 @@
 <div class="modal fade zModalTwo" id="add-modal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content zModalTwo-content">
-            <form class="ajax reset" action="{{ route('admin.users.store') }}" method="post"
+            <form class="ajax reset" action="{{ route('admin.team-members.store') }}" method="post"
                 data-handler="commonResponseWithPageLoad">
                 @csrf
                 <div class="modal-body zModalTwo-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{__('Add New User')}}</h4>
+                        <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{__('Add Team Member')}}</h4>
                         <div class="mClose">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             </button>
@@ -72,6 +72,14 @@
                     </div>
                     <div class="primary-form">
                         <div class="row gy-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">{{ __('Role') }} <span class="required">*</span></label>
+                                    <select class="form-control select wide" name="role_id" required>
+                                        @foreach($roles as $role)<option value="{{ $role->id }}" @selected($role->name === 'Team Member')>{{ $role->display_name }}</option>@endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="name" class="form-label">{{ __('Name') }} <span

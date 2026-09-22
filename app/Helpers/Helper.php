@@ -833,6 +833,15 @@ if (!function_exists('moduleName')) {
     }
 }
 
+if (!function_exists('adminCan')) {
+    function adminCan(string $permission): bool
+    {
+        if (!auth()->check()) return false;
+        if (auth()->user()->role == USER_ROLE_SUPER_ADMIN) return true;
+        return auth()->user()->can($permission);
+    }
+}
+
 if (!function_exists('setCommonNotification')) {
     function setCommonNotification($title, $body, $link = null)
     {

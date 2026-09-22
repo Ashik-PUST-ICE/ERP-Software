@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GarmentPaymentGatewaySeeder::class);
         $this->call(HrmSeeder::class);
         $this->call(EmailTemplateSeeder::class);
+        $this->call(AdminPermissionSeeder::class);
         $this->call(GarmentBuyerSeeder::class);
         // $this->call(TwitterConfigSeeder::class);
         // $this->call(InstagramConfigSeeder::class);

@@ -20,9 +20,11 @@ class UserController extends Controller
     {
         $data = [
             'activeUsers' => 'active',
+            'activeTeamMembers' => 'active',
             'showUsersMenu' => 'show',
-            'title' => __('User List'),
-            'breadcrumb' => __('User Management') . ' / ' . __('Users List'),
+            'title' => __('Team Members'),
+            'breadcrumb' => __('User Management') . ' / ' . __('Team Members'),
+            'roles' => Role::where('user_type', USER_ROLE_ADMIN)->where('status', STATUS_ACTIVE)->orderBy('display_name')->get(),
         ];
 
         return view('auto_posts.admin.users.index', $data);
@@ -33,7 +35,7 @@ class UserController extends Controller
         $authUser = auth()->user();
         $tenantId = $authUser->tenant_id;
 
-        $users = User::select('id', 'name', 'email', 'role', 'mobile', 'status')
+        $users = User::with('roles:id,display_name')->select('id', 'name', 'email', 'role', 'mobile', 'status')
             ->where('role', USER_ROLE_ADMIN)
             // Super admin can see all admins across tenants
             ->when($authUser->role != USER_ROLE_SUPER_ADMIN, function ($q) use ($tenantId, $authUser) {
@@ -53,7 +55,7 @@ class UserController extends Controller
                 return ++$count;
             })
             ->addColumn('role', function ($data) {
-                return 'Admin';
+                return $data->roles->pluck('display_name')->join(', ') ?: __('Team Member');
             })
             ->editColumn('status', function ($data) {
                 if ($data->status == STATUS_ACTIVE) {
@@ -70,7 +72,7 @@ class UserController extends Controller
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.users.edit', $data->id) . '\', \'#edit-modal\')">
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="getEditModal(\'' . route('admin.team-members.edit', $data->id) . '\', \'#edit-modal\')">
                                             ' . __('Edit') . '
                                         </a>
                                     </li>
@@ -102,6 +104,7 @@ class UserController extends Controller
             $user = $query->firstOrFail();
             $data = [
                 'user' => $user,
+                'roles' => Role::where('user_type', USER_ROLE_ADMIN)->where('status', STATUS_ACTIVE)->orderBy('display_name')->get(),
             ];
 
             return view('auto_posts.admin.users.edit', $data);
@@ -118,6 +121,7 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
             'mobile' => 'nullable|string|max:20',
             'status' => 'required|in:1,3',
+            'role_id' => ['nullable', 'integer', 'exists:roles,id'],
         ]);
 
         try {
@@ -131,6 +135,9 @@ class UserController extends Controller
             $user->status = $request->status;
             $user->tenant_id = auth()->user()->tenant_id;
             $user->save();
+            $role = Role::where('user_type', USER_ROLE_ADMIN)->whereKey($request->input('role_id'))->first()
+                ?: Role::where('user_type', USER_ROLE_ADMIN)->where('name', 'Team Member')->first();
+            if ($role) $user->syncRoles([$role]);
 
             DB::commit();
             $message = getMessage(CREATED_SUCCESSFULLY);
@@ -148,7 +155,9 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'mobile' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6',
             'status' => 'required|in:1,3',
+            'role_id' => ['required', 'integer', 'exists:roles,id'],
         ]);
 
         try {
@@ -172,7 +181,12 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->mobile = $request->mobile;
             $user->status = $request->status;
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
             $user->save();
+            $role = Role::where('user_type', USER_ROLE_ADMIN)->whereKey($request->input('role_id'))->firstOrFail();
+            $user->syncRoles([$role]);
 
             DB::commit();
             $message = getMessage(UPDATED_SUCCESSFULLY);

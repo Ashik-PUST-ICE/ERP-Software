@@ -82,6 +82,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         ->name('dashboard');
     Route::get('/search', AdminSearchController::class)->name('search');
 
+    Route::prefix('team-members')->name('team-members.')->middleware('permission:admin.team-members.manage')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/data', [UserController::class, 'data'])->name('data');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [UserController::class, 'update'])->name('update');
+    });
+
     // Pricing
     Route::prefix('pricing')->name('pricing.')->group(function () {
         Route::get('/', [PricingController::class, 'index'])->name('index');
@@ -269,21 +277,25 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::prefix('garments')->name('garments.')->group(function () {
         Route::get('/dashboard', [GarmentDashboardController::class, 'index'])->name('dashboard');
         Route::get('/dashboard/data', [GarmentDashboardController::class, 'data'])->name('dashboard.data');
-        Route::get('/merchandiser', [MerchandiserController::class, 'index'])->name('merchandiser.index');
-        Route::get('/merchandiser/management', [MerchandiserManagementController::class, 'index'])->name('merchandiser.management');
-        Route::get('/merchandiser/management/data', [MerchandiserManagementController::class, 'data'])->name('merchandiser.management.data');
-        Route::get('/merchandiser/management/orders', [MerchandiserManagementController::class, 'orders'])->name('merchandiser.orders');
-        Route::get('/merchandiser/management/tasks', [MerchandiserManagementController::class, 'tasks'])->name('merchandiser.tasks');
-        Route::get('/merchandiser/management/communications', [MerchandiserManagementController::class, 'communications'])->name('merchandiser.communications');
-        Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');
-        Route::get('/merchandiser/insights/data', [MerchandiserInsightsController::class, 'data'])->name('merchandiser.insights.data');
-        Route::post('/merchandiser/handover', [MerchandiserInsightsController::class, 'handover'])->name('merchandiser.handover');
-        Route::get('/merchandiser/assign/edit', [MerchandiserManagementController::class, 'editAssign'])->name('merchandiser.assign.create');
-        Route::post('/merchandiser/assign', [MerchandiserManagementController::class, 'assign'])->name('merchandiser.assign');
-        Route::post('/merchandiser/tasks', [MerchandiserManagementController::class, 'task'])->name('merchandiser.task');
-        Route::delete('/merchandiser/tasks/{id}', [MerchandiserManagementController::class, 'destroyTask'])->name('merchandiser.task.destroy');
-        Route::post('/merchandiser/communications', [MerchandiserManagementController::class, 'communication'])->name('merchandiser.communication');
-        Route::delete('/merchandiser/communications/{id}', [MerchandiserManagementController::class, 'destroyCommunication'])->name('merchandiser.communication.destroy');
+        Route::get('/merchandiser', [MerchandiserController::class, 'index'])->middleware('permission:admin.merchandiser.view')->name('merchandiser.index');
+        Route::middleware('permission:admin.merchandiser.manage')->group(function () {
+            Route::get('/merchandiser/management', [MerchandiserManagementController::class, 'index'])->name('merchandiser.management');
+            Route::get('/merchandiser/management/data', [MerchandiserManagementController::class, 'data'])->name('merchandiser.management.data');
+            Route::get('/merchandiser/management/orders', [MerchandiserManagementController::class, 'orders'])->name('merchandiser.orders');
+            Route::get('/merchandiser/management/tasks', [MerchandiserManagementController::class, 'tasks'])->name('merchandiser.tasks');
+            Route::get('/merchandiser/management/communications', [MerchandiserManagementController::class, 'communications'])->name('merchandiser.communications');
+            Route::post('/merchandiser/handover', [MerchandiserInsightsController::class, 'handover'])->name('merchandiser.handover');
+            Route::get('/merchandiser/assign/edit', [MerchandiserManagementController::class, 'editAssign'])->name('merchandiser.assign.create');
+            Route::post('/merchandiser/assign', [MerchandiserManagementController::class, 'assign'])->name('merchandiser.assign');
+            Route::post('/merchandiser/tasks', [MerchandiserManagementController::class, 'task'])->name('merchandiser.task');
+            Route::delete('/merchandiser/tasks/{id}', [MerchandiserManagementController::class, 'destroyTask'])->name('merchandiser.task.destroy');
+            Route::post('/merchandiser/communications', [MerchandiserManagementController::class, 'communication'])->name('merchandiser.communication');
+            Route::delete('/merchandiser/communications/{id}', [MerchandiserManagementController::class, 'destroyCommunication'])->name('merchandiser.communication.destroy');
+        });
+        Route::middleware('permission:admin.merchandiser.insights.view')->group(function () {
+            Route::get('/merchandiser/insights', [MerchandiserInsightsController::class, 'index'])->name('merchandiser.insights');
+            Route::get('/merchandiser/insights/data', [MerchandiserInsightsController::class, 'data'])->name('merchandiser.insights.data');
+        });
         Route::post('/purchase-orders/{id}/approve', [ApprovalController::class, 'purchaseOrder'])->name('purchase-orders.approve');
         Route::post('/shipment-documents/{id}/approve', [ApprovalController::class, 'shipment'])->name('shipment-documents.approve');
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
