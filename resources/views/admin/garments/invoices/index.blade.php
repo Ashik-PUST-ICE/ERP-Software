@@ -5,14 +5,14 @@
 @section('content')
 <div class="section-title">
     <h2 class="title">{{ __($title) }}</h2>
-    <div class="d-flex gap-2"><a href="{{ route('admin.garments.invoices.export') }}" class="primary-btn-outline"><i class="fa-solid fa-file-csv me-1"></i>{{ __('Export CSV') }}</a><button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal"><i class="fa fa-plus me-2"></i>{{ __('Create Invoice') }}</button></div>
+    <div class="d-flex flex-wrap gap-2"><a href="{{ route('admin.garments.invoices.print-report') }}" target="_blank" class="primary-btn"><i class="fa fa-print me-1"></i>{{ __('Print') }}</a><div class="dropdown"><button class="primary-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="fa fa-download me-1"></i>{{ __('Export') }}</button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="{{ route('admin.garments.invoices.export') }}"><i class="fa-solid fa-file-csv me-2"></i>{{ __('Export CSV') }}</a></li></ul></div><button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal"><i class="fa fa-plus me-2"></i>{{ __('Create Invoice') }}</button></div>
 </div>
 
-<div class="invoice-summary-grid">
-    <div class="invoice-summary-card total"><span class="invoice-summary-icon"><i class="fa-solid fa-file-invoice"></i></span><div><strong>{{ $invoiceSummary['total'] }}</strong><small>{{ __('Total Invoices') }}</small></div></div>
-    <div class="invoice-summary-card paid"><span class="invoice-summary-icon"><i class="fa-solid fa-circle-check"></i></span><div><strong>{{ $invoiceSummary['paid'] }}</strong><small>{{ __('Paid Invoices') }}</small></div></div>
-    <div class="invoice-summary-card outstanding"><span class="invoice-summary-icon"><i class="fa-solid fa-clock"></i></span><div><strong>{{ $invoiceSummary['outstanding'] }}</strong><small>{{ __('Outstanding') }}</small></div></div>
-    <div class="invoice-summary-card overdue"><span class="invoice-summary-icon"><i class="fa-solid fa-triangle-exclamation"></i></span><div><strong>{{ $invoiceSummary['overdue'] }}</strong><small>{{ __('Overdue') }}</small></div></div>
+<div class="row gy-4 mb-20 hrm-dashboard-kpis invoice-summary-kpis">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6"><div class="card-box"><span class="card-icon"><i class="fa-solid fa-file-invoice"></i></span><div class="card-info"><h2>{{ $invoiceSummary['total'] }}</h2><h3>{{ __('Total Invoices') }}</h3></div></div></div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6"><div class="card-box"><span class="card-icon"><i class="fa-solid fa-circle-check"></i></span><div class="card-info"><h2>{{ $invoiceSummary['paid'] }}</h2><h3>{{ __('Paid Invoices') }}</h3></div></div></div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6"><div class="card-box"><span class="card-icon"><i class="fa-solid fa-clock"></i></span><div class="card-info"><h2>{{ $invoiceSummary['outstanding'] }}</h2><h3>{{ __('Outstanding') }}</h3></div></div></div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-6"><div class="card-box"><span class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></span><div class="card-info"><h2>{{ $invoiceSummary['overdue'] }}</h2><h3>{{ __('Overdue') }}</h3></div></div></div>
 </div>
 
 <div class="settings-page-area">
@@ -263,11 +263,4 @@
 
 @push('script')
 <script src="{{ asset('admin/js/garment-invoices.js') }}"></script>
-@endpush
-
-@push('style')
-<style>
-.invoice-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0 0 22px; }.invoice-summary-card { display: flex; align-items: center; gap: 12px; min-height: 84px; padding: 16px; border: 1px solid #e8edf3; border-radius: 10px; background: #fff; }.invoice-summary-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; font-size: 17px; }.invoice-summary-card strong, .invoice-summary-card small { display: block; }.invoice-summary-card strong { color: #1b1c17; font-size: 22px; line-height: 1.15; }.invoice-summary-card small { color: #64748b; font-size: 11px; margin-top: 4px; }.invoice-summary-card.total .invoice-summary-icon { color: #2455a4; background: #eff6ff; }.invoice-summary-card.paid .invoice-summary-icon { color: #16734a; background: #eaf8f0; }.invoice-summary-card.outstanding .invoice-summary-icon { color: #946200; background: #fff7df; }.invoice-summary-card.overdue .invoice-summary-icon { color: #b42318; background: #fff0ee; }
-@media (max-width: 991px) { .invoice-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } } @media (max-width: 575px) { .invoice-summary-grid { grid-template-columns: 1fr; gap: 10px; } }
-</style>
 @endpush

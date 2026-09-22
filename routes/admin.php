@@ -471,6 +471,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::get('/{id}/edit', [InvoiceController::class, 'edit'])->name('edit');
             Route::put('/{id}', [InvoiceController::class, 'update'])->name('update');
             Route::delete('/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
+            Route::get('/print', [InvoiceController::class, 'printReport'])->name('print-report');
             Route::get('/{id}/print', [InvoiceController::class, 'print'])->name('print');
             Route::get('/export', [InvoiceController::class, 'export'])->name('export');
             Route::post('/{id}/send-email', [InvoiceController::class, 'sendEmail'])->name('send-email');

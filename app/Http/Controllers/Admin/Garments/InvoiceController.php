@@ -131,6 +131,14 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function printReport()
+    {
+        return view('admin.garments.invoices.print-report', [
+            'invoices' => Invoice::with('order.buyer')->latest('issue_date')->get(),
+            'title' => __('Commercial Invoice Report'),
+        ]);
+    }
+
     public function export()
     {
         $invoices = Invoice::with('order.buyer')->latest('issue_date')->get();
