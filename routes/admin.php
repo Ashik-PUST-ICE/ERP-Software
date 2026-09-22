@@ -12,6 +12,7 @@ use App\Http\Controllers\AutoPost\Admin\AIContentGenerationController;
 use App\Http\Controllers\AutoPost\Admin\AIChatController;
 use App\Http\Controllers\AutoPost\Admin\EmailController;
 use App\Http\Controllers\AutoPost\Admin\QueueController;
+use App\Http\Controllers\AutoPost\Admin\AdminSearchController;
 use App\Http\Controllers\Admin\HRM\HrmDashboardController;
 use App\Http\Controllers\Admin\HRM\DepartmentController as HrmDepartmentController;
 use App\Http\Controllers\Admin\HRM\DesignationController as HrmDesignationController;
@@ -79,6 +80,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\AutoPost\Admin\DashboardController::class, 'index'])
         ->name('dashboard');
+    Route::get('/search', AdminSearchController::class)->name('search');
 
     // Pricing
     Route::prefix('pricing')->name('pricing.')->group(function () {

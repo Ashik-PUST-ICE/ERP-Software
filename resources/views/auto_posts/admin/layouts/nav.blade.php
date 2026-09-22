@@ -34,8 +34,9 @@ $unreadNotificationsCount = $adminNotifications->where('view_status', 0)->count(
                             stroke="#6E5858" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </label>
-                <input type="text" class="search-input" id="searchDataHeader"
-                    placeholder="{{ __('Search here...') }}" />
+                <input type="text" class="search-input" id="searchDataHeader" data-search-url="{{ route('admin.search') }}"
+                    placeholder="{{ __('Search buyers, orders, invoices...') }}" autocomplete="off" />
+                <div id="admin-global-search-results" class="admin-global-search-results" hidden></div>
             </div>
         </div>
     </div>
@@ -199,3 +200,6 @@ $unreadNotificationsCount = $adminNotifications->where('view_status', 0)->count(
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
 </form>
+<style>
+.search-area-wrap { position: relative; }.admin-global-search-results { position: absolute; top: calc(100% + 8px); left: 0; width: min(390px, 80vw); max-height: 360px; overflow-y: auto; background: #fff; border: 1px solid #e6eaf0; border-radius: 9px; box-shadow: 0 12px 30px rgba(30,41,59,.14); z-index: 1060; }.admin-search-result { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: #334155; text-decoration: none; border-bottom: 1px solid #f0f2f5; }.admin-search-result:last-child { border-bottom: 0; }.admin-search-result:hover { background: #f8fafc; }.admin-search-result i { color: #4778c7; width: 22px; text-align: center; }.admin-search-result strong, .admin-search-result small { display: block; }.admin-search-result strong { font-size: 12px; }.admin-search-result small { color: #94a3b8; font-size: 10px; margin-top: 2px; }.admin-search-empty { padding: 18px; color: #94a3b8; font-size: 12px; text-align: center; }
+</style>
