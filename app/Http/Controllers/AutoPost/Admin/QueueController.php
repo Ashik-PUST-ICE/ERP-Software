@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AutoPost\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Process\Process;
 
 class QueueController extends Controller
@@ -67,5 +68,17 @@ class QueueController extends Controller
             'success' => true,
             'message' => __('Queue worker started. It will stop automatically when the queue is empty.'),
         ]);
+    }
+
+    public function retryFailed(int $id)
+    {
+        Artisan::call('queue:retry', ['id' => $id]);
+        return response()->json(['success' => true, 'message' => __('Failed job queued for retry.')]);
+    }
+
+    public function forgetFailed(int $id)
+    {
+        Artisan::call('queue:forget', ['id' => $id]);
+        return response()->json(['success' => true, 'message' => __('Failed job removed.')]);
     }
 }

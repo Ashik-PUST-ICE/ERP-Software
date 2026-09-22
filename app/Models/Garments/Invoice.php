@@ -15,7 +15,7 @@ class Invoice extends Model
 
     protected $fillable = [
         'order_id', 'invoice_number', 'issue_date', 'due_date', 'currency',
-        'amount', 'tax_amount', 'total_amount', 'paid_amount', 'status', 'notes',
+        'amount', 'tax_amount', 'total_amount', 'paid_amount', 'status', 'notes', 'last_reminder_at',
     ];
 
     protected $casts = [
@@ -25,6 +25,7 @@ class Invoice extends Model
         'tax_amount' => 'decimal:4',
         'total_amount' => 'decimal:4',
         'paid_amount' => 'decimal:4',
+        'last_reminder_at' => 'datetime',
     ];
 
     public function order(): BelongsTo

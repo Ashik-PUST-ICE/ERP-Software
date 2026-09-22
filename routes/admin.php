@@ -106,6 +106,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('/queue/status', [QueueController::class, 'status'])->name('queue.status');
     Route::post('/queue/start', [QueueController::class, 'start'])->middleware('throttle:5,1')->name('queue.start');
+    Route::post('/queue/failed/{id}/retry', [QueueController::class, 'retryFailed'])->name('queue.failed.retry');
+    Route::delete('/queue/failed/{id}', [QueueController::class, 'forgetFailed'])->name('queue.failed.forget');
 
     // Billing
     Route::prefix('billing')->name('billings.')->group(function () {

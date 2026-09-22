@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
 
         // Fetch engagement metrics every hour
         $schedule->command('posts:fetch-engagement --days=7')->hourly();
+        $schedule->command('invoices:send-reminders')->dailyAt('09:00');
     }
 
     /**

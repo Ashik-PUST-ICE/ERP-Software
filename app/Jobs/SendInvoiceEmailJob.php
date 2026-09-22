@@ -21,7 +21,7 @@ class SendInvoiceEmailJob implements ShouldQueue
     public int $tries = 3;
     public int $backoff = 30;
 
-    public function __construct(public int $historyId, public int $invoiceId)
+    public function __construct(public int $historyId, public int $invoiceId, public string $templateSlug = 'invoice-issued')
     {
     }
 
@@ -36,8 +36,8 @@ class SendInvoiceEmailJob implements ShouldQueue
 
         try {
             $buyer = $invoice->order?->buyer;
-            $template = EmailTemplate::active()->where('slug', 'invoice-issued')->first();
-            $subject = $template?->subject ?: 'Invoice {{invoice_number}} from {{app_name}}';
+            $template = EmailTemplate::active()->where('slug', $this->templateSlug)->first();
+            $subject = $template?->subject ?: ($this->templateSlug === 'invoice-reminder' ? 'Payment reminder: Invoice {{invoice_number}}' : 'Invoice {{invoice_number}} from {{app_name}}');
             $message = $template?->body ?: "Hello {{name}},\n\nPlease find your invoice details below.\n\nInvoice: {{invoice_number}}\nTotal: {{total}}\nDue date: {{due_date}}\n\nRegards,\n{{app_name}}";
             $variables = [
                 '{{name}}' => $buyer?->contact_person ?: $buyer?->company_name ?: 'Customer',
