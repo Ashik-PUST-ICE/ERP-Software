@@ -40,4 +40,98 @@
 .queue-assistant-ready { margin: 13px 0 10px; color: #16734a; font-size: 12px; }.queue-assistant-ready.is-not-ready { color: #b42318; }.queue-assistant-ready i { margin-right: 5px; }.queue-assistant-run { width: 100%; border: 0; border-radius: 7px; background: #4778c7; color: #fff; padding: 9px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }.queue-assistant-run:hover { background: #315fa8; }.queue-assistant-run:disabled { opacity: .55; cursor: wait; }.queue-assistant-feedback { min-height: 18px; color: #16734a; font-size: 11px; margin-top: 7px; }.queue-assistant-feedback.is-error { color: #b42318; }.queue-assistant-command-label { color: #64748b; font-size: 11px; margin-bottom: 5px; }.queue-assistant-command { display: flex; align-items: center; gap: 6px; background: #1e293b; border-radius: 7px; padding: 8px; }.queue-assistant-command code { flex: 1; color: #dbeafe; font-size: 10px; white-space: normal; word-break: break-word; }.queue-assistant-command button { border: 0; background: transparent; color: #fff; cursor: pointer; }.queue-assistant-note { color: #8991a3; font-size: 11px; line-height: 1.45; margin: 10px 0; }.queue-assistant-footer { display: flex; align-items: center; justify-content: space-between; color: #8991a3; font-size: 10px; }.queue-assistant-refresh { border: 0; background: transparent; color: #4778c7; font-size: 12px; cursor: pointer; }.queue-assistant-refresh:disabled { opacity: .5; cursor: wait; }.queue-assistant-refresh.is-loading i { animation: queue-spin .8s linear infinite; } @keyframes queue-spin { to { transform: rotate(360deg); } }
 .queue-failed-section { margin-top: 12px; padding-top: 11px; border-top: 1px solid #e5e7eb; }.queue-failed-title { color: #475569; font-size: 11px; font-weight: 700; margin-bottom: 7px; }.queue-failed-item { padding: 8px 0; border-bottom: 1px solid #edf0f4; }.queue-failed-item:last-child { border-bottom: 0; }.queue-failed-meta { color: #64748b; font-size: 10px; }.queue-failed-error { color: #b42318; font-size: 10px; margin: 3px 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }.queue-failed-actions { display: flex; gap: 5px; }.queue-failed-actions button { border: 1px solid #d9e0ea; border-radius: 4px; background: #fff; color: #475569; padding: 3px 7px; font-size: 10px; cursor: pointer; }.queue-failed-actions button:hover { color: #2455a4; border-color: #9db9e5; }.queue-failed-actions .queue-forget { color: #b42318; }
 @media (max-width:575px) { .queue-assistant { right: 16px; bottom: 74px; }.queue-assistant-launcher span { display: none; }.queue-assistant-launcher { width: 46px; height: 46px; justify-content: center; border-radius: 50%; padding: 0; } }
+.ai-assistant, .queue-assistant { touch-action: none; }
+.ai-assistant-launcher, .queue-assistant-launcher { cursor: grab; user-select: none; }
+.ai-assistant.is-dragging, .queue-assistant.is-dragging { transition: none; }
+.ai-assistant.is-dragging .ai-assistant-launcher, .queue-assistant.is-dragging .queue-assistant-launcher { cursor: grabbing; }
 </style>
+
+<script>
+(function () {
+    const storageKey = 'admin-assistant-floating-position';
+    const draggableAssistants = [
+        { id: 'ai-assistant', launcher: '.ai-assistant-launcher' },
+        { id: 'queue-assistant', launcher: '.queue-assistant-launcher' }
+    ];
+    let savedPositions = {};
+    try { savedPositions = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch (error) { savedPositions = {}; }
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), Math.max(min, max));
+    const applySavedPosition = (root, position) => {
+        if (!position || !Number.isFinite(position.left) || !Number.isFinite(position.top)) return;
+        const maxLeft = Math.max(8, window.innerWidth - root.offsetWidth - 8);
+        const maxTop = Math.max(8, window.innerHeight - root.offsetHeight - 8);
+        root.style.left = clamp(position.left, 8, maxLeft) + 'px';
+        root.style.top = clamp(position.top, 8, maxTop) + 'px';
+        root.style.right = 'auto';
+        root.style.bottom = 'auto';
+    };
+
+    draggableAssistants.forEach(function (config) {
+        const root = document.getElementById(config.id);
+        const launcher = root && root.querySelector(config.launcher);
+        if (!root || !launcher) return;
+        applySavedPosition(root, savedPositions[config.id]);
+
+        let dragging = false;
+        let moved = false;
+        let startX = 0;
+        let startY = 0;
+        let originLeft = 0;
+        let originTop = 0;
+
+        launcher.addEventListener('pointerdown', function (event) {
+            if (event.button !== 0) return;
+            const rect = root.getBoundingClientRect();
+            dragging = true;
+            moved = false;
+            startX = event.clientX;
+            startY = event.clientY;
+            originLeft = rect.left;
+            originTop = rect.top;
+            root.classList.add('is-dragging');
+            launcher.setPointerCapture?.(event.pointerId);
+        });
+
+        launcher.addEventListener('pointermove', function (event) {
+            if (!dragging) return;
+            const deltaX = event.clientX - startX;
+            const deltaY = event.clientY - startY;
+            if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) moved = true;
+            if (!moved) return;
+            const maxLeft = Math.max(8, window.innerWidth - root.offsetWidth - 8);
+            const maxTop = Math.max(8, window.innerHeight - root.offsetHeight - 8);
+            root.style.left = clamp(originLeft + deltaX, 8, maxLeft) + 'px';
+            root.style.top = clamp(originTop + deltaY, 8, maxTop) + 'px';
+            root.style.right = 'auto';
+            root.style.bottom = 'auto';
+        });
+
+        const finishDrag = function () {
+            if (!dragging) return;
+            dragging = false;
+            root.classList.remove('is-dragging');
+            if (!moved) return;
+            savedPositions[config.id] = { left: root.getBoundingClientRect().left, top: root.getBoundingClientRect().top };
+            localStorage.setItem(storageKey, JSON.stringify(savedPositions));
+            launcher.dataset.dragged = 'true';
+        };
+        launcher.addEventListener('pointerup', finishDrag);
+        launcher.addEventListener('pointercancel', finishDrag);
+        launcher.addEventListener('click', function (event) {
+            if (launcher.dataset.dragged === 'true') {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                delete launcher.dataset.dragged;
+            }
+        }, true);
+    });
+
+    window.addEventListener('resize', function () {
+        draggableAssistants.forEach(function (config) {
+            const root = document.getElementById(config.id);
+            if (root && root.style.left) applySavedPosition(root, { left: root.getBoundingClientRect().left, top: root.getBoundingClientRect().top });
+        });
+    });
+}());
+</script>
