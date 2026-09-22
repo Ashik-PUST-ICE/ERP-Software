@@ -26,6 +26,13 @@ class SendInvoiceReminders extends Command
             $this->warn('No user is available to own the mail history records.');
             return self::SUCCESS;
         }
+        Invoice::query()
+            ->whereIn('status', ['issued', 'partially_paid'])
+            ->whereColumn('paid_amount', '<', 'total_amount')
+            ->whereNotNull('due_date')
+            ->whereDate('due_date', '<', today())
+            ->update(['status' => 'overdue']);
+
         Invoice::with('order.buyer')
             ->whereNotIn('status', ['paid', 'cancelled'])
             ->whereColumn('paid_amount', '<', 'total_amount')
@@ -35,7 +42,7 @@ class SendInvoiceReminders extends Command
                 $query->whereNull('last_reminder_at')->orWhere('last_reminder_at', '<', now()->subDay());
             })
             ->get()
-            ->each(function (Invoice $invoice) use (&$count) {
+            ->each(function (Invoice $invoice) use (&$count, $ownerId) {
                 $email = $invoice->order?->buyer?->email;
                 if (!$email) return;
 

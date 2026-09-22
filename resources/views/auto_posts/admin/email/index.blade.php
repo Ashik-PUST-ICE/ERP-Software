@@ -24,7 +24,7 @@
                 <div class="d-flex align-items-center gap-3 flex-wrap"><div class="email-variable-list"><code>&#123;&#123;name&#125;&#125;</code><code>&#123;&#123;email&#125;&#125;</code><code>&#123;&#123;date&#125;&#125;</code></div><button type="button" class="primary-btn-outline template-manage-btn" data-bs-toggle="modal" data-bs-target="#template-management-modal"><i class="fa-solid fa-sliders me-1"></i>{{ __('Manage Templates') }}</button></div>
             </div>
             <div class="row g-3 mt-1">
-                @forelse($templates as $template)
+                @forelse($activeTemplates as $template)
                     <div class="col-md-6 col-xl-4">
                         <button type="button" class="email-template-card w-100 text-start" data-bs-toggle="modal" data-bs-target="#send-template-modal" data-template-id="{{ $template->id }}">
                             <div class="email-card-icon"><i class="fa-solid {{ ['fa-hand-sparkles', 'fa-receipt', 'fa-bell', 'fa-shirt'][$loop->index % 4] }}"></i></div>

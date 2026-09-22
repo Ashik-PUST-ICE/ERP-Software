@@ -14,12 +14,14 @@ class EmailController extends Controller
 {
     public function index()
     {
-        $templates = EmailTemplate::active()->orderBy('name')->get();
+        $templates = EmailTemplate::orderBy('name')->get();
+        $activeTemplates = $templates->where('status', true)->values();
 
         return view('auto_posts.admin.email.index', [
             'title' => __('Email Center'),
             'histories' => MailHistory::latest('date')->paginate(15),
             'templates' => $templates,
+            'activeTemplates' => $activeTemplates,
             'templateData' => $templates->keyBy('id')->map(function ($template) {
                 return [
                     'name' => $template->name,
