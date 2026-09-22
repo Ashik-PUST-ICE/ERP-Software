@@ -5,9 +5,7 @@
 @section('content')
 <div class="section-title">
     <h2 class="title">{{ __($title) }}</h2>
-    <button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal">
-        <i class="fa fa-plus me-2"></i>{{ __('Create Invoice') }}
-    </button>
+    <div class="d-flex gap-2"><a href="{{ route('admin.garments.invoices.export') }}" class="primary-btn-outline"><i class="fa-solid fa-file-csv me-1"></i>{{ __('Export CSV') }}</a><button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#add-modal"><i class="fa fa-plus me-2"></i>{{ __('Create Invoice') }}</button></div>
 </div>
 
 <div class="invoice-summary-grid">

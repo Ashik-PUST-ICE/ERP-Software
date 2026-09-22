@@ -131,6 +131,33 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function export()
+    {
+        $invoices = Invoice::with('order.buyer')->latest('issue_date')->get();
+        $filename = 'invoices-' . now()->format('Y-m-d') . '.csv';
+
+        return response()->streamDownload(function () use ($invoices) {
+            $handle = fopen('php://output', 'w');
+            fwrite($handle, "\xEF\xBB\xBF");
+            fputcsv($handle, ['Invoice', 'Order', 'Buyer', 'Issue Date', 'Due Date', 'Currency', 'Total', 'Paid', 'Outstanding', 'Status']);
+            foreach ($invoices as $invoice) {
+                fputcsv($handle, [
+                    $invoice->invoice_number,
+                    $invoice->order?->order_number ?: '-',
+                    $invoice->order?->buyer?->company_name ?: '-',
+                    optional($invoice->issue_date)->format('Y-m-d'),
+                    optional($invoice->due_date)->format('Y-m-d'),
+                    $invoice->currency,
+                    number_format((float) $invoice->total_amount, 2, '.', ''),
+                    number_format((float) $invoice->paid_amount, 2, '.', ''),
+                    number_format(max(0, (float) $invoice->total_amount - (float) $invoice->paid_amount), 2, '.', ''),
+                    $invoice->status,
+                ]);
+            }
+            fclose($handle);
+        }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
+    }
+
     public function sendEmail($id)
     {
         if ((int) getOption('app_mail_status', STATUS_ACTIVE) !== STATUS_ACTIVE) {

@@ -472,6 +472,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
             Route::put('/{id}', [InvoiceController::class, 'update'])->name('update');
             Route::delete('/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
             Route::get('/{id}/print', [InvoiceController::class, 'print'])->name('print');
+            Route::get('/export', [InvoiceController::class, 'export'])->name('export');
             Route::post('/{id}/send-email', [InvoiceController::class, 'sendEmail'])->name('send-email');
         });
         Route::get('/ap-ar', [ApArController::class, 'index'])->name('ap-ar.index');
