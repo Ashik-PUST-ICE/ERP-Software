@@ -3969,33 +3969,27 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control {
 Currency Management Page Stylses (Copied from \currencies\index.blade.php in style tag)  
 ------------- */
 /* Modal UI/UX Improvements */
-#add-modal .modal-dialog,
-#edit-modal .modal-dialog {
+.zModalTwo .modal-dialog {
   max-width: 600px;
 }
 
-#add-modal .zModalTwo-body,
-#edit-modal .zModalTwo-body {
+.zModalTwo .zModalTwo-body {
   padding: 25px;
 }
 
-#add-modal .form-group,
-#edit-modal .form-group {
+.zModalTwo .form-group {
   margin-bottom: 1rem;
 }
 
-#add-modal .form-label,
-#edit-modal .form-label {
+.zModalTwo .form-label {
   font-weight: 500;
   font-size: 14px;
   color: #495057;
   margin-bottom: 6px;
 }
 
-#add-modal .form-control,
-#add-modal .select.form-control,
-#edit-modal .form-control,
-#edit-modal .select.form-control {
+.zModalTwo .form-control,
+.zModalTwo .select.form-control {
   border-radius: 6px;
   border: 1px solid #dee2e6;
   padding: 8px 12px;
@@ -4003,24 +3997,66 @@ Currency Management Page Stylses (Copied from \currencies\index.blade.php in sty
   transition: all 0.3s ease;
 }
 
-#add-modal .form-control:focus,
-#add-modal .select.form-control:focus,
-#edit-modal .form-control:focus,
-#edit-modal .select.form-control:focus {
+.zModalTwo .form-control:focus,
+.zModalTwo .select.form-control:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
 }
 
-#add-modal .btn-list,
-#edit-modal .btn-list {
+.zModalTwo .btn-list {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
 }
 
-#add-modal .btn-list .primary-btn,
-#edit-modal .btn-list .primary-btn {
+.zModalTwo .btn-list .primary-btn {
   min-width: 100px;
+}
+
+.zModalTwo.zModalWide .modal-dialog {
+  max-width: 760px;
+}
+
+.zModalTwo .form-check {
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.zModalTwo .form-check.form-switch {
+  padding-left: 2.5em;
+  display: block;
+}
+
+.zModalTwo .package-gateway-switch .form-check-input {
+  width: 2.75em;
+  height: 1.5em;
+  margin-left: -2.5em;
+  cursor: pointer;
+}
+
+.zModalTwo .form-check-label {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .zModalTwo .modal-dialog {
+    margin: .5rem;
+  }
+
+  .zModalTwo .zModalTwo-body {
+    padding: 18px;
+  }
+
+  .zModalTwo .row > [class*="col-"] {
+    width: 100%;
+  }
 }
 
 #add-modal .form-check,

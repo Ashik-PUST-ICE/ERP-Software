@@ -21,7 +21,6 @@ class UserPackage extends Model
         'end_date',
         'status',
         'subscription_type',
-        'post_limit',
         
     ];
 

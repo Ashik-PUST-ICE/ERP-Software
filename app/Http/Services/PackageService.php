@@ -67,7 +67,6 @@ class PackageService
                         'package_id' => $package->id,
                         'package_slug' => $package->slug,
                         'ai_enabled' => $package->ai_enabled ? 'yes' : 'no',
-                        'post_limit' => $package->post_limit ?? 0,
                         'created_at' => $package->created_at?->toISOString(),
                     ],
                     'monthly_price' => $request->monthly_price ?? $package->monthly_price,
@@ -147,7 +146,7 @@ class PackageService
 
     public function getAllData()
     {
-        $packages = Package::orderBy('id', 'DESC')->select('id', 'name', 'slug', 'monthly_price', 'yearly_price', 'status', 'icon', 'old_monthly_price', 'old_yearly_price', 'ai_enabled', 'features', 'description', 'post_limit', 'provider_limit');
+        $packages = Package::orderBy('id', 'DESC')->select('id', 'name', 'slug', 'monthly_price', 'yearly_price', 'status', 'icon', 'old_monthly_price', 'old_yearly_price', 'ai_enabled', 'features', 'description');
         return datatables($packages)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
@@ -160,9 +159,6 @@ class PackageService
             })
             ->editColumn('ai_enabled', function ($data) {
                 return $data->ai_enabled ? __('Yes') : __('No');
-            })
-            ->editColumn('post_limit', function ($data) {
-                return $data->post_limit ? $data->post_limit . ' ' . __('days') : __('No');
             })
             ->addColumn('icon', function ($data) {
                 return '<div class="min-w-160 d-flex align-items-center cg-10"><div class="flex-shrink-0 w-35 h-35 bd-one bd-c-cdef84 rounded-circle overflow-hidden bg-eaeaea d-flex justify-content-center align-items-center"><img src="' . getFileUrl($data->icon) . '" alt="icon" class="rounded avatar-xs w-100"></div><p>' . htmlspecialchars($data->name) . '</p></div>';
@@ -202,7 +198,7 @@ class PackageService
     public function getPackagesListData()
     {
         $packages = Package::orderBy('id', 'DESC')
-            ->select('id', 'name', 'slug', 'monthly_price', 'yearly_price', 'status', 'icon', 'old_monthly_price', 'old_yearly_price', 'ai_enabled', 'features', 'description', 'post_limit', 'provider_limit');
+            ->select('id', 'name', 'slug', 'monthly_price', 'yearly_price', 'status', 'icon', 'old_monthly_price', 'old_yearly_price', 'ai_enabled', 'features', 'description');
         return datatables($packages)
             ->addColumn('sl', function ($data) {
                 $start = (int) request()->input('start', 0);
@@ -214,19 +210,6 @@ class PackageService
                     return '<img src="' . getFileUrl($data->icon) . '" alt="' . e($data->name) . '" class="package-icon" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">';
                 }
                 return '<span class="text-muted">-</span>';
-            })
-            ->addColumn('provider', function ($data) {
-                if ($data->provider_limit && is_array($data->provider_limit) && count($data->provider_limit) > 0) {
-                    $providers = defined('SOCIAL_MEDIA_PLATFORMS') ? SOCIAL_MEDIA_PLATFORMS : [];
-                    $names = [];
-                    foreach ((array) $data->provider_limit as $id) {
-                        if (isset($providers[$id])) {
-                            $names[] = '<span class="badge package-badge me-1">' . e($providers[$id]) . '</span>';
-                        }
-                    }
-                    return count($names) > 0 ? implode('', $names) : '<span class="text-muted">' . __('N/A') . '</span>';
-                }
-                return '<span class="text-muted">' . __('N/A') . '</span>';
             })
             ->addColumn('price', function ($data) {
                 return '$' . number_format((float) $data->monthly_price, 2);
@@ -272,7 +255,7 @@ class PackageService
             ->addColumn('package_json', function ($data) {
                 return json_encode($data->toArray());
             })
-            ->rawColumns(['icon', 'provider', 'old_price', 'ai_enabled', 'features', 'status', 'action'])
+            ->rawColumns(['icon', 'old_price', 'ai_enabled', 'features', 'status', 'action'])
             ->make(true);
     }
 
@@ -310,9 +293,7 @@ class PackageService
                 'paypal_monthly_plan_id' => $request->paypal_monthly_plan_id,
                 'paypal_yearly_plan_id' => $request->paypal_yearly_plan_id,
                 'ai_enabled' => $request->ai_enabled ?? false,
-                'provider_limit' => $request->provider_limit ?? [],
                 'features' => $request->features ?? [],
-                'post_limit' => $request->post_limit ?? 0,
                 'status' => $request->status ?? false,
             ]);
 
@@ -384,9 +365,7 @@ class PackageService
                 'paypal_monthly_plan_id' => $request->paypal_monthly_plan_id,
                 'paypal_yearly_plan_id' => $request->paypal_yearly_plan_id,
                 'ai_enabled' => $request->ai_enabled ?? false,
-                'provider_limit' => $request->provider_limit ?? [],
                 'features' => $request->features ?? [],
-                'post_limit' => $request->post_limit ?? 0,
                 'status' => $request->status ?? false,
             ]);
 

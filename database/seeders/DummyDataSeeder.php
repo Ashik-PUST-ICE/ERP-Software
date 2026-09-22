@@ -122,10 +122,8 @@ class DummyDataSeeder extends Seeder
                 'description' => "Dummy package for {$name} - perfect for screenshots.",
                 'monthly_price' => rand(9, 99),
                 'yearly_price' => rand(90, 999),
-                'post_limit' => rand(10, 500),
                 'ai_enabled' => $i % 2 === 0 ? 1 : 0,
                 'status' => STATUS_ACTIVE,
-                'provider_limit' => $this->getProviderLimit($i),
                 'features' => $this->getFeatures($i),
             ];
             
@@ -218,25 +216,6 @@ class DummyDataSeeder extends Seeder
         // Save as JPEG
         imagejpeg($image, storage_path('app/public/' . $path), 85);
         imagedestroy($image);
-    }
-
-    /**
-     * Get provider limit (social media platforms) for a package based on its index
-     * Platform IDs: 1=Facebook, 2=Twitter, 3=YouTube, 4=LinkedIn, 5=Instagram, 6=TikTok, 7=Threads
-     */
-    private function getProviderLimit(int $packageIndex): array
-    {
-        $providerLimits = [
-            [1, 2],                    // Starter: Facebook, Twitter
-            [1, 2, 5],                 // Professional: Facebook, Twitter, Instagram
-            [1, 2, 3, 5],              // Business: Facebook, Twitter, YouTube, Instagram
-            [1, 2, 3, 4, 5],           // Enterprise: Facebook, Twitter, YouTube, LinkedIn, Instagram
-            [1, 2, 3, 4, 5, 6],        // Premium: All except Threads
-            [1, 2, 3, 4, 5, 6, 7],     // Growth: All platforms
-            [1, 2, 3, 4, 5, 6, 7],     // Scale: All platforms
-        ];
-        
-        return $providerLimits[$packageIndex % count($providerLimits)] ?? [1, 2];
     }
 
     /**

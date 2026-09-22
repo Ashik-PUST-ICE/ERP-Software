@@ -27,9 +27,7 @@ class Package extends Model
         'paypal_monthly_plan_id',
         'paypal_yearly_plan_id',
         'ai_enabled',
-        'provider_limit',
         'features',
-        'post_limit',
         'status',
         
     ];
@@ -40,9 +38,7 @@ class Package extends Model
         'yearly_price' => 'decimal:2',
         'old_yearly_price' => 'decimal:2',
         'ai_enabled' => 'boolean',
-        'provider_limit' => 'array',
         'features' => 'array',
-        'post_limit' => 'integer',
         'status' => 'boolean',
     ];
 

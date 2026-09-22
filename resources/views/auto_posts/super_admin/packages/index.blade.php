@@ -5,7 +5,6 @@
 
 
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <div class="section-title">
     <h2 class="title">{{ __('Packages') }}</h2>
     <button type="button" class="primary-btn" data-bs-toggle="modal" data-bs-target="#package-modal"
@@ -37,7 +36,6 @@
                     <th class="keep-show">{{ __('SL') }}</th>
                     <th class="keep-show">{{ __('Icon') }}</th>
                     <th>{{ __('Name') }}</th>
-                    <th>{{ __('Provider') }}</th>
                     <th>{{ __('Price') }}</th>
                     <th>{{ __('Old Price') }}</th>
                     <th>{{ __('AI Access') }}</th>
@@ -54,19 +52,21 @@
 </div>
 
     <!-- Package Modal -->
-  <div class="modal fade primary-modal" id="package-modal" tabindex="-1" aria-labelledby="packageModalLabel"
+  <div class="modal fade zModalTwo zModalWide" id="package-modal" tabindex="-1" aria-labelledby="packageModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="packageModalLabel">{{ __('Add New Package') }}</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content zModalTwo-content">
                 <form id="package-form" method="POST" action="{{ route('super_admin.packages.store') }}"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="_method" id="form-method" value="POST">
-                    <div class="modal-body">
+                    <div class="modal-body zModalTwo-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0" id="packageModalLabel">{{ __('Add New Package') }}</h4>
+                            <div class="mClose">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        </div>
                         <div class="primary-form">
                             <div class="row gy-4">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -96,30 +96,12 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label class="form-label">{{ __('Provider') }}<span
-                                                class="required">*</span></label>
-                                        <select class="multipleSelect2" multiple="true" name="provider_limit[]">
-                                            @foreach(SOCIAL_MEDIA_PLATFORMS as $id => $name)
-                                            <option value="{{ $id }}"> {{ $name }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
                                         <label for="ai_enabled" class="form-label">{{ __('AI Enabled') }}</label>
                                         <select class="select form-control wide sf-select-without-search" id="ai_enabled"
                                             name="ai_enabled">
                                             <option value="1">{{ __('Yes') }}</option>
                                             <option value="0">{{ __('No') }}</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="post_limit" class="form-label">{{ __('Post Limit') }}</label>
-                                        <input type="number" class="form-control" id="post_limit" name="post_limit"
-                                            placeholder="{{ __('Enter post limit') }}" min="0">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -198,32 +180,32 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="create_plan_in_gateway"
-                                                name="create_plan_in_gateway" value="1">
-                                            <label class="form-check-label" for="create_plan_in_gateway">
-                                                {{ __('Create plan in payment gateway') }}
+                                        <div class="d-flex justify-content-start align-items-center gap-3">
+                                            <div class="form-check form-switch mb-0 package-gateway-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="create_plan_in_gateway" name="create_plan_in_gateway" value="1">
+                                            </div>
+                                            <label class="form-check-label mb-0 ms-2" for="create_plan_in_gateway">
+                                                {{ __('Sync plan with Stripe / PayPal') }}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="btn-list mt-4 pt-3 border-top">
+                            <button type="button" class="primary-btn" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                            <button type="submit" class="primary-btn" id="submit-btn">{{ __('Create Package') }}</button>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="primary-btn btn-secondary"
-                            data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-                        <button type="submit" class="primary-btn" id="submit-btn">{{ __('Create Package') }}</button>
-                    </div>
+                </form>
             </div>
-            </form>
         </div>
     </div>
 </div>
 @endsection
 
 @push('script')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 window.superAdminPackageConfig = {
     routes: {
@@ -234,13 +216,4 @@ window.superAdminPackageConfig = {
 };
 </script>
 <script src="{{ asset('super_admin/js/packages.js') }}"></script>
-<script>
-$(document).ready(function() {
-    //Select2
-    $(".multipleSelect2").select2({
-        placeholder: "Select Providers",
-        allowClear: true,
-    });
-})
-</script>
 @endpush

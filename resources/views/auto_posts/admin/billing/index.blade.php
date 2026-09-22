@@ -38,51 +38,8 @@
                                         stroke="#141B34" stroke-width="0.875" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg>
-                                <strong>{{ __('Posts:') }}</strong>
-                                {{$currentPackage->packageable->post_limit == 0 ? 'Unlimited' : $currentPackage->packageable->post_limit}}
-                            </li>
-                            <li>
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M2.91675 8.45898C2.91675 8.45898 3.79175 8.45898 4.95841 10.5007C4.95841 10.5007 8.20105 5.15343 11.0834 4.08398"
-                                        stroke="#141B34" stroke-width="0.875" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
                                 <strong>{{ __('AI Enabled:') }}</strong>
                                 {{$currentPackage->packageable->ai_enabled ? 'Yes' : 'No'}}
-                            </li>
-                            <li>
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M2.91675 8.45898C2.91675 8.45898 3.79175 8.45898 4.95841 10.5007C4.95841 10.5007 8.20105 5.15343 11.0834 4.08398"
-                                        stroke="#141B34" stroke-width="0.875" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                <strong>{{ __('Platfrom:') }}</strong>
-                                @if($currentPackage->packageable->provider_limit &&
-                                is_array($currentPackage->packageable->provider_limit) &&
-                                count($currentPackage->packageable->provider_limit) > 0)
-                                @php
-                                $providers = SOCIAL_MEDIA_PLATFORMS;
-                                $providerNames = [];
-                                foreach($currentPackage->packageable->provider_limit as $providerId) {
-                                if(isset($providers[$providerId])) {
-                                $providerNames[] = $providers[$providerId];
-                                }
-                                }
-                                @endphp
-                                @if(count($providerNames) > 0)
-                                @foreach($providerNames as $providerName)
-                                <span class="badge package-badge me-1">{{ $providerName }}</span>
-                                @endforeach
-                                @else
-                                <span class="text-muted">{{ __('N/A') }}</span>
-                                @endif
-                                @else
-                                <span class="text-muted">{{ __('N/A') }}</span>
-                                @endif
                             </li>
                         </ul>
                         @if($currentPackage->packageable->features && is_array($currentPackage->packageable->features)
@@ -255,30 +212,8 @@
                                 @if($package->ai_enabled)
                                 <li>{{ __('AI Features Enabled') }}</li>
                                 @endif
-                                @if($package->post_limit)
-                                <li>{{ $package->post_limit }} {{ __('posts per day') }}</li>
-                                @else
-                                <li>{{ __('Unlimited posts') }}</li>
-                                @endif
                                 @if(isset($package->is_trail) && $package->is_trail == STATUS_ACTIVE)
                                 <li>{{ __('Includes free trial') }}</li>
-                                @endif
-                                @if($package->provider_limit && is_array($package->provider_limit) &&
-                                count($package->provider_limit) > 0)
-                                @php
-                                $providers = SOCIAL_MEDIA_PLATFORMS;
-                                $providerNames = [];
-                                foreach($package->provider_limit as $providerId) {
-                                if(isset($providers[$providerId])) {
-                                $providerNames[] = $providers[$providerId];
-                                }
-                                }
-                                @endphp
-                                @if(count($providerNames) > 0)
-                                @foreach($providerNames as $providerName)
-                                <li>{{ $providerName }}</li>
-                                @endforeach
-                                @endif
                                 @endif
                                 @if($package->features && is_array($package->features))
                                 @foreach($package->features as $feature)

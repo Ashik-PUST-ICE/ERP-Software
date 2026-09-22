@@ -24,9 +24,6 @@
             <li class="included">{{ __('AI Features Included') }}</li>
             @endif
 
-            @if($package->post_limit)
-            <li class="included">{{ __('Post limit') }}: {{ $package->post_limit }}</li>
-            @endif
         </ul>
 
 

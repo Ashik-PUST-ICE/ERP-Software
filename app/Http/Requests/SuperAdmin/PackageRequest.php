@@ -44,9 +44,7 @@ class PackageRequest extends FormRequest
             'paypal_monthly_plan_id' => 'nullable|string|max:255',
             'paypal_yearly_plan_id' => 'nullable|string|max:255',
             'ai_enabled' => 'boolean',
-            'provider_limit' => 'required|array',
             'features' => 'nullable|array',
-            'post_limit' => 'nullable|integer|min:0',
             'status' => 'boolean',
             'create_plan_in_gateway' => 'nullable|boolean',
             'selected_gateway' => 'nullable|string|in:stripe,paypal',
@@ -71,11 +69,5 @@ class PackageRequest extends FormRequest
             ]);
         }
 
-        // Ensure provider_limit is an array (multi-select usually sends array)
-        if ($this->has('provider_limit') && !is_array($this->provider_limit)) {
-            $this->merge([
-                'provider_limit' => [$this->provider_limit],
-            ]);
-        }
     }
 }

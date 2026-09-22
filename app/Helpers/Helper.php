@@ -872,22 +872,6 @@ if (!function_exists('getUserCurrentPackage')) {
     }
 }
 
-if (!function_exists('getUserPlanPostLimit')) {
-    /**
-     * Get the post limit from the user's current active package.
-     * Returns the integer post_limit, or null if no active plan.
-     * A value of 0 means unlimited posts.
-     */
-    function getUserPlanPostLimit($userId = null)
-    {
-        $userPackage = getUserCurrentPackage($userId);
-        if (!$userPackage || !$userPackage->packageable) {
-            return null; // no active plan
-        }
-        return (int) ($userPackage->packageable->post_limit ?? 0);
-    }
-}
-
 if (!function_exists('getUserPostedCount')) {
     /**
      * Count the number of successfully published posts for a user
@@ -917,11 +901,11 @@ if (!function_exists('hasReachedPostLimit')) {
     /**
      * Check if the user has reached their plan's post limit.
      * Returns true if limit is reached (cannot publish more).
-     * Returns false if unlimited (post_limit == 0) or still has quota.
+     * Post limits are no longer enforced by package plans.
      */
     function hasReachedPostLimit($userId = null)
     {
-        $limit = getUserPlanPostLimit($userId);
+        return false;
 
         // No active plan → treat as limit reached
         if (is_null($limit)) {
@@ -943,42 +927,16 @@ if (!function_exists('isProviderAllowedByPlan')) {
      * Check if a given platform (string like 'Facebook', 'Twitter', etc.)
      * is allowed by the user's current subscription plan.
      *
-     * The Package's provider_limit stores numeric keys from SOCIAL_MEDIA_PLATFORMS.
-     * This function maps the platform string to its key and checks membership.
-     *
-     * Returns true if allowed, false if not.
-     * If provider_limit is empty or user has no plan, returns false.
+     * Provider access is no longer restricted by package.
      */
     function isProviderAllowedByPlan($platformName, $userId = null)
     {
-        $userPackage = getUserCurrentPackage($userId);
-
-        if (!$userPackage || !$userPackage->packageable) {
-            return false; // no active plan
-        }
-
-        $providerLimit = $userPackage->packageable->provider_limit;
-
-        // If provider_limit is empty array → no providers allowed
-        if (empty($providerLimit) || !is_array($providerLimit)) {
-            return false;
-        }
-
-        // Map the platform name string to its numeric key
-        $platformKey = null;
         foreach (SOCIAL_MEDIA_PLATFORMS as $key => $name) {
             if (strtolower($name) === strtolower($platformName)) {
-                $platformKey = $key;
-                break;
+                return true;
             }
         }
-
-        if ($platformKey === null) {
-            return false; // unknown platform
-        }
-
-        // Check if the platform key is in the allowed list (cast to int for comparison)
-        return in_array((int) $platformKey, array_map('intval', $providerLimit));
+        return false;
     }
 }
 
@@ -1009,44 +967,11 @@ if (!function_exists('getPostLimitCheckResult')) {
      */
     function getPostLimitCheckResult($userId = null)
     {
-        $limit = getUserPlanPostLimit($userId);
-        $used = getUserPostedCount($userId);
-
-        if (is_null($limit)) {
-            return [
-                'allowed' => false,
-                'message' => __('You do not have an active subscription plan. Please subscribe to a package.'),
-                'limit' => null,
-                'used' => $used,
-            ];
-        }
-
-        if ($limit === 0) {
-            return [
-                'allowed' => true,
-                'message' => '',
-                'limit' => 0, // unlimited
-                'used' => $used,
-            ];
-        }
-
-        if ($used >= $limit) {
-            return [
-                'allowed' => false,
-                'message' => __('You have reached your post limit (:used/:limit). Please upgrade your package.', [
-                    'used' => $used,
-                    'limit' => $limit,
-                ]),
-                'limit' => $limit,
-                'used' => $used,
-            ];
-        }
-
         return [
             'allowed' => true,
             'message' => '',
-            'limit' => $limit,
-            'used' => $used,
+            'limit' => 0,
+            'used' => getUserPostedCount($userId),
         ];
     }
 }
@@ -1059,22 +984,6 @@ if (!function_exists('getUserAllowedProviders')) {
      */
     function getUserAllowedProviders($userId = null)
     {
-        $userPackage = getUserCurrentPackage($userId);
-        if (!$userPackage || !$userPackage->packageable) {
-            return [];
-        }
-
-        $providerLimit = $userPackage->packageable->provider_limit;
-        if (empty($providerLimit) || !is_array($providerLimit)) {
-            return [];
-        }
-
-        $allowed = [];
-        foreach ($providerLimit as $key) {
-            if (isset(SOCIAL_MEDIA_PLATFORMS[(int) $key])) {
-                $allowed[] = strtolower(SOCIAL_MEDIA_PLATFORMS[(int) $key]);
-            }
-        }
-        return $allowed;
+        return array_map('strtolower', array_values(SOCIAL_MEDIA_PLATFORMS));
     }
 }

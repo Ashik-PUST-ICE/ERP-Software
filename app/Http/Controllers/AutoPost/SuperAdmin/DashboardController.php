@@ -49,12 +49,17 @@ class DashboardController extends Controller
 
         $startMonth = Carbon::now()->subMonths(11)->startOfMonth();
         $endMonth   = Carbon::now()->endOfMonth();
+        // SQLite uses strftime(), while MySQL/MariaDB use DATE_FORMAT().
+        // Keep the dashboard compatible with both local development and production.
+        $monthExpression = static fn (string $column): string => DB::connection()->getDriverName() === 'sqlite'
+            ? "strftime('%Y-%m', {$column})"
+            : "DATE_FORMAT({$column}, '%Y-%m')";
 
         // Monthly subscription counts (based on start_date)
         $rawSubData = UserPackage::whereDate('start_date', '>=', $startMonth)
             ->whereDate('start_date', '<=', $endMonth)
             ->select(
-                DB::raw("strftime('%Y-%m', start_date) as ym"),
+                DB::raw($monthExpression('start_date') . ' as ym'),
                 DB::raw('COUNT(*) as total')
             )
             ->groupBy('ym')
@@ -66,7 +71,7 @@ class DashboardController extends Controller
         $rawSalesData = Transaction::whereDate('payment_time', '>=', $startMonth)
             ->whereDate('payment_time', '<=', $endMonth)
             ->select(
-                DB::raw("strftime('%Y-%m', payment_time) as ym"),
+                DB::raw($monthExpression('payment_time') . ' as ym'),
                 DB::raw('SUM(amount) as total')
             )
             ->groupBy('ym')

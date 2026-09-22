@@ -23,7 +23,6 @@ return new class extends Migration
             $table->dateTime('end_date')->nullable();
             $table->tinyInteger('status')->default(STATUS_DEACTIVATE);
             $table->tinyInteger('subscription_type')->default(SUBSCRIPTION_TYPE_MONTHLY);
-            $table->integer('post_limit')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

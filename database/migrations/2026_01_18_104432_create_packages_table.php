@@ -29,9 +29,7 @@ return new class extends Migration
             $table->string('paypal_monthly_plan_id')->nullable();
             $table->string('paypal_yearly_plan_id')->nullable();
             $table->tinyInteger('ai_enabled')->default(0);
-            $table->text('provider_limit')->nullable();
             $table->text('features')->nullable();
-            $table->integer('post_limit')->default(0);
             $table->tinyInteger('status')->default(0)->comment('1 = active, 0 = inactive');
             $table->timestamps();
             $table->softDeletes();
