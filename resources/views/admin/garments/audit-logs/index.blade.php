@@ -21,7 +21,7 @@
                     <input type="text" class="search-input" id="searchData" placeholder="{{ __('Search audit logs...') }}" />
                     <select class="form-control w-auto" id="auditLogModuleFilter" style="height: 38px; border-radius: 8px; font-size: 13px;">
                         <option value="">{{ __('All Modules') }}</option>
-                        @foreach(['Supplier', 'Purchase Order'] as $module)
+                        @foreach(['Supplier', 'Purchase Order', 'Email', 'Email Template', 'Queue'] as $module)
                             <option value="{{ $module }}" @selected(request('module') === $module)>{{ $module }}</option>
                         @endforeach
                     </select>

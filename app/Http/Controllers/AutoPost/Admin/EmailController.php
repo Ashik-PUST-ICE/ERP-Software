@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendAdminEmailJob;
 use App\Models\EmailTemplate;
 use App\Models\MailHistory;
+use App\Services\Garments\AuditLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -104,6 +105,13 @@ class EmailController extends Controller
             SendAdminEmailJob::dispatch($history->id);
         }
 
+        app(AuditLogService::class)->record(
+            'created',
+            'Email',
+            null,
+            __('Queued :count email(s) from the admin Email Center.', ['count' => $recipients->count()])
+        );
+
         return to_route('admin.email.index')->with('success', __('Email queued successfully. Delivery status is available in history.'));
     }
 
@@ -124,6 +132,8 @@ class EmailController extends Controller
         $history->update(['status' => 2, 'error' => null, 'date' => now()]);
         SendAdminEmailJob::dispatch($history->id);
 
+        app(AuditLogService::class)->record('updated', 'Email', $history->id, __('Email # :id queued for retry.', ['id' => $history->id]));
+
         return back()->with('success', __('Email has been queued for retry.'));
     }
 
@@ -139,7 +149,8 @@ class EmailController extends Controller
 
         $data['slug'] = $this->uniqueTemplateSlug($data['name']);
         $data['status'] = $request->boolean('status', true);
-        EmailTemplate::create($data);
+        $template = EmailTemplate::create($data);
+        app(AuditLogService::class)->record('created', 'Email Template', $template->id, __('Email template :name created.', ['name' => $template->name]));
 
         return back()->with('success', __('Email template created successfully.'));
     }
@@ -157,13 +168,16 @@ class EmailController extends Controller
 
         $data['status'] = $request->boolean('status');
         $template->update($data);
+        app(AuditLogService::class)->record('updated', 'Email Template', $template->id, __('Email template :name updated.', ['name' => $template->name]), $template->getChanges());
 
         return back()->with('success', __('Email template updated successfully.'));
     }
 
     public function destroyTemplate(int $id)
     {
-        EmailTemplate::findOrFail($id)->delete();
+        $template = EmailTemplate::findOrFail($id);
+        $template->delete();
+        app(AuditLogService::class)->record('deleted', 'Email Template', $template->id, __('Email template :name deleted.', ['name' => $template->name]));
         return back()->with('success', __('Email template deleted successfully.'));
     }
 

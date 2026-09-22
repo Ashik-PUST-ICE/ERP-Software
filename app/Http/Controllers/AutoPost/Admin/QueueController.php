@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
+use App\Services\Garments\AuditLogService;
 use Symfony\Component\Process\Process;
 
 class QueueController extends Controller
@@ -74,6 +75,7 @@ class QueueController extends Controller
             ], base_path());
             $process->disableOutput();
             $process->start();
+            app(AuditLogService::class)->record('created', 'Queue', null, __('Queue worker started from Queue Center.'));
         } catch (\Throwable $exception) {
             Cache::forget('admin_queue_worker_running');
             report($exception);
@@ -90,12 +92,14 @@ class QueueController extends Controller
     public function retryFailed(int $id)
     {
         Artisan::call('queue:retry', ['id' => $id]);
+        app(AuditLogService::class)->record('updated', 'Queue', $id, __('Failed queue job # :id retried.', ['id' => $id]));
         return response()->json(['success' => true, 'message' => __('Failed job queued for retry.')]);
     }
 
     public function forgetFailed(int $id)
     {
         Artisan::call('queue:forget', ['id' => $id]);
+        app(AuditLogService::class)->record('deleted', 'Queue', $id, __('Failed queue job # :id removed.', ['id' => $id]));
         return response()->json(['success' => true, 'message' => __('Failed job removed.')]);
     }
 }

@@ -25,7 +25,7 @@ class AuditLogController extends Controller
         }
 
         return view('admin.garments.audit-logs.index', [
-            'title' => __('Garments Audit Log'),
+            'title' => __('System Audit Log'),
             'activeGarments' => 'active',
             'activeGarmentAuditLogs' => 'active',
             'showGarmentsMenu' => 'show',
