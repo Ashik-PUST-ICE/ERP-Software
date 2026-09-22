@@ -102,6 +102,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::get('/history', [EmailController::class, 'history'])->name('history');
         Route::post('/send', [EmailController::class, 'send'])->middleware('throttle:10,1')->name('send');
         Route::post('/{id}/retry', [EmailController::class, 'retry'])->middleware('throttle:10,1')->name('retry');
+        Route::post('/templates', [EmailController::class, 'storeTemplate'])->name('templates.store');
+        Route::put('/templates/{id}', [EmailController::class, 'updateTemplate'])->name('templates.update');
+        Route::delete('/templates/{id}', [EmailController::class, 'destroyTemplate'])->name('templates.destroy');
     });
 
     Route::get('/queue/status', [QueueController::class, 'status'])->name('queue.status');

@@ -10,6 +10,21 @@
         var $refresh = $('#queue-refresh');
         var $run = $('#queue-run');
 
+        function escapeHtml(value) { return $('<div>').text(value || '').html(); }
+
+        function renderFailedJobs(jobs) {
+            var $section = $('#queue-failed-section');
+            var $list = $('#queue-failed-list');
+            if (!jobs || !jobs.length) { $section.prop('hidden', true); $list.empty(); return; }
+            $section.prop('hidden', false);
+            $list.html(jobs.map(function (job) {
+                return '<div class="queue-failed-item" data-job-id="' + job.id + '">' +
+                    '<div class="queue-failed-meta">#' + job.id + ' · ' + escapeHtml(job.queue) + ' · ' + escapeHtml(job.failed_at) + '</div>' +
+                    '<div class="queue-failed-error" title="' + escapeHtml(job.exception) + '">' + escapeHtml(job.exception) + '</div>' +
+                    '<div class="queue-failed-actions"><button type="button" class="queue-retry">Retry</button><button type="button" class="queue-forget">Remove</button></div></div>';
+            }).join(''));
+        }
+
         function loadStatus() {
             $refresh.prop('disabled', true).addClass('is-loading');
             $.get($root.data('status-url'))
@@ -17,6 +32,7 @@
                     $('#queue-connection').text(data.connection || '—');
                     $('#queue-pending').text(data.pending || 0);
                     $('#queue-failed').text(data.failed || 0);
+                    renderFailedJobs(data.failed_jobs || []);
                     $('#queue-command').text(data.command || 'php artisan queue:work');
                     $('#queue-checked-at').text(data.checked_at || '');
                     $run.prop('disabled', !!data.worker_running);
@@ -52,6 +68,22 @@
             }).fail(function (xhr) {
                 $('#queue-feedback').addClass('is-error').text(xhr.responseJSON?.message || 'Unable to start worker.');
                 loadStatus();
+            });
+        });
+        $('#queue-failed-list').on('click', 'button', function () {
+            var $button = $(this), id = $button.closest('.queue-failed-item').data('job-id');
+            var retry = $button.hasClass('queue-retry');
+            $button.prop('disabled', true);
+            $.ajax({
+                url: (retry ? $root.data('retry-url') : $root.data('forget-url')).replace('__ID__', id),
+                type: retry ? 'POST' : 'DELETE',
+                headers: { 'X-CSRF-TOKEN': $root.data('csrf'), 'Accept': 'application/json' }
+            }).done(function (response) {
+                $('#queue-feedback').removeClass('is-error').text(response.message || 'Done.');
+                loadStatus();
+            }).fail(function (xhr) {
+                $('#queue-feedback').addClass('is-error').text(xhr.responseJSON?.message || 'Unable to update failed job.');
+                $button.prop('disabled', false);
             });
         });
         $('#queue-copy-command').on('click', function () {

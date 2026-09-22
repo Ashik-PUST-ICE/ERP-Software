@@ -81,6 +81,41 @@
     $(document).ready(function () {
         var templates = readTemplates();
         var $modal = $('#send-template-modal');
+        var $templateModal = $('#template-management-modal');
+        var $templateForm = $('#template-management-form');
+
+        function resetTemplateForm() {
+            $templateForm.attr('action', $('#template-store-route').val());
+            $('#template-form-method').val('POST');
+            $('#template_name, #template_subject, #template_body, #template_variables').val('');
+            $('#template_status').prop('checked', true);
+            $('#template-save-btn').text('Save Template');
+        }
+
+        $('#template-new-btn').on('click', resetTemplateForm);
+        $templateModal.on('show.bs.modal', function () {
+            resetTemplateForm();
+        });
+        $templateModal.on('click', '.template-edit-btn', function () {
+            var template = templates[$(this).data('template-id')];
+            if (!template) return;
+            $templateForm.attr('action', $('#template-update-route').val().replace('__ID__', $(this).data('template-id')));
+            $('#template-form-method').val('PUT');
+            $('#template_name').val(template.name || '');
+            $('#template_subject').val(template.subject || '');
+            $('#template_body').val(template.body || '');
+            $('#template_variables').val(template.variables || '');
+            $('#template_status').prop('checked', !!template.status);
+            $('#template-save-btn').text('Update Template');
+            $('#template_name').trigger('focus');
+        });
+
+        var $deleteModal = $('#template-delete-modal');
+        $deleteModal.on('show.bs.modal', function (event) {
+            var $button = $(event.relatedTarget);
+            $('#template-delete-name').text($button.data('template-name') || '');
+            $('#template-delete-form').attr('action', $('#template-delete-route').val().replace('__ID__', $button.data('template-id')));
+        });
 
         $modal.on('show.bs.modal', function (event) {
             var id = $(event.relatedTarget).data('template-id') || '';

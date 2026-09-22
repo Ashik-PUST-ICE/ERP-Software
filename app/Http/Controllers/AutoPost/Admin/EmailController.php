@@ -13,10 +13,21 @@ class EmailController extends Controller
 {
     public function index()
     {
+        $templates = EmailTemplate::active()->orderBy('name')->get();
+
         return view('auto_posts.admin.email.index', [
             'title' => __('Email Center'),
             'histories' => MailHistory::latest('date')->paginate(15),
-            'templates' => EmailTemplate::active()->orderBy('name')->get(),
+            'templates' => $templates,
+            'templateData' => $templates->keyBy('id')->map(function ($template) {
+                return [
+                    'name' => $template->name,
+                    'subject' => $template->subject,
+                    'body' => $template->body,
+                    'variables' => $template->variables,
+                    'status' => (bool) $template->status,
+                ];
+            }),
             'activeEmailCenter' => 'active',
         ]);
     }
@@ -114,5 +125,56 @@ class EmailController extends Controller
         SendAdminEmailJob::dispatch($history->id);
 
         return back()->with('success', __('Email has been queued for retry.'));
+    }
+
+    public function storeTemplate(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:120'],
+            'subject' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string', 'max:50000'],
+            'variables' => ['nullable', 'string', 'max:1000'],
+            'status' => ['nullable', 'boolean'],
+        ]);
+
+        $data['slug'] = $this->uniqueTemplateSlug($data['name']);
+        $data['status'] = $request->boolean('status', true);
+        EmailTemplate::create($data);
+
+        return back()->with('success', __('Email template created successfully.'));
+    }
+
+    public function updateTemplate(Request $request, int $id)
+    {
+        $template = EmailTemplate::findOrFail($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:120'],
+            'subject' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string', 'max:50000'],
+            'variables' => ['nullable', 'string', 'max:1000'],
+            'status' => ['nullable', 'boolean'],
+        ]);
+
+        $data['status'] = $request->boolean('status');
+        $template->update($data);
+
+        return back()->with('success', __('Email template updated successfully.'));
+    }
+
+    public function destroyTemplate(int $id)
+    {
+        EmailTemplate::findOrFail($id)->delete();
+        return back()->with('success', __('Email template deleted successfully.'));
+    }
+
+    private function uniqueTemplateSlug(string $name): string
+    {
+        $slug = Str::slug($name) ?: 'email-template';
+        $base = $slug;
+        $counter = 1;
+        while (EmailTemplate::where('slug', $slug)->exists()) {
+            $slug = $base . '-' . $counter++;
+        }
+        return $slug;
     }
 }
