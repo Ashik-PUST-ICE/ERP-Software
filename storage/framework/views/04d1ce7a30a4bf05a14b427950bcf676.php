@@ -1,0 +1,237 @@
+<!-- Start Header -->
+<div class="">
+    <!-- Top Header -->
+    <div class="pt-19 pb-15 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center rg-10">
+                <!-- Left -->
+                <div class="col-lg-6">
+                    <div
+                        class="d-flex justify-content-center justify-content-lg-start align-items-center flex-wrap cg-23 rg-10">
+                        <a href="mailto:<?php echo e(getOption('app_email')); ?>"
+                            class="d-flex align-items-center cg-7 fs-18 fw-600 lh-28 text-black-color">
+                            <div class="d-flex"><img src="<?php echo e(asset('frontend/images/icon/envelope.svg')); ?>"
+                                    alt="" /></div>
+                            <p><?php echo e(__('Email')); ?> : <span class="fw-500"><?php echo e(getOption('app_email')); ?></span></p>
+                        </a>
+                        <a href="tel:<?php echo e(getOption('app_contact_number')); ?>"
+                            class="d-flex align-items-center cg-7 fs-18 fw-600 lh-28 text-black-color">
+                            <div class="d-flex"><img src="<?php echo e(asset('frontend/images/icon/phone.svg')); ?>"
+                                    alt="" /></div>
+                            <p><?php echo e(__('Hotline')); ?> : <span class="fw-500"><?php echo e(getOption('app_contact_number')); ?></span>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Right -->
+                <div class="col-lg-6">
+                    <div class="d-flex justify-content-center justify-content-lg-end align-items-center g-11">
+                        <!-- Language switcher -->
+                        <?php if(!empty(getOption('show_language_switcher')) && getOption('show_language_switcher') == STATUS_ACTIVE): ?>
+                        <div class="dropdown headerUserDropdown lanDropdown">
+                            <button
+                                class="dropdown-toggle p-0 border-0 bg-transparent d-flex align-items-center cg-8"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div
+                                    class="flex-shrink-0 w-42 h-42 rounded-circle overflow-hidden bd-one bd-c-black-5 bg-fafafa d-flex justify-content-center align-items-center">
+                                    <img class="h-100 object-fit-cover w-100"
+                                        src="<?php echo e(asset(selectedLanguage()?->flag)); ?>"
+                                        alt="" />
+                                </div>
+                                <div class="text-start d-none d-md-block">
+                                    <h4 class="fs-15 fw-500 lh-18 text-1b1c17"><?php echo e(selectedLanguage()?->language); ?>
+
+                                    </h4>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu dropdownItem-one">
+                                <?php $__currentLoopData = appLanguages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app_lang): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li>
+                                    <a class="d-flex align-items-center cg-8"
+                                        href="<?php echo e(url('/local/' . $app_lang->iso_code)); ?>">
+                                        <div class="d-flex">
+                                            <img src="<?php echo e(asset($app_lang->flag)); ?>" alt=""
+                                                class="max-w-26" />
+                                        </div>
+                                        <p class="fs-14 fw-500 lh-16 text-para-color"><?php echo e($app_lang->language); ?></p>
+                                    </a>
+                                </li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </ul>
+                        </div>
+                        <?php endif; ?>
+                        <?php if(auth()->guard()->check()): ?>
+                        <a href="<?php echo e(route('login')); ?>"
+                            class="d-flex py-6 px-24 bg-white bd-one bd-ra-8 fs-18 fw-500 lh-28 text-black-color hover-bg-color-primary hover-border-color-primary"><?php echo e(__('Go To Community')); ?></a>
+                        <?php else: ?>
+                        <a href="<?php echo e(route('login')); ?>"
+                            class="d-flex py-6 px-24 bg-black-color bd-ra-8 fs-18 fw-500 lh-28 text-white hover-bg-color-primary hover-color-black"><?php echo e(__('Login')); ?></a>
+                        <?php if(!getOption('disable_registration')): ?>
+                        <a href="<?php echo e(route('register')); ?>"
+                            class="d-flex py-6 px-24 bg-white bd-one bd-ra-8 fs-18 fw-500 lh-28 text-black-color hover-bg-color-primary hover-border-color-primary"><?php echo e(__('Sign Up')); ?></a>
+                        <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Header -->
+    <div class="pt-16 pb-17 bg-primary-color">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left / Logo -->
+                <div class="col-lg-2 col-6">
+                    <a href="<?php echo e(route('index')); ?>"
+                        class="d-flex justify-content-center align-items-center max-w-146"><img
+                            src="<?php echo e(getSettingImage('app_black_logo')); ?>" alt="<?php echo e(getOption('app_name')); ?>" /></a>
+                </div>
+                <!-- Middle / Menu -->
+                <div class="col-lg-8 col-6">
+                    <nav class="navbar navbar-expand-lg p-0">
+                        <button class="navbar-toggler menu-navbar-toggler bd-c-black-color ms-auto" type="button"
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                            aria-controls="offcanvasNavbar"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse menu-navbar-collapse offcanvas offcanvas-start" tabindex="-1"
+                            id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                            <button type="button"
+                                class="d-lg-none w-30 h-30 p-0 rounded-circle bg-white border-0 position-absolute top-10 right-10"
+                                data-bs-dismiss="offcanvas" aria-label="Close"><i
+                                    class="fa-solid fa-times"></i></button>
+                            <ul class="navbar-nav menu-navbar-nav justify-content-center flex-wrap cg-42 rg-10 w-100">
+                                <li class="nav-item">
+                                    <a class="nav-link fs-18 fw-500 lh-28 text-black-color p-0 active"
+                                        aria-current="page" href="<?php echo e(route('index')); ?>"><?php echo e(__('Home')); ?></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link fs-18 fw-500 lh-28 text-black-color p-0"
+                                        href="<?php echo e(route('all.event')); ?>"><?php echo e(__('Events')); ?></a></li>
+                                <li class="nav-item"><a class="nav-link fs-18 fw-500 lh-28 text-black-color p-0"
+                                        href="<?php echo e(route('our.news')); ?>"><?php echo e(__('News')); ?></a></li>
+                                <li class="nav-item"><a class="nav-link fs-18 fw-500 lh-28 text-black-color p-0"
+                                        href="<?php echo e(route('our.notice')); ?>"><?php echo e(__('Notice')); ?></a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link fs-18 fw-500 lh-28 text-black-color p-0 dropdown-toggle menu-dropdown-toggle"
+                                        href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><?php echo e(__('Community')); ?></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="<?php echo e(route('all.job')); ?>">
+                                                <?php echo e(__('Find Job')); ?>
+
+                                                <span><i class="fa-solid fa-long-arrow-right"></i></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="<?php echo e(route('all.membership')); ?>">
+                                                <?php echo e(__('Get Membership')); ?>
+
+                                                <span><i class="fa-solid fa-long-arrow-right"></i></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="<?php echo e(route('all.stories')); ?>">
+                                                <?php echo e(__('Stories')); ?>
+
+                                                <span><i class="fa-solid fa-long-arrow-right"></i></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item d-lg-none"><a
+                                        class="nav-link d-flex justify-content-lg-end align-items-center cg-16 fs-18 fw-600 lh-28 text-black-color"
+                                        href="<?php echo e(route('contact_us')); ?>">
+                                        <?php echo e(__('Contact us')); ?>
+
+                                        <span><i class="fa-solid fa-arrow-right"></i></span></a></li>
+                            </ul>
+                            <div class="pt-20 w-100 d-lg-none">
+                                <div
+                                    class="d-flex justify-content-start align-items-center flex-wrap cg-23 rg-10 pb-30">
+                                    <a href="mailto:<?php echo e(getOption('app_email')); ?>"
+                                        class="d-flex align-items-center cg-7 fs-18 fw-600 lh-28 text-black-color">
+                                        <div class="d-flex flex-shrink-0"><img
+                                                src="<?php echo e(asset('frontend/images/icon/envelope.svg')); ?>"
+                                                alt="" /></div>
+                                        <p><span class="d-none d-lg-block"><?php echo e(__('Email')); ?> :</span> <span
+                                                class="fw-500"><?php echo e(getOption('app_email')); ?></span></p>
+                                    </a>
+                                    <a href="tel:(880) 2566 3245"
+                                        class="d-flex align-items-center cg-7 fs-18 fw-600 lh-28 text-black-color">
+                                        <div class="d-flex flex-shrink-0"><img
+                                                src="<?php echo e(asset('frontend/images/icon/phone.svg')); ?>" alt="" />
+                                        </div>
+                                        <p><span class="d-none d-lg-block"><?php echo e(__('Hotline')); ?> :</span> <span
+                                                class="fw-500"><?php echo e(getOption('app_contact_number')); ?></span></p>
+                                    </a>
+                                </div>
+                                <!-- Language switcher -->
+                                <?php if(!empty(getOption('show_language_switcher')) && getOption('show_language_switcher') == STATUS_ACTIVE): ?>
+                                <div class="dropdown headerUserDropdown lanDropdown">
+                                    <button
+                                        class="dropdown-toggle p-0 border-0 bg-transparent d-flex align-items-center cg-8"
+                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div
+                                            class="flex-shrink-0 w-42 h-42 rounded-circle overflow-hidden bd-one bd-c-black-5 bg-fafafa d-flex justify-content-center align-items-center">
+                                            <img class="max-w-26" src="<?php echo e(asset(selectedLanguage()?->flag)); ?>"
+                                                alt="" />
+                                        </div>
+                                        <div class="text-start d-none d-md-block">
+                                            <h4 class="fs-15 fw-500 lh-18 text-1b1c17">
+                                                <?php echo e(selectedLanguage()?->language); ?>
+
+                                            </h4>
+                                        </div>
+                                    </button>
+                                    <ul class="dropdown-menu dropdownItem-one">
+                                        <?php $__currentLoopData = appLanguages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app_lang): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li>
+                                            <a class="d-flex align-items-center cg-8"
+                                                href="<?php echo e(url('/local/' . $app_lang->iso_code)); ?>">
+                                                <div class="d-flex">
+                                                    <img src="<?php echo e(asset($app_lang->flag)); ?>" alt=""
+                                                        class="max-w-26" />
+                                                </div>
+                                                <p class="fs-14 fw-500 lh-16 text-para-color">
+                                                    <?php echo e($app_lang->language); ?>
+
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </ul>
+                                </div>
+                                <?php endif; ?>
+                                <div class="d-flex justify-content-start align-items-center flex-wrap g-11 pt-16">
+                                    <?php if(auth()->guard()->check()): ?>
+                                    <a href="<?php echo e(route('login')); ?>"
+                                        class="d-flex py-6 px-24 bg-transparent bd-one bd-ra-8 fs-18 fw-500 lh-28 text-black-color"><?php echo e(__('Go To Community')); ?></a>
+                                    <?php else: ?>
+                                    <a href="<?php echo e(route('login')); ?>"
+                                        class="d-flex py-6 px-24 bg-black-color bd-ra-8 fs-18 fw-500 lh-28 text-white"><?php echo e(__('Login')); ?></a>
+                                    <?php if(!getOption('disable_registration')): ?>
+                                    <a href="<?php echo e(route('register')); ?>"
+                                        class="d-flex py-6 px-24 bg-transparent bd-one bd-ra-8 fs-18 fw-500 lh-28 text-black-color"><?php echo e(__('Sign Up')); ?></a>
+                                    <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <!-- Right -->
+                <div class="col-lg-2 d-none d-lg-block">
+                    <a href="<?php echo e(route('contact_us')); ?>"
+                        class="d-flex justify-content-lg-end align-items-center cg-16 fs-18 fw-600 lh-28 text-black-color">
+                        <?php echo e(__('Contact us')); ?>
+
+                        <span><i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Header --><?php /**PATH C:\Users\ashik\ERP-Software\resources\views\auto_posts\frontend\layouts\nav.blade.php ENDPATH**/ ?>

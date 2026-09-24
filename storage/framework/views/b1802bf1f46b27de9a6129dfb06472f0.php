@@ -20,4 +20,4 @@ $message = $__bag->first($__errorArgs[0]); ?><div class="error"><?php echo e($me
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?></div><?php endif; ?></div><div class="notice">🔒 Your information is saved securely. Existing data will not be deleted.</div><div class="actions"><a class="btn back" href="<?php echo e(route('ashik.install')); ?>">← Back</a><button class="btn next" type="submit" <?php if(!$allPassed): echo 'disabled'; endif; ?>>Continue to database&nbsp; →</button></div></form></div></section></div></main></body></html>
-<?php /**PATH C:\Users\ashik\ERP-Software\packages\ashik\version-updater\src/../resources/views/configure.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\ashik\ERP-Software\packages\ashik\version-updater\resources\views\configure.blade.php ENDPATH**/ ?>
