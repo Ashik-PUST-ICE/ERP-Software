@@ -49,6 +49,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'super-admin' => \App\Http\Middleware\SuperAdminMiddleware::class,
             'user' => \App\Http\Middleware\UserMiddleware::class,
             'version.update' => \App\Http\Middleware\VersionUpdate::class,
+            'installed' => \App\Http\Middleware\InstallMiddleware::class,
             'isDemo' => \App\Http\Middleware\IsDemo::class,
             '2fa_verify' => \App\Http\Middleware\Google2FAAuthentication::class,
             'is_email_verify' => \App\Http\Middleware\IsVerifyMiddleware::class,

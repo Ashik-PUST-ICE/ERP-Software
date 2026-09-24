@@ -34,24 +34,26 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function allWebRoutes(): void
     {
-        Route::middleware(['web', 'version.update'])
-            ->group(base_path('routes/web.php'));
+        Route::middleware(['installed'])->group(function () {
+            Route::middleware(['web', 'version.update'])
+                ->group(base_path('routes/web.php'));
 
-        Route::middleware(['web', 'auth', 'user', 'version.update', 'is_email_verify'/*, '2fa_verify'*/, 'common'])
-            ->group(base_path('routes/user.php'));
+            Route::middleware(['web', 'auth', 'user', 'version.update', 'is_email_verify'/*, '2fa_verify'*/, 'common'])
+                ->group(base_path('routes/user.php'));
 
-        Route::middleware(['web', 'auth', 'super-admin', 'version.update', 'is_email_verify'/*, '2fa_verify'*/])
-            ->prefix('erp/super-admin')
-            ->as('super_admin.')
-            ->group(base_path('routes/super_admin.php'));
+            Route::middleware(['web', 'auth', 'super-admin', 'version.update', 'is_email_verify'/*, '2fa_verify'*/])
+                ->prefix('erp/super-admin')
+                ->as('super_admin.')
+                ->group(base_path('routes/super_admin.php'));
 
-        Route::middleware(['web', 'auth', 'admin', 'version.update', 'is_email_verify'/*, '2fa_verify'*/])
-            ->prefix('erp/admin')
-            ->as('admin.')
-            ->group(base_path('routes/admin.php'));
+            Route::middleware(['web', 'auth', 'admin', 'version.update', 'is_email_verify'/*, '2fa_verify'*/])
+                ->prefix('erp/admin')
+                ->as('admin.')
+                ->group(base_path('routes/admin.php'));
 
-        Route::middleware(['web', 'version.update'])
-            ->group(base_path('routes/frontend.php'));
+            Route::middleware(['web', 'version.update'])
+                ->group(base_path('routes/frontend.php'));
+        });
     }
 
     protected function allApiRoutes(): void
