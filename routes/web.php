@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
+use Ashik\VersionUpdater\Http\Controllers\InstallController;
 use App\Models\Language;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,11 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook'])->name('facebook-login');
 Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+
+// Keep the installer before the dynamic page route below.
+Route::get('ashik-install', [InstallController::class, 'index'])->name('ashik.install');
+Route::get('ashik-install/configure', [InstallController::class, 'configure'])->name('ashik.install.configure');
+Route::post('ashik-install', [InstallController::class, 'install'])->name('ashik.install.store');
 
 // Frontend Page Route
 Route::get('/{slug}', [\App\Http\Controllers\AutoPost\SuperAdmin\PageController::class, 'pageShow'])->name('page');
