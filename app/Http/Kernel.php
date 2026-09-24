@@ -5,7 +5,6 @@ namespace App\Http;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CommonMiddleware;
 use App\Http\Middleware\Google2FAAuthentication;
-use App\Http\Middleware\InstallMiddleware;
 use App\Http\Middleware\IsDemo;
 use App\Http\Middleware\IsVerifyMiddleware;
 use App\Http\Middleware\SetLocale;
@@ -82,7 +81,6 @@ class Kernel extends HttpKernel
         'super-admin' => SuperAdminMiddleware::class,
         'user' => UserMiddleware::class,
         'version.update' => VersionUpdate::class,
-        'installed' => InstallMiddleware::class,
         'isDemo' => IsDemo::class,
         '2fa_verify' => Google2FAAuthentication::class,
         'is_email_verify' => IsVerifyMiddleware::class,

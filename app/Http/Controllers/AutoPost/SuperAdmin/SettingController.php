@@ -465,7 +465,6 @@ class SettingController extends Controller
             return '<div class="alert alert-info text-center">
             <p>' . __('This is a demo version, and configuration setup is not visible') . '.</p>
             <p>' . __('You can access the full demo after purchase or by contacting us') . '.</p>
-            <a href="https://ticket.zainikthemes.com/contact-us" target="__blank" class="btn btn-primary">' . __('Contact Us') . '</a>
         </div>';
         }
     }

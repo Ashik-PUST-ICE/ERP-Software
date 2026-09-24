@@ -6,8 +6,7 @@
             <h3 class="p-2">{{__('If you enable preloader, the preloader will be show before load the content..')}}</h3>
             <br>
             <a class="btn btn-success" target="_blank"
-               href="https://zaialumni-doc.zainikthemes.com/configurable.html#preloader">{{ __('View the documentation') }}</a>
+               href="{{ route('super_admin.setting.configuration-settings') }}">{{ __('Back to configuration settings') }}</a>
         </div>
     </div>
 </div>
-

@@ -149,12 +149,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
     Route::post('update', [ProfileController::class, 'update'])->name('update')->middleware('isDemo');
 });
 
-// version update
-Route::get('version-update', [VersionUpdateController::class, 'versionFileUpdate'])->name('version-update');
-Route::post('version-update', [VersionUpdateController::class, 'versionFileUpdateStore'])->name('version-update-store');
-Route::get('version-update-execute', [VersionUpdateController::class, 'versionUpdateExecute'])->name('version-update-execute');
-Route::get('version-delete', [VersionUpdateController::class, 'versionFileUpdateDelete'])->name('version-delete');
-
 // Roles (Super Admin)
 Route::group(['prefix' => 'roles', 'as' => 'roles.', 'middleware' => ['can:Manage Moderator']], function () {
     Route::get('/', [RolePermissionController::class, 'index'])->name('index');

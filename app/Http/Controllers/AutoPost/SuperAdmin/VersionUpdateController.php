@@ -9,9 +9,7 @@ use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
 use ZipArchive;
 use Illuminate\Support\Facades\File;
 
@@ -28,92 +26,12 @@ class VersionUpdateController extends Controller
         $this->fileSystem = new Filesystem();
     }
 
-    public function versionUpdate(Request $request)
-    {
-        $data['title'] = __('Version Update');
-
-        return view('zainiklab.installer.version-update', $data);
-    }
-
-    public function processUpdate(Request $request)
-    {
-        $request->validate([
-            'purchase_code' => 'required',
-            'email' => 'bail|required|email'
-        ], [
-            'purchase_code.required' => 'Purchase code field is required',
-            'email.required' => 'Customer email field is required',
-            'email.email' => 'Customer email field is must a valid email'
-        ]);
-
-        $response = Http::acceptJson()->post('https://support.zainikthemes.com/api/745fca97c52e41daa70a99407edf44dd/active', [
-            'app' => config('app.app_code'),
-            'is_localhost' => env('IS_LOCAL', false),
-            'type' => 1,
-            'email' => $request->email,
-            'purchase_code' => $request->purchase_code,
-            'version' => config('app.build_version'),
-            'url' => $request->fullUrl(),
-            'app_url' => env('APP_URL'),
-        ]);
-
-        if ($response->successful()) {
-            $data = $response->object();
-            if ($data->status === 'success') {
-                Artisan::call('migrate', [
-                    '--force' => true
-                ]);
-
-                $data = json_decode($data->data->data);
-                // Log::info($data);
-                foreach ($data as $d) {
-                    if (!Artisan::call($d)) {
-                        break;
-                    }
-                }
-
-                $installedLogFile = storage_path('installed');
-                if (file_exists($installedLogFile)) {
-                    $data = json_decode(file_get_contents($installedLogFile));
-                    if (!is_null($data) && isset($data->d)) {
-                        $data->u = date('ymdhis');
-                    } else {
-                        $data = [
-                            'd' => base64_encode(getDomainName(request()->fullUrl())),
-                            'i' => date('ymdhis'),
-                            'p' => base64_encode($request->purchase_code),
-                            'u' => date('ymdhis'),
-                        ];
-                    }
-
-                    file_put_contents($installedLogFile, json_encode($data));
-                    // Artisan::call('storage:link');
-                }
-            } else {
-                return Redirect::back()->withErrors(['purchase_code' => $data->message]);
-            }
-        } else {
-            return Redirect::back()->withErrors(['purchase_code' => 'Something went wrong with your purchase key.']);
-        }
-
-        return redirect()->route('login');
-    }
-
     public function versionFileUpdate(Request $request)
     {
-        $data['title'] = __('Version Update');
+        $data['title'] = __(config('app.version_updater_name', 'Ashik Version Update'));
         $data['activeVersionUpdate'] = 'active';
-        $apiResponse = Http::acceptJson()->post('https://support.zainikthemes.com/api/745fca97c52e41daa70a99407edf44dd/ad', [
-            'app' => config('app.app_code'),
-            'is_localhost' => env('IS_LOCAL', false),
-        ]);
-        if ($apiResponse->successful()) {
-            $responseData = $apiResponse->object();
-            $data['latestVersion'] = $responseData->data->cv;
-            $data['latestBuildVersion'] = $responseData->data->bv;
-        } else {
-            return back()->with('error', __('Something went wrong.'));
-        }
+        $data['latestVersion'] = config('app.current_version');
+        $data['latestBuildVersion'] = config('app.build_version');
 
         $path = storage_path('app/source-code.zip');
         if (file_exists($path)) {
@@ -194,9 +112,12 @@ class VersionUpdateController extends Controller
                     $this->logger->log('Get update note', 'START');
                     $versionFile = file_get_contents($demoPath . DIRECTORY_SEPARATOR . 'update_note.json');
                     $updateNote = json_decode($versionFile);
+                    if (!is_object($updateNote) || !isset($updateNote->build_version, $updateNote->root_path, $updateNote->code_path)) {
+                        throw new Exception('Invalid Ashik update package: update_note.json is incomplete.');
+                    }
                     $this->logger->log('Get update note', 'END');
                     $this->logger->log('Get Build Version from update note', 'START');
-                    $codeVersion = $updateNote->build_version;
+                    $codeVersion = (int) $updateNote->build_version;
                     $this->logger->log('Get Build Version from update note', 'END');
                     $this->logger->log('Get Root Path from update note', 'START');
                     $codeRootPath = $updateNote->root_path;
@@ -204,22 +125,8 @@ class VersionUpdateController extends Controller
                     $this->logger->log('Get current version', 'START');
                     $currentVersion = getCustomerCurrentBuildVersion();
                     $this->logger->log('Get current version', 'END');
-                    $this->logger->log('Checking if updatable version from api', 'START');
-                    $apiResponse = Http::acceptJson()->post('https://support.zainikthemes.com/api/745fca97c52e41daa70a99407edf44dd/glv', [
-                        'app' => config('app.app_code'),
-                        'is_localhost' => env('IS_LOCAL', false),
-                    ]);
-                    $this->logger->log('Checking if updatable version from api', 'END');
-
-                    if ($apiResponse->successful()) {
-                        $this->logger->log('Response', 'Success');
-                        $data = $apiResponse->object();
-                        $this->logger->log('Response Data', json_encode($data));
-                        $latestVersion = $data->data->bv;
-                        if ($data->status === 'success') {
-                            $this->logger->log('Response status', 'Success');
-                            $this->logger->log('Checking if updatable code', 'START');
-                            if ($latestVersion == $codeVersion && $codeVersion > $currentVersion) {
+                    $this->logger->log('Checking if updatable version locally', 'START');
+                    if ($codeVersion > $currentVersion) {
                                 $this->logger->log('Checking if updatable code', 'True');
                                 $this->logger->log('Move file', 'START');
 
@@ -235,19 +142,13 @@ class VersionUpdateController extends Controller
                                 }
                                 $response['success'] = true;
                                 $response['message'] = 'Successfully done';
+                                Artisan::call('migrate', ['--force' => true]);
+                                setCustomerBuildVersion($codeVersion);
+                                setCustomerCurrentVersion();
                                 $this->logger->log('Move file', 'Done');
-                            } else {
-                                $response['message'] = 'Your code is not up to date';
-                                $this->logger->log('Version', 'Not matched');
-                            }
-                        } else {
-                            $response['message'] = $data->message;
-                            $this->logger->log('Response Status', 'Failed');
-                        }
                     } else {
-                        $data = $apiResponse->object();
-                        $response['message'] = $data['message'];
-                        $this->logger->log('Response', 'Failed');
+                        $response['message'] = 'Your code is not up to date';
+                        $this->logger->log('Version', 'Not matched');
                     }
 
                     $this->logger->log('Demo extracted path', 'Deleting');

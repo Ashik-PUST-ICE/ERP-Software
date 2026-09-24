@@ -7646,53 +7646,6 @@
                 }
             ],
             "time": "2026-08-26T05:15:51+00:00"
-        },
-        {
-            "name": "zainiklab/zai-installer",
-            "version": "v2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zainiktheme/zai-installer.git",
-                "reference": "c1e80d9cd69f800c5e735cc01fa5fc1a9007e16b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zainiktheme/zai-installer/zipball/c1e80d9cd69f800c5e735cc01fa5fc1a9007e16b",
-                "reference": "c1e80d9cd69f800c5e735cc01fa5fc1a9007e16b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0.0|^8.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Zainiklab\\ZaiInstaller\\Providers\\ZaiInstallerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zainiklab\\ZaiInstaller\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "ZainikLab",
-                    "email": "zainiktheme@gmail.com"
-                }
-            ],
-            "description": "Laravel Web Installer For Zainiklab",
-            "support": {
-                "issues": "https://github.com/zainiktheme/zai-installer/issues",
-                "source": "https://github.com/zainiktheme/zai-installer/tree/v2.0.2"
-            },
-            "time": "2025-10-22T11:47:37+00:00"
         }
     ],
     "packages-dev": [

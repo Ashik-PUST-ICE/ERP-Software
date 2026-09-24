@@ -149,7 +149,8 @@ return [
      * Application version
      */
 
-    'app_code' => 'AUTOPOST',
+    'app_code' => 'ASHIK-ERP',
+    'version_updater_name' => 'Ashik Version Update',
     'build_version' => 1,
     'current_version' =>  '1.0',
     'sql_path' => app_path('demo.sql'),
@@ -169,8 +170,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Zainiklab\ZaiInstaller\Providers\ZaiInstallerServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
@@ -179,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Ashik\VersionUpdater\VersionUpdaterServiceProvider::class,
         // App\Providers\SocialMediaServiceProvider::class,
     ])->toArray(),
 

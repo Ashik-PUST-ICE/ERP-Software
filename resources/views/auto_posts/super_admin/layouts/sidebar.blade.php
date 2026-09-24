@@ -174,7 +174,7 @@
 
             <li class="divider"><span>{{ __('System') }}</span></li>
             <li>
-                <a href="{{ route('super_admin.version-update') }}">
+                <a href="{{ route('ashik.version-update') }}">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.6663 1.33301V3.99967M5.33301 1.33301V3.99967" stroke="#808080" stroke-width="1.3"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -184,7 +184,7 @@
                         <path d="M2 6.66699H14" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    {{ __('Version Update') }}
+                    {{ __(config('app.version_updater_name', 'Ashik Version Update')) }}
                 </a>
             </li>
 

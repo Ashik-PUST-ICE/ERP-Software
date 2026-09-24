@@ -12,6 +12,11 @@ class VersionUpdate
 
     public function handle(Request $request, Closure $next)
     {
+        // The local updater must remain reachable while an update is pending.
+        if ($request->is('erp/super-admin/version-update*')) {
+            return $next($request);
+        }
+
         $codeBuildVersion = config('app.build_version');
         $dbBuildVersion = getCustomerCurrentBuildVersion();
 
@@ -21,10 +26,10 @@ class VersionUpdate
             Artisan::call('config:clear');
             Artisan::call('cache:clear');
             Auth::logout();
-            if (!file_exists(storage_path('installed'))) {
-                return redirect()->to('/install');
+            if (!file_exists(storage_path('installed')) && !file_exists(storage_path('ashik-installed'))) {
+                return redirect()->route('ashik.install');
             }
-            return redirect()->route('version-update');
+            return redirect()->route('ashik.version-update');
 
         }
         return $next($request);

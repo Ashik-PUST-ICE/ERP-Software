@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\AutoPost\SuperAdmin\VersionUpdateController;
 use App\Models\Language;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -57,9 +56,6 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook'])->name('facebook-login');
 Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
-
-Route::get('version-update', [VersionUpdateController::class, 'versionUpdate'])->name('version-update')->withoutMiddleware(['version.update']);
-Route::post('process-update', [VersionUpdateController::class, 'processUpdate'])->name('process-update')->withoutMiddleware(['version.update']);
 
 // Frontend Page Route
 Route::get('/{slug}', [\App\Http\Controllers\AutoPost\SuperAdmin\PageController::class, 'pageShow'])->name('page');

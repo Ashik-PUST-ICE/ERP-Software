@@ -3,5 +3,5 @@
     <hr class="my-4">
     <p class="fs-16 mb-4">{{__('If you enable Email Verification, new users have to verify their email to access this system.')}}</p>
     <a class="primary-btn" target="_blank"
-       href="https://zaialumni-doc.zainikthemes.com/configurable.html#mail_configuration">{{ __('View the setup process') }}</a>
+       href="{{ route('super_admin.setting.configuration-settings') }}">{{ __('Back to configuration settings') }}</a>
 </div>

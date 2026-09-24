@@ -6,8 +6,7 @@
             <h3 class="p-2">{{__('If you enable this. The system will enable for cookie consent settings. User Can manage cookie consent setting.')}}</h3>
             <br>
             <a class="btn btn-success" target="_blank"
-               href="https://zaialumni-doc.zainikthemes.com/configurable.html#cookie_consent">{{ __('View the documentation') }}</a>
+               href="{{ route('super_admin.setting.configuration-settings') }}">{{ __('Back to configuration settings') }}</a>
         </div>
     </div>
 </div>
-

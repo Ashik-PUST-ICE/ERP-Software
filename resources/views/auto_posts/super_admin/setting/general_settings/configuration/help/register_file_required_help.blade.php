@@ -6,7 +6,7 @@
             <h3 class="p-2">{{__('If you enable this. The system will Register File Required. By wearing it you will know how this setting works .')}}</h3>
             <br>
             <a class="btn btn-success" target="_blank"
-               href="https://zaialumni-doc.zainikthemes.com/configurable.html#register_file_required">{{ __('View the documentation')}}</a>
+               href="{{ route('super_admin.setting.configuration-settings') }}">{{ __('Back to configuration settings')}}</a>
         </div>
     </div>
 </div>

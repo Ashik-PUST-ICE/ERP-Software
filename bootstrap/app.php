@@ -5,6 +5,21 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
 
+// Local package fallback: keeps the Ashik updater available when Composer's
+// generated autoload files have not yet been rebuilt.
+spl_autoload_register(function (string $class): void {
+    $prefix = 'Ashik\\VersionUpdater\\';
+    if (!str_starts_with($class, $prefix)) {
+        return;
+    }
+
+    $relative = str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($prefix)));
+    $file = __DIR__ . '/../packages/ashik/version-updater/src/' . $relative . '.php';
+    if (is_file($file)) {
+        require_once $file;
+    }
+});
+
 // Prevent PHP deprecation notices from polluting CLI / API / Web responses
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
@@ -34,7 +49,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'super-admin' => \App\Http\Middleware\SuperAdminMiddleware::class,
             'user' => \App\Http\Middleware\UserMiddleware::class,
             'version.update' => \App\Http\Middleware\VersionUpdate::class,
-            'installed' => \App\Http\Middleware\InstallMiddleware::class,
             'isDemo' => \App\Http\Middleware\IsDemo::class,
             '2fa_verify' => \App\Http\Middleware\Google2FAAuthentication::class,
             'is_email_verify' => \App\Http\Middleware\IsVerifyMiddleware::class,
