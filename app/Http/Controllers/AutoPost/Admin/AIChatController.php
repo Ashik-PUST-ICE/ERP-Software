@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AutoPost\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\OpenAIService;
+use App\Http\Services\AIChatProviderService;
 use App\Http\Services\SubscriptionService;
 use App\Models\AIChatConversation;
 use Illuminate\Http\JsonResponse;
@@ -26,7 +26,7 @@ class AIChatController extends Controller
         ]);
     }
 
-    public function send(Request $request, OpenAIService $service): JsonResponse
+    public function send(Request $request, AIChatProviderService $service): JsonResponse
     {
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:6000'],
@@ -34,7 +34,7 @@ class AIChatController extends Controller
         ]);
 
         if (!$service->isConfigured()) {
-            return response()->json(['success' => false, 'message' => __('Please set the OpenAI API key first. Ask the Super Admin to set it in Settings → AI Settings.')], 503);
+            return response()->json(['success' => false, 'message' => __('Please configure the selected AI provider first in Settings → AI Settings.')], 503);
         }
 
         if ((int) getOption('openai_ai_status', 1) !== 1) {
@@ -72,7 +72,7 @@ class AIChatController extends Controller
         $conversation->messages()->create([
             'role' => 'assistant',
             'content' => $result['text'],
-            'model' => getOption('openai_model', config('ai.openai_default_model', 'gpt-4o-mini')),
+            'model' => $service->model(),
         ]);
         $conversation->forceFill(['last_message_at' => now()])->save();
 

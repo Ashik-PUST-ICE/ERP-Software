@@ -14,62 +14,55 @@ class AISettingController extends Controller
 
     public function openAISetting()
     {
-        $data['title'] = __('AI Settings');
-        $data['showManageApplicationSetting'] = 'show';
-        $data['activeApplicationSetting'] = 'active';
-        $data['subAISettingActiveClass'] = 'active';
-        return view('auto_posts.super_admin.setting.ai_settings.open-ai-settings')->with($data);
+        return view('auto_posts.super_admin.setting.ai_settings.open-ai-settings', [
+            'title' => __('AI Chatbot Settings'),
+            'showManageApplicationSetting' => 'show',
+            'activeApplicationSetting' => 'active',
+            'subAISettingActiveClass' => 'active',
+            'providers' => config('ai.providers', []),
+        ]);
     }
 
     public function updateAISettings(Request $request)
     {
-        $openaiModels = config('ai.openai_models', ['gpt-4o-mini', 'gpt-4o', 'gpt-4-turbo', 'gpt-3.5-turbo']);
-        $allowedAiModel = array_map(fn ($m) => 'openai__' . $m, $openaiModels);
+        $providers = config('ai.providers', []);
+        $provider = $request->input('ai_provider');
+        abort_unless(array_key_exists($provider, $providers), 422, 'Invalid AI provider.');
+        $models = $providers[$provider]['models'] ?? [];
 
-        $request->validate([
-            'openai_ai_status'        => 'required|in:0,1',
-            'ai_model'                => 'required_if:openai_ai_status,1|nullable|string|in:' . implode(',', $allowedAiModel),
-            'openai_api_key'          => 'nullable|string|max:500',
-            'openai_temperature'      => 'nullable|numeric|min:0|max:2',
-            'openai_max_tokens'       => 'required_if:openai_ai_status,1|integer|min:100|max:4096',
-            'openai_default_language' => 'nullable|string|max:20',
+        $data = $request->validate([
+            'openai_ai_status' => ['required', 'in:0,1'],
+            'ai_provider' => ['required', 'string', 'in:' . implode(',', array_keys($providers))],
+            'ai_model' => ['required_if:openai_ai_status,1', 'string', 'in:' . implode(',', $models)],
+            'provider_api_key' => ['nullable', 'string', 'max:500'],
+            'openai_temperature' => ['nullable', 'numeric', 'min:0', 'max:2'],
+            'openai_max_tokens' => ['required_if:openai_ai_status,1', 'integer', 'min:100', 'max:4096'],
+            'openai_default_language' => ['nullable', 'string', 'max:20'],
         ]);
 
-        $aiModel = $request->input('ai_model', '');
-        $openaiModel = config('ai.openai_default_model', 'gpt-4o-mini');
-        if (str_contains($aiModel, '__')) {
-            [, $modelId] = explode('__', $aiModel, 2);
-            if (in_array($modelId, $openaiModels, true)) {
-                $openaiModel = $modelId;
-            }
+        $keyOption = $providers[$provider]['api_key_option'];
+        $apiKey = trim((string) ($data['provider_api_key'] ?? ''));
+        if ((int) $data['openai_ai_status'] === 1 && $apiKey === '' && ! filled(getOption($keyOption, ''))) {
+            return response()->json(['status' => false, 'message' => __('API Key is required for the selected provider.')], 422);
         }
 
-        if ((int) $request->input('openai_ai_status', 0) === 1) {
-            if (empty(trim($request->input('openai_api_key', '')))) {
-                return response()->json(['status' => false, 'message' => __('API Key is required. Enter your OpenAI key.')], 422);
-            }
-        }
-
-        $keys = ['openai_api_key', 'openai_model', 'openai_temperature', 'openai_max_tokens', 'openai_ai_status', 'openai_default_language'];
         $values = [
-            'openai_api_key'          => $request->input('openai_api_key', ''),
-            'openai_model'             => $openaiModel,
-            'openai_temperature'      => $request->input('openai_temperature', ''),
-            'openai_max_tokens'       => $request->input('openai_max_tokens', ''),
-            'openai_ai_status'        => $request->input('openai_ai_status', ''),
-            'openai_default_language' => $request->input('openai_default_language', ''),
+            'openai_ai_status' => $data['openai_ai_status'],
+            'ai_provider' => $provider,
+            'ai_model' => $data['ai_model'],
+            $keyOption => $apiKey !== '' ? $apiKey : getOption($keyOption, ''),
+            'openai_temperature' => $data['openai_temperature'] ?? '',
+            'openai_max_tokens' => $data['openai_max_tokens'] ?? '',
+            'openai_default_language' => $data['openai_default_language'] ?? '',
         ];
-        foreach ($keys as $key) {
-            $option = Setting::firstOrCreate(['option_key' => $key]);
-            $option->option_value = $values[$key] ?? '';
-            $option->save();
+        $values[$provider . '_model'] = $data['ai_model'];
+        if ($provider === 'openai') $values['openai_model'] = $data['ai_model'];
+
+        foreach ($values as $key => $value) {
+            Setting::updateOrCreate(['option_key' => $key], ['option_value' => $value]);
         }
 
-        Log::info('AI Settings Updated', [
-            'keys' => $keys,
-            'values_snippet' => array_merge($values, ['openai_api_key' => substr($values['openai_api_key'], 0, 8) . '...'])
-        ]);
-
-        return $this->success([], __('Updated successfully.'));
+        Log::info('AI chatbot settings updated', ['provider' => $provider, 'model' => $data['ai_model']]);
+        return $this->success([], __('AI chatbot settings updated successfully.'));
     }
 }

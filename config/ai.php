@@ -2,6 +2,38 @@
 
 return [
 
+    'providers' => [
+        'openai' => [
+            'label' => 'OpenAI',
+            'api_key_option' => 'openai_api_key',
+            'models' => ['gpt-4o-mini', 'gpt-4o', 'gpt-4.1-mini', 'gpt-4.1', 'gpt-5-mini', 'gpt-5'],
+            'default_model' => 'gpt-4o-mini',
+            'base_url' => 'https://api.openai.com/v1',
+        ],
+        'grok' => [
+            'label' => 'Grok (xAI)',
+            'api_key_option' => 'grok_api_key',
+            'models' => ['grok-3-mini', 'grok-3', 'grok-4-0709'],
+            'default_model' => 'grok-3-mini',
+            'base_url' => 'https://api.x.ai/v1',
+        ],
+        'gemini' => [
+            'label' => 'Google Gemini',
+            'api_key_option' => 'gemini_api_key',
+            'models' => ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-1.5-flash'],
+            'default_model' => 'gemini-2.5-flash',
+            'base_url' => 'https://generativelanguage.googleapis.com/v1beta',
+        ],
+        'anthropic' => [
+            'label' => 'Anthropic Claude',
+            'api_key_option' => 'anthropic_api_key',
+            'models' => ['claude-3-5-haiku-latest', 'claude-3-7-sonnet-latest', 'claude-sonnet-4-20250514'],
+            'default_model' => 'claude-3-5-haiku-latest',
+            'base_url' => 'https://api.anthropic.com/v1',
+        ],
+    ],
+    'default_provider' => 'openai',
+
     /*
     |--------------------------------------------------------------------------
     | OpenAI – One API key is used for all: text, image, and video.
