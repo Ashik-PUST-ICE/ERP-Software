@@ -76,7 +76,8 @@ class RolePermissionController extends Controller
         $data['breadcrumb'] = __('Roles') . ' / ' . __('Add Roles');
         $data['activeRoles'] = 'active';
         $data['showRolePermission'] = 'show';
-        $data['permissions'] = Permission::where('user_type', USER_ROLE_SUPER_ADMIN)->get();
+        // Permissions are global in this project's schema; only roles are scoped by user_type.
+        $data['permissions'] = Permission::all();
         return view('auto_posts.super_admin.roles.index', $data);
     }
 
@@ -126,7 +127,7 @@ class RolePermissionController extends Controller
     public function edit($id)
     {
         $data['role'] = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->findOrFail($id);
-        $data['permissions'] = Permission::where('user_type', USER_ROLE_SUPER_ADMIN)->get();
+        $data['permissions'] = Permission::all();
         $data['oldPermissions'] = $data['role']->permissions->pluck('name')->toArray();
         return view('auto_posts.super_admin.roles.edit')->with($data);
     }
@@ -182,7 +183,7 @@ class RolePermissionController extends Controller
         $data['activeRoles'] = 'active';
         $data['showRolePermission'] = 'show';
         $data['role'] = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->findOrFail($id);
-        $permissions = Permission::where('user_type', USER_ROLE_SUPER_ADMIN)->get();
+        $permissions = Permission::all();
         $groupedPermissions = [];
 
         foreach ($permissions as $permission) {
