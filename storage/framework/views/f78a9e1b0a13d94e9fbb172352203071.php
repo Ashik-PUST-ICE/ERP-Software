@@ -1,11 +1,11 @@
 <aside class="sidebar-area">
-    <a class="brand-logo" href="{{ route('super_admin.dashboard') }}">
-        <img src="{{ getSettingImage('app_logo') }}" alt="{{ getOption('app_name') }}">
+    <a class="brand-logo" href="<?php echo e(route('super_admin.dashboard')); ?>">
+        <img src="<?php echo e(getSettingImage('app_logo')); ?>" alt="<?php echo e(getOption('app_name')); ?>">
     </a>
     <div class="menu-wrapr">
         <ul id="metismenu" class="primary-menu metismenu">
-            <li class="{{ isset($activeDashboard) && $activeDashboard == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.dashboard') }}" aria-expanded="true">
+            <li class="<?php echo e(isset($activeDashboard) && $activeDashboard == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.dashboard')); ?>" aria-expanded="true">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M7 5.83333V4.5C7 3.40417 7 2.85626 6.69733 2.48747C6.64194 2.41997 6.58003 2.35806 6.51253 2.30265C6.14374 2 5.59583 2 4.5 2C3.40417 2 2.85626 2 2.48747 2.30265C2.41997 2.35806 2.35806 2.41997 2.30265 2.48747C2 2.85626 2 3.40417 2 4.5V5.83333C2 6.92913 2 7.47707 2.30265 7.84587C2.35806 7.9134 2.41997 7.97527 2.48747 8.03067C2.85626 8.33333 3.40417 8.33333 4.5 8.33333C5.59583 8.33333 6.14374 8.33333 6.51253 8.03067C6.58003 7.97527 6.64194 7.9134 6.69733 7.84587C7 7.47707 7 6.92913 7 5.83333Z"
@@ -20,13 +20,14 @@
                             d="M12.1667 2H10.8333C10.3681 2 10.1355 2 9.94627 2.05741C9.52013 2.18668 9.18667 2.52015 9.0574 2.94629C9 3.13555 9 3.36815 9 3.83333C9 4.29852 9 4.53111 9.0574 4.72038C9.18667 5.14651 9.52013 5.47999 9.94627 5.60925C10.1355 5.66667 10.3681 5.66667 10.8333 5.66667H12.1667C12.6319 5.66667 12.8645 5.66667 13.0537 5.60925C13.4799 5.47999 13.8133 5.14651 13.9426 4.72038C14 4.53111 14 4.29852 14 3.83333C14 3.36815 14 3.13555 13.9426 2.94629C13.8133 2.52015 13.4799 2.18668 13.0537 2.05741C12.8645 2 12.6319 2 12.1667 2Z"
                             stroke="#808080" stroke-width="1.3" stroke-linejoin="round" />
                     </svg>
-                    {{ __('Dashboard') }}
+                    <?php echo e(__('Dashboard')); ?>
+
                 </a>
             </li>
 
-            <li class="divider"><span>{{ __('Billing Center') }}</span></li>
-            <li class="{{ isset($activePackages) && $activePackages == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.packages.index') }}">
+            <li class="divider"><span><?php echo e(__('Billing Center')); ?></span></li>
+            <li class="<?php echo e(isset($activePackages) && $activePackages == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.packages.index')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M10.8719 2.92328C10.4779 2.92328 10.2808 2.92328 10.1013 2.85668C10.0764 2.84743 10.0519 2.83726 10.0277 2.82617C9.85367 2.74635 9.71441 2.60704 9.43574 2.32843C8.79447 1.68716 8.47387 1.36653 8.07934 1.33696C8.02634 1.33299 7.97301 1.33299 7.92001 1.33696C7.52547 1.36653 7.20481 1.68716 6.56357 2.32842C6.28496 2.60704 6.14565 2.74635 5.97165 2.82617C5.94749 2.83726 5.92291 2.84743 5.89799 2.85668C5.71851 2.92328 5.52149 2.92328 5.12748 2.92328H5.0548C4.04953 2.92328 3.54689 2.92328 3.2346 3.23558C2.9223 3.54787 2.9223 4.0505 2.9223 5.05578V5.12846C2.9223 5.52247 2.9223 5.71948 2.85571 5.89896C2.84645 5.92389 2.83628 5.94846 2.82519 5.97263C2.74537 6.14663 2.60607 6.28594 2.32745 6.56455C1.68619 7.20578 1.36555 7.52645 1.33599 7.92098C1.33201 7.97398 1.33201 8.02732 1.33599 8.08032C1.36555 8.47485 1.68619 8.79545 2.32745 9.43672C2.60607 9.71538 2.74537 9.85465 2.82519 10.0287C2.83628 10.0529 2.84645 10.0774 2.85571 10.1023C2.9223 10.2818 2.9223 10.4789 2.9223 10.8729V10.9455C2.9223 11.9508 2.9223 12.4535 3.2346 12.7657C3.54689 13.0781 4.04953 13.0781 5.0548 13.0781H5.12748C5.52149 13.0781 5.71851 13.0781 5.89799 13.1447C5.92291 13.1539 5.94749 13.1641 5.97165 13.1751C6.14565 13.255 6.28496 13.3943 6.56357 13.6729C7.20481 14.3141 7.52547 14.6348 7.92001 14.6643C7.97301 14.6683 8.02627 14.6683 8.07934 14.6643C8.47387 14.6348 8.79447 14.3141 9.43574 13.6729C9.71441 13.3943 9.85367 13.255 10.0277 13.1751C10.0519 13.1641 10.0764 13.1539 10.1013 13.1447C10.2808 13.0781 10.4779 13.0781 10.8719 13.0781H10.9445C11.9498 13.0781 12.4525 13.0781 12.7647 12.7657C13.0771 12.4535 13.0771 11.9508 13.0771 10.9455V10.8729C13.0771 10.4789 13.0771 10.2818 13.1437 10.1023C13.1529 10.0774 13.1631 10.0529 13.1741 10.0287C13.254 9.85465 13.3933 9.71538 13.6719 9.43672C14.3131 8.79545 14.6338 8.47485 14.6633 8.08032C14.6673 8.02725 14.6673 7.97398 14.6633 7.92098C14.6338 7.52645 14.3131 7.20578 13.6719 6.56455C13.3933 6.28594 13.254 6.14663 13.1741 5.97263C13.1631 5.94846 13.1529 5.92389 13.1437 5.89896C13.0771 5.71948 13.0771 5.52247 13.0771 5.12846V5.05578C13.0771 4.0505 13.0771 3.54787 12.7647 3.23558C12.4525 2.92328 11.9498 2.92328 10.9445 2.92328H10.8719Z"
@@ -35,13 +36,14 @@
                             d="M10.3337 7.99935C10.3337 9.28802 9.28899 10.3327 8.00033 10.3327C6.71166 10.3327 5.66699 9.28802 5.66699 7.99935C5.66699 6.71068 6.71166 5.66602 8.00033 5.66602C9.28899 5.66602 10.3337 6.71068 10.3337 7.99935Z"
                             stroke="#808080" stroke-width="1.3" />
                     </svg>
-                    {{ __('Package') }}
+                    <?php echo e(__('Package')); ?>
+
                 </a>
             </li>
 
 
-            <li class="{{ isset($activeUserPackages) && $activeUserPackages == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.packages.user') }}">
+            <li class="<?php echo e(isset($activeUserPackages) && $activeUserPackages == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.packages.user')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M11.3337 5.66634C11.3337 3.82539 9.84126 2.33301 8.00033 2.33301C6.15938 2.33301 4.66699 3.82539 4.66699 5.66634C4.66699 7.50727 6.15938 8.99967 8.00033 8.99967C9.84126 8.99967 11.3337 7.50727 11.3337 5.66634Z"
@@ -50,12 +52,13 @@
                             d="M12.6663 13.6667C12.6663 11.0893 10.577 9 7.99967 9C5.42235 9 3.33301 11.0893 3.33301 13.6667"
                             stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    {{ __('User Package') }}
+                    <?php echo e(__('User Package')); ?>
+
                 </a>
             </li>
 
-            <li class="{{ isset($activeFundOrders) && $activeFundOrders == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.subscriptions.orders') }}">
+            <li class="<?php echo e(isset($activeFundOrders) && $activeFundOrders == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.subscriptions.orders')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.6663 1.33301V3.99967M5.33301 1.33301V3.99967" stroke="#808080" stroke-width="1.3"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -65,13 +68,14 @@
                         <path d="M2 6.66699H14" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    {{ __('All Order') }}
+                    <?php echo e(__('All Order')); ?>
+
                 </a>
             </li>
 
-            <li class="divider"><span>{{ __('User Management') }}</span></li>
-            <li class="{{ isset($activeUsers) && $activeUsers == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.users.index') }}">
+            <li class="divider"><span><?php echo e(__('User Management')); ?></span></li>
+            <li class="<?php echo e(isset($activeUsers) && $activeUsers == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.users.index')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M11.3337 5.66634C11.3337 3.82539 9.84126 2.33301 8.00033 2.33301C6.15938 2.33301 4.66699 3.82539 4.66699 5.66634C4.66699 7.50727 6.15938 8.99967 8.00033 8.99967C9.84126 8.99967 11.3337 7.50727 11.3337 5.66634Z"
@@ -80,13 +84,14 @@
                             d="M12.6663 13.6667C12.6663 11.0893 10.577 9 7.99967 9C5.42235 9 3.33301 11.0893 3.33301 13.6667"
                             stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    {{ __('User List') }}
+                    <?php echo e(__('User List')); ?>
+
                 </a>
             </li>
 
             <li
-                class="{{ isset($activeAutoPostRefundRequest) && $activeAutoPostRefundRequest == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.subscription-refund.list') }}">
+                class="<?php echo e(isset($activeAutoPostRefundRequest) && $activeAutoPostRefundRequest == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.subscription-refund.list')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.33301 11.667V9.66699M7.66634 11.667V5.66699M10.9997 11.667V9.00033" stroke="#808080"
                             stroke-width="1.3" stroke-linecap="round" />
@@ -97,12 +102,13 @@
                             d="M14.3307 7.33366C14.3307 7.33366 14.3337 7.55999 14.3337 8.00033C14.3337 10.9859 14.3337 12.4787 13.4062 13.4062C12.4787 14.3337 10.9859 14.3337 8.00033 14.3337C5.01477 14.3337 3.52199 14.3337 2.59449 13.4062C1.66699 12.4787 1.66699 10.9859 1.66699 8.00033C1.66699 5.01479 1.66699 3.52201 2.59449 2.59451C3.52199 1.66701 5.01477 1.66701 8.00033 1.66701L8.66699 1.66699"
                             stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    {{ __('Refund Request') }}
+                    <?php echo e(__('Refund Request')); ?>
+
                 </a>
             </li>
 
-            <li class="{{ isset($activeTicket) && $activeTicket == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.ticket.list') }}">
+            <li class="<?php echo e(isset($activeTicket) && $activeTicket == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.ticket.list')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M1.64256 6.22884C1.47687 6.22884 1.32567 6.09453 1.33328 5.91897C1.3779 4.89092 1.50288 4.22166 1.85306 3.69223C2.05453 3.38765 2.30478 3.12273 2.5925 2.90946C3.37018 2.33301 4.46727 2.33301 6.66145 2.33301H9.33794C11.5321 2.33301 12.6292 2.33301 13.4069 2.90946C13.6946 3.12273 13.9448 3.38765 14.1463 3.69223C14.4965 4.2216 14.6215 4.89077 14.6661 5.91863C14.6737 6.09439 14.5223 6.22884 14.3564 6.22884C13.4325 6.22884 12.6836 7.02167 12.6836 7.99967C12.6836 8.97767 13.4325 9.77047 14.3564 9.77047C14.5223 9.77047 14.6737 9.90494 14.6661 10.0807C14.6215 11.1086 14.4965 11.7777 14.1463 12.3071C13.9448 12.6117 13.6946 12.8766 13.4069 13.0899C12.6292 13.6663 11.5321 13.6663 9.33794 13.6663H6.66145C4.46727 13.6663 3.37018 13.6663 2.5925 13.0899C2.30478 12.8766 2.05453 12.6117 1.85306 12.3071C1.50288 11.7777 1.3779 11.1084 1.33328 10.0804C1.32567 9.90481 1.47687 9.77047 1.64256 9.77047C2.56642 9.77047 3.31536 8.97767 3.31536 7.99967C3.31536 7.02167 2.56642 6.22884 1.64256 6.22884Z"
@@ -110,13 +116,14 @@
                         <path d="M6 2.33301V13.6663" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    {{ __('Support Ticket') }}
+                    <?php echo e(__('Support Ticket')); ?>
+
                 </a>
             </li>
 
-            <li class="divider"><span>{{ __('Access Control') }}</span></li>
-            <li class="{{ isset($activeRoles) && $activeRoles == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.roles.index') }}">
+            <li class="divider"><span><?php echo e(__('Access Control')); ?></span></li>
+            <li class="<?php echo e(isset($activeRoles) && $activeRoles == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.roles.index')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M4.66634 1.33398C2.82539 1.33398 1.33301 2.82637 1.33301 4.66732C1.33301 5.90112 2.00334 6.97838 2.99967 7.55472V11.8961C2.99967 12.4411 2.99967 12.7136 3.10117 12.9586C3.20266 13.2036 3.39535 13.3963 3.78072 13.7817L4.66634 14.6673L6.0718 13.2619C6.13662 13.1971 6.16905 13.1646 6.19594 13.1294C6.26655 13.0371 6.31178 12.9279 6.32715 12.8127C6.33301 12.7688 6.33301 12.7229 6.33301 12.6313C6.33301 12.5571 6.33301 12.52 6.32907 12.4839C6.31877 12.3894 6.28836 12.2982 6.23991 12.2164C6.22143 12.1852 6.19917 12.1555 6.15465 12.0962L5.33301 11.0007L5.79967 10.3785C6.064 10.026 6.19616 9.84978 6.26459 9.64452C6.33301 9.43925 6.33301 9.21898 6.33301 8.77845V7.55472C7.32934 6.97838 7.99967 5.90112 7.99967 4.66732C7.99967 2.82637 6.50729 1.33398 4.66634 1.33398Z"
@@ -130,18 +137,19 @@
                             d="M10 3.33301H12.6667C13.2879 3.33301 13.5985 3.33301 13.8436 3.4345C14.1703 3.56983 14.4299 3.82939 14.5652 4.15609C14.6667 4.40113 14.6667 4.71175 14.6667 5.33301C14.6667 5.95426 14.6667 6.26489 14.5652 6.50992C14.4299 6.83661 14.1703 7.09621 13.8436 7.23154C13.5985 7.33301 13.2879 7.33301 12.6667 7.33301H10"
                             stroke="#808080" stroke-width="1.3" stroke-linecap="round" />
                     </svg>
-                    {{ __('Role') }}
+                    <?php echo e(__('Role')); ?>
+
                 </a>
             </li>
 
 
-            {{-- Frontend Configuration: Blogs, Pages, Menus removed --}}
+            
 
-            <li class="divider"><span>{{ __('System Configuration') }}</span></li>
+            <li class="divider"><span><?php echo e(__('System Configuration')); ?></span></li>
             <li
-                class="{{ (isset($activeApplicationSetting) || isset($activeConfigurationSetting) || isset($activeLandingPageSettings)) ? 'currrent-menu' : '' }}">
+                class="<?php echo e((isset($activeApplicationSetting) || isset($activeConfigurationSetting) || isset($activeLandingPageSettings)) ? 'currrent-menu' : ''); ?>">
                 <a class="has-arrow" href="#settings-menu" data-bs-toggle="collapse" role="button"
-                    aria-expanded="{{ isset($showManageApplicationSetting) ? 'true' : 'false' }}"
+                    aria-expanded="<?php echo e(isset($showManageApplicationSetting) ? 'true' : 'false'); ?>"
                     aria-controls="settings-menu">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -151,30 +159,31 @@
                             d="M10.3337 7.99935C10.3337 9.28802 9.28899 10.3327 8.00033 10.3327C6.71166 10.3327 5.66699 9.28802 5.66699 7.99935C5.66699 6.71068 6.71166 5.66602 8.00033 5.66602C9.28899 5.66602 10.3337 6.71068 10.3337 7.99935Z"
                             stroke="#808080" stroke-width="1.3" />
                     </svg>
-                    {{ __('Settings') }}
+                    <?php echo e(__('Settings')); ?>
+
                 </a>
-                <ul id="settings-menu" class="collapse {{ isset($showManageApplicationSetting) ? 'show' : ' ' }}">
+                <ul id="settings-menu" class="collapse <?php echo e(isset($showManageApplicationSetting) ? 'show' : ' '); ?>">
                     <li
-                        class="{{ isset($activeApplicationSetting) && $activeApplicationSetting == 'active' ? 'active' : '' }}">
+                        class="<?php echo e(isset($activeApplicationSetting) && $activeApplicationSetting == 'active' ? 'active' : ''); ?>">
                         <a
-                            href="{{ route('super_admin.setting.application-settings') }}">{{ __('General Setting') }}</a>
+                            href="<?php echo e(route('super_admin.setting.application-settings')); ?>"><?php echo e(__('General Setting')); ?></a>
                     </li>
                     <li
-                        class="{{ isset($activeConfigurationSetting) && $activeConfigurationSetting == 'active' ? 'active' : '' }}">
+                        class="<?php echo e(isset($activeConfigurationSetting) && $activeConfigurationSetting == 'active' ? 'active' : ''); ?>">
                         <a
-                            href="{{ route('super_admin.setting.configuration-settings') }}">{{ __('Configuration Settings') }}</a>
+                            href="<?php echo e(route('super_admin.setting.configuration-settings')); ?>"><?php echo e(__('Configuration Settings')); ?></a>
                     </li>
                     <li
-                        class="{{ isset($activeFrontendSetting) && $activeFrontendSetting == 'active' ? 'active' : '' }}">
+                        class="<?php echo e(isset($activeFrontendSetting) && $activeFrontendSetting == 'active' ? 'active' : ''); ?>">
                         <a
-                            href="{{ route('super_admin.setting.landing-settings') }}">{{ __('Landing Page Settings') }}</a>
+                            href="<?php echo e(route('super_admin.setting.landing-settings')); ?>"><?php echo e(__('Landing Page Settings')); ?></a>
                     </li>
                 </ul>
             </li>
 
-            <li class="divider"><span>{{ __('System') }}</span></li>
+            <li class="divider"><span><?php echo e(__('System')); ?></span></li>
             <li>
-                <a href="{{ route('ashik.version-update') }}">
+                <a href="<?php echo e(route('ashik.version-update')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.6663 1.33301V3.99967M5.33301 1.33301V3.99967" stroke="#808080" stroke-width="1.3"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -184,12 +193,13 @@
                         <path d="M2 6.66699H14" stroke="#808080" stroke-width="1.3" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    {{ __(config('app.version_updater_name', 'Ashik Version Update')) }}
+                    <?php echo e(__(config('app.version_updater_name', 'Ashik Version Update'))); ?>
+
                 </a>
             </li>
 
-            <li class="{{ isset($activeProfile) && $activeProfile == 'active' ? 'currrent-menu' : '' }}">
-                <a href="{{ route('super_admin.profile.index') }}">
+            <li class="<?php echo e(isset($activeProfile) && $activeProfile == 'active' ? 'currrent-menu' : ''); ?>">
+                <a href="<?php echo e(route('super_admin.profile.index')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M11.3337 5.66634C11.3337 3.82539 9.84126 2.33301 8.00033 2.33301C6.15938 2.33301 4.66699 3.82539 4.66699 5.66634C4.66699 7.50727 6.15938 8.99967 8.00033 8.99967C9.84126 8.99967 11.3337 7.50727 11.3337 5.66634Z"
@@ -198,12 +208,13 @@
                             d="M12.6663 13.6667C12.6663 11.0893 10.577 9 7.99967 9C5.42235 9 3.33301 11.0893 3.33301 13.6667"
                             stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    {{ __('Profile') }}
+                    <?php echo e(__('Profile')); ?>
+
                 </a>
             </li>
 
             <li>
-                <a href="{{ route('logout') }}">
+                <a href="<?php echo e(route('logout')); ?>">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M3.66048 3.33414C3.33325 3.84672 3.33325 4.5098 3.33325 5.83595V14.1642C3.33325 15.4903 3.33325 16.1534 3.66048 16.666C3.71891 16.7576 3.78442 16.8444 3.85639 16.9257C4.25945 17.3811 4.89714 17.5632 6.1725 17.9276C7.45109 18.2928 8.09039 18.4754 8.55325 18.2015C8.63359 18.154 8.70825 18.0977 8.776 18.0336C9.16659 17.6638 9.16659 16.9991 9.16659 15.6696V4.3306C9.16659 3.0011 9.16659 2.33634 8.776 1.9666C8.70825 1.90248 8.63359 1.84614 8.55325 1.79864C8.09039 1.52471 7.45109 1.70733 6.1725 2.07257C4.89714 2.4369 4.25945 2.61906 3.85639 3.07445C3.78442 3.15578 3.71891 3.2426 3.66048 3.33414Z"
@@ -215,10 +226,12 @@
                             d="M17.5001 10.0001H11.6667M16.2501 7.91675C16.2501 7.91675 18.3334 9.45113 18.3334 10.0001C18.3334 10.5491 16.2501 12.0834 16.2501 12.0834"
                             stroke="#808080" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    {{ __('Logout') }}
+                    <?php echo e(__('Logout')); ?>
+
                 </a>
             </li>
         </ul>
     </div>
     <div class="sidebar-overlay"></div>
 </aside>
+<?php /**PATH C:\Users\ashik\ERP-Software\resources\views/auto_posts/super_admin/layouts/sidebar.blade.php ENDPATH**/ ?>
