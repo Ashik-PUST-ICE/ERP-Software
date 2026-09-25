@@ -44,7 +44,12 @@
                     <div class="col-xl-8 col-lg-6 col-md-6">
                         <div class="form-group">
                             <label class="form-label" for="provider_api_key">{{ __('Provider API key') }} <span class="required">*</span></label>
-                            <input type="password" name="provider_api_key" id="provider_api_key" class="form-control" value="{{ getOption($selectedConfig['api_key_option'], '') }}" placeholder="Paste selected provider API key" autocomplete="new-password">
+                            <div class="password-input-wrap">
+                                <input type="password" name="provider_api_key" id="provider_api_key" class="form-control" value="{{ getOption($selectedConfig['api_key_option'], '') }}" placeholder="Paste selected provider API key" autocomplete="new-password">
+                                <button type="button" class="password-toggle-btn" id="toggleApiKeyVisibility" title="{{ __('Show/Hide API key') }}">
+                                    <i class="fa fa-eye" id="apiKeyEyeIcon"></i>
+                                </button>
+                            </div>
                             <small id="provider-help" class="text-muted">{{ __('The key stays on your server and is never shown to chatbot users.') }}</small>
                         </div>
                     </div>
@@ -84,6 +89,33 @@
 </div>
 @endsection
 
+@push('style')
+<style>
+    .password-input-wrap {
+        position: relative;
+    }
+    .password-input-wrap .form-control {
+        padding-right: 48px;
+    }
+    .password-input-wrap .password-toggle-btn {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #6c757d;
+        padding: 6px;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .password-input-wrap .password-toggle-btn:hover {
+        color: #0f172a;
+    }
+</style>
+@endpush
+
 @push('script')
 <script>
 (function() {
@@ -93,6 +125,8 @@
     const providerSelect = document.getElementById('ai_provider');
     const modelSelect = document.getElementById('ai_model');
     const apiKeyInput = document.getElementById('provider_api_key');
+    const toggleBtn = document.getElementById('toggleApiKeyVisibility');
+    const eyeIcon = document.getElementById('apiKeyEyeIcon');
     const temperatureInput = document.getElementById('openai_temperature');
     const maxTokensInput = document.getElementById('openai_max_tokens');
     const languageInput = document.getElementById('openai_default_language');
@@ -132,7 +166,9 @@
         modelSelect.value = defaultModel;
 
         if (apiKeyInput) {
-            apiKeyInput.value = '';
+            if (providerKey !== lastProviderValue) {
+                apiKeyInput.value = '';
+            }
             apiKeyInput.placeholder = 'Paste ' + (providerConfig.label || 'provider') + ' API key';
         }
 
@@ -166,14 +202,29 @@
         }
         setInterval(function() {
             if (providerSelect.value !== lastProviderValue) {
+                lastProviderValue = providerSelect.value;
                 update();
             }
         }, 150);
     }
 
+    function bindApiKeyToggle() {
+        if (!toggleBtn || !apiKeyInput || !eyeIcon) {
+            return;
+        }
+
+        toggleBtn.addEventListener('click', function() {
+            const isPassword = apiKeyInput.type === 'password';
+            apiKeyInput.type = isPassword ? 'text' : 'password';
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+    }
+
     function init() {
         bindProviderChange();
         bindPollingFallback();
+        bindApiKeyToggle();
         update();
     }
 
