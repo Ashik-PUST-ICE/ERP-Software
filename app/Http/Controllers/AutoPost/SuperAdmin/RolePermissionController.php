@@ -15,13 +15,13 @@ class RolePermissionController extends Controller
 
     /**
      * Display a listing of the resource.
-     * Super Admin manages roles for Admin users (user_type = USER_ROLE_ADMIN)
+     * Super Admin manages Super Admin roles (user_type = USER_ROLE_SUPER_ADMIN)
      */
 
     public function index(Request $request)
     {
         if ($request->ajax() && $request->has('draw')) {
-            $roles = Role::where('user_type', USER_ROLE_ADMIN)
+            $roles = Role::where('user_type', USER_ROLE_SUPER_ADMIN)
                 ->withCount('permissions')
                 ->orderBy('id', 'DESC');
             return datatables($roles)
@@ -76,7 +76,7 @@ class RolePermissionController extends Controller
         $data['breadcrumb'] = __('Roles') . ' / ' . __('Add Roles');
         $data['activeRoles'] = 'active';
         $data['showRolePermission'] = 'show';
-        $data['permissions'] = Permission::all();
+        $data['permissions'] = Permission::where('user_type', USER_ROLE_SUPER_ADMIN)->get();
         return view('auto_posts.super_admin.roles.index', $data);
     }
 
@@ -100,7 +100,7 @@ class RolePermissionController extends Controller
             $role->display_name = $request->name;
             $role->guard_name = 'web';
             $role->status = STATUS_ACTIVE;
-            $role->user_type = USER_ROLE_ADMIN; // Super admin creates roles for admin users
+            $role->user_type = USER_ROLE_SUPER_ADMIN; // Super admin creates roles for super admin users
             $role->save();
 
             if (!empty($request->permissions)) {
@@ -125,8 +125,8 @@ class RolePermissionController extends Controller
      */
     public function edit($id)
     {
-        $data['role'] = Role::where('user_type', USER_ROLE_ADMIN)->findOrFail($id);
-        $data['permissions'] = Permission::all();
+        $data['role'] = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->findOrFail($id);
+        $data['permissions'] = Permission::where('user_type', USER_ROLE_SUPER_ADMIN)->get();
         $data['oldPermissions'] = $data['role']->permissions->pluck('name')->toArray();
         return view('auto_posts.super_admin.roles.edit')->with($data);
     }
@@ -146,7 +146,7 @@ class RolePermissionController extends Controller
 
         try {
             DB::beginTransaction();
-            $role = Role::where('user_type', USER_ROLE_ADMIN)->findOrFail($id);
+            $role = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->findOrFail($id);
 
             $role->name = $request->name;
             $role->display_name = $request->name;
@@ -181,8 +181,8 @@ class RolePermissionController extends Controller
         $data['title'] = __('Permissions for Role');
         $data['activeRoles'] = 'active';
         $data['showRolePermission'] = 'show';
-        $data['role'] = Role::where('user_type', USER_ROLE_ADMIN)->findOrFail($id);
-        $permissions = Permission::all();
+        $data['role'] = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->findOrFail($id);
+        $permissions = Permission::where('user_type', USER_ROLE_SUPER_ADMIN)->get();
         $groupedPermissions = [];
 
         foreach ($permissions as $permission) {
@@ -216,7 +216,7 @@ class RolePermissionController extends Controller
     {
         try {
             DB::beginTransaction();
-            $role = Role::where('user_type', USER_ROLE_ADMIN)->where('id', $id)->first();
+            $role = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->where('id', $id)->firstOrFail();
 
             // Form sends permission names, so use them directly
             $permissions = $request->permissions ?? [];
@@ -250,7 +250,7 @@ class RolePermissionController extends Controller
     {
         try {
             DB::beginTransaction();
-            $role = Role::where('user_type', USER_ROLE_ADMIN)->where('id', $id)->firstOrFail();
+            $role = Role::where('user_type', USER_ROLE_SUPER_ADMIN)->where('id', $id)->firstOrFail();
 
             $tableNames = config('permission.table_names');
             $roleIdColumn = config('permission.column_names.role_pivot_key') ?? 'role_id';
