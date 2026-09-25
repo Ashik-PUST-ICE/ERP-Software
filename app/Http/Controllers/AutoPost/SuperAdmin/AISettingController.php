@@ -14,12 +14,17 @@ class AISettingController extends Controller
 
     public function openAISetting()
     {
+        $providers = config('ai.providers', []);
+        if (isset($providers['openai']) && config('ai.openai_models')) {
+            $providers['openai']['models'] = config('ai.openai_models');
+        }
+
         return view('auto_posts.super_admin.setting.ai_settings.open-ai-settings', [
             'title' => __('AI Chatbot Settings'),
             'showManageApplicationSetting' => 'show',
             'activeApplicationSetting' => 'active',
             'subAISettingActiveClass' => 'active',
-            'providers' => config('ai.providers', []),
+            'providers' => $providers,
         ]);
     }
 
