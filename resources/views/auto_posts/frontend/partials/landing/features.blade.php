@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-5">
                 <h2 class="lp-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                    {{ getOption('landing_features_title', __('Easily Manage Platform & Accounts.')) }}
+                     {{ getOption('landing_features_title', __('Powerful ERP Modules to Run Your Entire Business.')) }}
                 </h2>
             </div>
         </div>

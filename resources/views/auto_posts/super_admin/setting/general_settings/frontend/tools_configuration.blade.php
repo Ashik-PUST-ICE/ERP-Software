@@ -1,6 +1,6 @@
 <!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{ __('Our Tool Section Configuration') }}</h4>
+    <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{ __('ERP Features Section Configuration') }}</h4>
     <div class="mClose">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
@@ -21,14 +21,14 @@ $toolCount = max(1, min(16, $toolCount));
                 <div class="form-group">
                     <label class="form-label">{{ __('Section Title') }}</label>
                     <input type="text" name="landing_tools_title" class="form-control"
-                        value="{{ getOption('landing_tools_title', __('We Have Some Amazing Features For Team.')) }}"
+                        value="{{ getOption('landing_tools_title', __('Everything You Need to Manage Garment Production.')) }}"
                         placeholder="{{ __('Enter tools section title') }}">
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="mb-0">{{ __('Tool Cards') }}</h5>
+                    <h5 class="mb-0">{{ __('ERP Feature Cards') }}</h5>
                     <button type="button" class="primary-btn" id="tools-add-more-btn" onclick="toolsAddMore()">
                         {{ __('Add More') }}
                     </button>
@@ -48,14 +48,14 @@ $toolCount = max(1, min(16, $toolCount));
                     <div class="row gy-2">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label">{{ __('Tool Name') }} ({{ __('Tool') }} {{ $n }})</label>
+                                <label class="form-label">{{ __('ERP Feature Name') }} ({{ __('Feature') }} {{ $n }})</label>
                                 <input type="text" name="landing_tool_card{{ $n }}_name" class="form-control"
                                     value="{{ getOption('landing_tool_card' . $n . '_name') }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-label d-block">{{ __('Tool Image') }} ({{ __('Tool') }} {{ $n }})</label>
+                                <label class="form-label d-block">{{ __('ERP Feature Image') }} ({{ __('Feature') }} {{ $n }})</label>
                                 <div class="zImage-upload-details mw-100">
                                     <div class="upload-img-box">
                                         <img

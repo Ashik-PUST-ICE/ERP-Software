@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <h2 class="lp-title" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
-                    {{ getOption('landing_tools_title', __('We Have Some Amazing Features For Team.')) }}
+                    {{ getOption('landing_tools_title', __('Everything You Need to Manage Garment Production.')) }}
                 </h2>
             </div>
         </div>

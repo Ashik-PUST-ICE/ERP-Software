@@ -1,7 +1,7 @@
 @extends('auto_posts.frontend.layouts.app')
 
 @push('title')
-    {{ getOption('app_name', 'Autopost') }} - {{ getOption('landing_meta_title', 'AI-Powered Social Media Scheduling') }}
+    {{ getOption('app_name', 'ERP') }} - {{ getOption('landing_meta_title', 'All-in-One Garments ERP Software') }}
 @endpush
 
 @section('content')

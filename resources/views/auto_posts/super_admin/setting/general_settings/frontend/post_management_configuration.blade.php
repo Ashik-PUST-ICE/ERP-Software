@@ -1,6 +1,6 @@
 <!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{ __('Post Management Section Configuration') }}</h4>
+                <h4 class="fs-20 fw-500 lh-38 text-1b1c17 mb-0">{{ __('ERP Modules Section Configuration') }}</h4>
     <div class="mClose">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
@@ -19,14 +19,14 @@ for ($i = 2; $i <= 4; $i++) { if (trim((string) getOption('landing_post_card' . 
                 <div class="form-group">
                     <label class="form-label">{{ __('Section Title') }}</label>
                     <input type="text" name="landing_post_management_title" class="form-control"
-                        value="{{ getOption('landing_post_management_title', 'Easy Post Creation With AI & Manage Posts.') }}"
-                        placeholder="{{ __('Enter post management section title') }}">
+                        value="{{ getOption('landing_post_management_title', 'Core ERP Modules Built for Garment Manufacturers.') }}"
+                        placeholder="{{ __('Enter ERP module title') }}">
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="mb-0">{{ __('Post Management Cards') }}</h5>
+                    <h5 class="mb-0">{{ __('ERP Module Cards') }}</h5>
                     <button type="button" class="primary-btn" id="post-management-add-more-btn"
                         onclick="postManagementAddMore()">
                         {{ __('Add More') }}
@@ -78,15 +78,15 @@ for ($i = 2; $i <= 4; $i++) { if (trim((string) getOption('landing_post_card' . 
             @endfor
         </div>
 
-        <div class="col-lg-12 mt-3 pt-3 border-top">
-            <h6 class="mb-3">{{ __('Manage All Posts') }}</h6>
-        </div>
+            <div class="col-lg-12 mt-3 pt-3 border-top">
+                <h6 class="mb-3">{{ __('Why Choose Our ERP') }}</h6>
+            </div>
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="form-label">{{ __('Title') }}</label>
                 <input type="text" name="landing_post_manage_all_title" class="form-control"
                     value="{{ getOption('landing_post_manage_all_title') }}"
-                    placeholder="{{ __('Manage All Posts title') }}">
+                    placeholder="{{ __('Why Choose Our ERP title') }}">
             </div>
         </div>
         <div class="col-lg-6">
@@ -94,12 +94,12 @@ for ($i = 2; $i <= 4; $i++) { if (trim((string) getOption('landing_post_card' . 
                 <label class="form-label">{{ __('Description') }}</label>
                 <input type="text" name="landing_post_manage_all_description" class="form-control"
                     value="{{ getOption('landing_post_manage_all_description') }}"
-                    placeholder="{{ __('Manage All Posts description') }}">
+                    placeholder="{{ __('Why Choose Our ERP description') }}">
             </div>
         </div>
         <div class="col-lg-12">
             <div class="form-group">
-                <label class="form-label d-block">{{ __('Manage All Posts Image') }}</label>
+                        <label class="form-label d-block">{{ __('Why Choose Our ERP Image') }}</label>
                 <div class="zImage-upload-details mw-100">
                     <div class="upload-img-box">
                         <img

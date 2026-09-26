@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label class="form-label">{{ __('Section Title') }}</label>
                     <input type="text" name="landing_pricing_title" class="form-control"
-                        value="{{ getOption('landing_pricing_title', __('Affordable License For Every Budget.')) }}"
+                        value="{{ getOption('landing_pricing_title', __('Simple ERP Pricing for Every Factory Size.')) }}"
                         placeholder="{{ __('Enter pricing section title') }}">
                 </div>
             </div>

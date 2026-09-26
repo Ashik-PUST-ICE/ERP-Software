@@ -9,15 +9,15 @@
                     <div class="col-lg-7 col-md-8">
                         <div class="lp-banner-content">
                             <h1 class="lp-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                                {{ getOption('landing_hero_title', __('AI-Powered Social Media Scheduling Made Simple.')) }}
+                                {{ getOption('landing_hero_title', __('All-in-One Garments ERP Software for Modern Factories.')) }}
                             </h1>
                             <p data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
-                                {{ getOption('landing_hero_subtitle', __('Plan, create, and publish smarter content automatically — all from one powerful, easy-to-use dashboard.')) }}
+                                 {{ getOption('landing_hero_subtitle', __('Streamline HRM, inventory, production, payroll, and accounting — all in one powerful ERP built for garment manufacturers.')) }}
                             </p>
                             <a href="{{ getOption('landing_hero_button_url', route('register')) }}"
                                class="primary-btn"
                                data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
-                                {{ getOption('landing_hero_button_text', __('Get Started For Free')) }}
+                                {{ getOption('landing_hero_button_text', __('Request a Demo')) }}
                             </a>
                         </div>
                     </div>
@@ -47,15 +47,15 @@
                 <div class="col-lg-7 col-md-8">
                     <div class="lp-banner-content">
                         <h1 class="lp-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                            {{ getOption('landing_hero_title', __('AI-Powered Social Media Scheduling Made Simple.')) }}
+                            {{ getOption('landing_hero_title', __('All-in-One Garments ERP Software for Modern Factories.')) }}
                         </h1>
                         <p data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
-                            {{ getOption('landing_hero_subtitle', __('Plan, create, and publish smarter content automatically — all from one powerful, easy-to-use dashboard.')) }}
+                            {{ getOption('landing_hero_subtitle', __('Streamline HRM, inventory, production, payroll, and accounting — all in one powerful ERP built for garment manufacturers.')) }}
                         </p>
                         <a href="{{ getOption('landing_hero_button_url', route('register')) }}"
                            class="primary-btn"
                            data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
-                            {{ getOption('landing_hero_button_text', __('Get Started For Free')) }}
+                             {{ getOption('landing_hero_button_text', __('Request a Demo')) }}
                         </a>
                     </div>
                 </div>

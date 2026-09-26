@@ -18,7 +18,7 @@ $ctaShow = $ctaTitle !== '' || $ctaDesc !== '' || $ctaBtn !== '' || $ctaBg;
                     <div class="content">
                         @if($ctaTitle !== '')<h2 class="title">{{ $ctaTitle }}</h2>@endif
                         @if($ctaDesc !== '')<p class="description">{{ $ctaDesc }}</p>@endif
-                        @if($ctaBtn !== '')<a href="{{ route('register') }}" class="primary-btn">{{ $ctaBtn }}</a>@endif
+                        @if($ctaBtn !== '')<a href="{{ route('register') }}" class="primary-btn">{{ $ctaBtn ?: __('Start Your Free Trial') }}</a>@endif
                     </div>
                     @endif
 

@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label class="form-label">{{ __('Hero Title') }}<span class="required">*</span></label>
                     <input type="text" name="landing_hero_title"
-                        value="{{ getOption('landing_hero_title', 'AI-Powered Social Media Scheduling Made Simple.') }}"
+                        value="{{ getOption('landing_hero_title', 'All-in-One Garments ERP Software for Modern Factories.') }}"
                         class="form-control" placeholder="{{ __('Enter compelling hero title') }}" required>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label class="form-label">{{ __('Hero Subtitle') }}<span class="required">*</span></label>
                     <input type="text" name="landing_hero_subtitle"
-                        value="{{ getOption('landing_hero_subtitle', 'Plan, create, and publish smarter content automatically — all from one powerful, easy-to-use dashboard.') }}"
+                        value="{{ getOption('landing_hero_subtitle', 'Streamline HRM, inventory, production, payroll, and accounting — all in one powerful ERP built for garment manufacturers.') }}"
                         class="form-control" placeholder="{{ __('Enter engaging subtitle') }}" required>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <label class="form-label">{{ __('Hero Button Text') }}</label>
                     <input type="text" name="landing_hero_button_text"
-                        value="{{ getOption('landing_hero_button_text', 'Get Started For Free') }}" class="form-control"
+                        value="{{ getOption('landing_hero_button_text', 'Request a Demo') }}" class="form-control"
                         placeholder="{{ __('Button text') }}">
                 </div>
             </div>

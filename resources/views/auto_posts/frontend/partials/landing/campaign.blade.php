@@ -11,7 +11,7 @@
             break;
         }
     }
-    $sectionTitle = trim((string) getOption('landing_campaign_title', ''));
+    $sectionTitle = trim((string) getOption('landing_campaign_title', __('Why Garment Factories Choose Our ERP.')));
 @endphp
 @if($hasAnyCard || $sectionTitle !== '')
 <section class="campaing-calender lp-section-padding">

@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <h2 class="lp-title" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
-                    {{ getOption('landing_pricing_title', __('Affordable License For Every Budget.')) }}
+                    {{ getOption('landing_pricing_title', __('Simple ERP Pricing for Every Factory Size.')) }}
                 </h2>
             </div>
         </div>

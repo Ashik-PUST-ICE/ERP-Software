@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <h2 class="lp-title" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                    {{ getOption('landing_post_management_title', __('Easy Post Creation With AI & Manage Posts.')) }}
+                     {{ getOption('landing_post_management_title', __('Core ERP Modules Built for Garment Manufacturers.')) }}
                 </h2>
             </div>
         </div>

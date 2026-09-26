@@ -9,7 +9,7 @@
                     </div>
                     @if(getOption('footer_left_status', 1) == STATUS_ACTIVE)
                     <p class="footer-description">
-                        {{ getOption('footer_left_text', 'Our AI-powered platform helps businesses schedule smarter, post consistently, and grow their audience faster. Manage all your social media in one place with ease.') }}
+                        {{ getOption('footer_left_text', 'All-in-one Garments ERP software built to streamline HRM, inventory, production, payroll, and accounting for modern garment factories.') }}
                     </p>
                     @endif
                 </div>
@@ -21,16 +21,16 @@
                                 <div class="footer-title">{{ __('Pages') }}</div>
                                 <ul class="list-unstyled footer-links">
                                     <li><a href="{{ url('/#home') }}">{{ __('Home') }}</a></li>
-                                    <li><a href="{{ url('/#feature-section') }}">{{ __('Features') }}</a></li>
+                                    <li><a href="{{ url('/#feature-section') }}">{{ __('ERP Features') }}</a></li>
                                     <li><a href="{{ url('/#pricing-section') }}">{{ __('Pricing') }}</a></li>
-                                    <li><a href="{{ url('/#blog-section') }}">{{ __('Blog') }}</a></li>
+                                    <li><a href="{{ url('/#faq-section') }}">{{ __('FAQ') }}</a></li>
                                 </ul>
                             </div>
 
                             <div class="col-md-4 col-6">
-                                <div class="footer-title">{{ __('Utilities') }}</div>
+                                <div class="footer-title">{{ __('ERP Modules') }}</div>
                                 <ul class="list-unstyled footer-links">
-                                    <li><a href="{{ route('register') }}">{{ __('Sign Up') }}</a></li>
+                                    <li><a href="{{ route('register') }}">{{ __('Request Demo') }}</a></li>
                                     <li><a href="{{ route('login') }}">{{ __('Sign In') }}</a></li>
                                     <li><a href="#">{{ __('Privacy Policy') }}</a></li>
                                     <li><a href="#">{{ __('Terms & Condition') }}</a></li>
@@ -39,7 +39,7 @@
 
                             <div class="col-md-5 col-12">
                                 @if(getOption('footer_social_status', 1) == 1)
-                                <div class="footer-title">{{ __('Social Media') }}</div>
+                                <div class="footer-title">{{ __('Get Started') }}</div>
                                 <ul class="social-grid">
                                     @for($i = 1; $i <= 4; $i++)
                                         @php
